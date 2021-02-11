@@ -1,89 +1,88 @@
-  <div class="margin-layout">
-    <md-card>
-      <div layout="row" layout-align="center center">
-        <h2 class="md-display-1 label-light-gray" layout-padding ng-show="true">
-
-        </h2>
-      </div>
-      <md-list ng-repeat="item in $ctrl.items track by $index">
-        <div class="margin-not-top" layout="row" layout-align="start center">
-          <span class="md-headline new-chip-white" layout-padding ng-show="item"
-            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">{{}}</span>
-          <span class="md-headline new-chip-white" layout-padding ng-show="!item" layout-padding
-            ng-style="{ 'background': '{{$ctrl.colorStage}}'}"></span>
-        </div>
-        <md-card class="comment-null-layout" ng-show="item.length == 0">
-          <div class="comment-null ">
-            <p></p>
-          </div>
-        </md-card>
-        <md-list class="margin-bottom" ng-repeat="comment in item track by $id(comment)">
-          <div class="item-list-layout" ng-mouseover="comment.actionButton = $id"
-            ng-mouseleave="comment.actionButton = false">
-            <div class="comment" layout="row" layout-align="center center" layout-align-xs="start center">
-            </div>
-            <div class="comment-name" layout="row">
-              <span class="md-title margin-left"></span>
-            </div>
-          </div>
-          <md-card class="comment-null-layout" ng-show="true">
-            <div class="comment-null ">
-              <p></p>
-            </div>
-          </md-card>
-          <div class="comment-list-layout" ng-repeat="item in comment track by $id(item)"
-            ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
-            <div class="comment-status" layout="row" layout-align="center center">
-              <md-icon class="icon-status-size" md-font-set="material-icons"
-                ng-style="{color: item.color}">
-                {{item}}</md-icon>
-              <md-tooltip md-direction="top">
-                {{item}}
-              </md-tooltip>
-            </div>
-            <div class="comment-mode" layout="row" layout-align-gt-sm="center center" layout-align-xs="center start">
-              <md-icon class="icon-mode" md-font-set="material-icons">{{item}}</md-icon>
-              <md-tooltip md-direction="top">
-                {{item}}
-              </md-tooltip>
-              </md-icon>
-            </div>
-            <div class="comment-date" layout="row" layout-align-gt-sm="center center">
-              <p class="md-caption" ng-style="{ color: '#797985' }" hide-xs hide-sm hide-md>Criado em <small
-                  class="md-body-2" ng-style="{color:'black'}">{{item}}</small></p>
-              <p class="md-body-2" hide-gt-md>{{item}}</p>
-              <md-tooltip md-direction="top">
-                Data de realização
-              </md-tooltip>
-            </div>
-            <div class="comment-button">
-              <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
-                <md-button class="md-icon-button md-warn" aria-label="Excluir"
-                  ng-click="$ctrl.deleteSelectedActivity(item)">
-                  <md-tooltip md-direction="top">Excluir</md-tooltip>
-                  <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
-                </md-button>
-                <md-button class="md-accent md-icon-button" aria-label="Preencher Atividade"
-                  ng-click="$ctrl.fillSelectedActivity(item)" ng-show="$ctrl.showFillingButton(item.mode)">
-                  <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
-                  <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
-                </md-button>
-              </div>
-              <div layout="row" layout-align="end center" hide-lg hide-xl>
-                <md-button class="md-icon-button md-warn" aria-label="Excluir"
-                  ng-click="$ctrl.deleteSelectedActivity(item)">
-                  <md-tooltip md-direction="top">Excluir</md-tooltip>
-                  <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
-                </md-button>
-                <md-button class="md-accent md-icon-button" aria-label="Preencher Atividade"
-                  ng-click="$ctrl.fillSelectedActivity(item)" ng-show="$ctrl.showFillingButton(item.mode)">
-                  <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
-                  <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
-                </md-button>
-              </div>
-            </div>
-          </div>
-        </md-list>
-      </md-list>
-    </md-card>
+<md-card class="layout-uc">
+  <div layout="row" layout-align="center center">
+    <h2 class="md-display-1 label-light-gray" layout-padding ng-show="$ctrl.items.length == 0">
+      Área destinado para comentários
+    </h2>
   </div>
+  <md-list class="comment-list-layout" ng-repeat="item in $ctrl.items track by $id(item)"
+    ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
+    <div class="comment-image">
+      <md-icon layout="row" layout-align="center center" class="md-default-theme material-icons icon-size"
+        aria-label="account_circle">
+        account_circle</md-icon>
+    </div>
+    <div class="comment-name" layout="row" layout-align="start center">
+      <p class="md-body-2 margin-line" md-truncate>{{item.name}}</p>
+      <md-tooltip md-direction="top">
+        Nome
+      </md-tooltip>
+    </div>
+    <div class="comment-status" layout="row" ng-show="item.edit" layout-align="center center">
+      <p class="md-caption margin-line" ng-style="{ color: '#797985' }" hide-xs hide-sm hide-md>Editado</p>
+      <p class="md-body-2 margin-line" hide-gt-md>Editado</p>
+      <md-tooltip md-direction="top">
+        Comentário foi editado
+      </md-tooltip>
+    </div>
+    <div class="comment-date" layout="row" layout-align-gt-sm="center center">
+      <p class="md-caption margin-line" ng-style="{ color: '#797985' }" hide-xs hide-sm hide-md>Criado em <small
+          class="md-body-2" ng-style="{color:'black'}">{{item.date}}</small></p>
+      <p class="md-body-2 margin-line" hide-gt-md>{{item.date}}</p>
+      <md-tooltip md-direction="top">
+        Data de realização
+      </md-tooltip>
+    </div>
+    <div class="comment-text" layout="row" layout-align="start center">
+      <p class="md-body-3 margin-line" md-truncate>{{item.comment}}</p>
+      <md-tooltip md-direction="top">
+        Comentário
+      </md-tooltip>
+    </div>
+    <div class="comment-email" layout="row" layout-align="start center">
+      <p class="md-body-3 margin-line" md-truncate>{{item.email}}</p>
+      <md-tooltip md-direction="top">
+        E-mail
+      </md-tooltip>
+    </div>
+    <div class="comment-button">
+      <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
+        <md-button class="md-icon-button md-warn" aria-label="Excluir" ng-click="$ctrl.deleteSelectedActivity(item)">
+          <md-tooltip md-direction="top">Excluir</md-tooltip>
+          <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
+        </md-button>
+        <md-button class="md-accent md-icon-button" aria-label="Editar Comentário"
+          ng-click="$ctrl.fillSelectedActivity(item)">
+          <md-tooltip md-direction="top">Editar Comentário</md-tooltip>
+          <md-icon md-font-set="material-icons" aria-label="Editar Comentário">edit</md-icon>
+        </md-button>
+      </div>
+      <div layout="row" layout-align="end center" hide-lg hide-xl>
+        <md-button class="md-icon-button md-warn" aria-label="Excluir" ng-click="$ctrl.deleteSelectedActivity(item)">
+          <md-tooltip md-direction="top">Excluir</md-tooltip>
+          <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
+        </md-button>
+        <md-button class="md-accent md-icon-button" aria-label="Editar Comentário"
+          ng-click="$ctrl.fillSelectedActivity(item)">
+          <md-tooltip md-direction="top">Editar Comentário</md-tooltip>
+          <md-icon md-font-set="material-icons" aria-label="Editar Comentário">edit</md-icon>
+        </md-button>
+      </div>
+    </div>
+  </md-list>
+  <div layout="row" layout-align="end center">
+    <md-button class="md-accent" aria-label="view comment">
+      Ver mais
+      <md-icon md-font-set="material-icons">comment</md-icon>
+    </md-button>
+  </div>
+  <div layout="column" layout-padding class="comment-textarea">
+    <textarea maxlength="300" rows="5" max-rows="8" class="comment-box" ng-model="$ctrl.comment"
+      placeholder="Digite o texto aqui"></textarea>
+  </div>
+  <div layout="row" layout-align="end center">
+    <md-button class="md-primary md-raised" aria-label="save">
+      Salvar
+      <md-icon md-font-set="material-icons">save</md-icon>
+    </md-button>
+  </div>
+</md-card>

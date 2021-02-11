@@ -1382,18 +1382,261 @@ otus-activity-stage-list .new-chip-white {
 }
 
 @media screen and (min-width: 360px) {
+  .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.4fr 0.6fr 0.6fr 0.1fr 0.6fr;
+        grid-template-columns: 0.4fr 0.6fr 0.6fr 0.1fr 0.6fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name  comment-date  comment-button comment-button" "comment-image comment-text  comment-text  comment-button  comment-button" "comment-image comment-user-email comment-status comment-button  comment-button";
+  }
+  .layout-uc {
+    padding: 4px;
+    height: 96vh;
+    margin-top: 16px;
+  }
+  .margin-line {
+    margin: 4px;
+  }
+  .margin-bottom {
+    margin: 0 0 20px 0;
+  }
+  .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  .icon-size {
+    font-size: 3em;
+    height: auto;
+    width: auto;
+  }
+  .md-headline {
+    font-size: 24px;
+  }
+  .md-title {
+    font-size: 20px;
+  }
+  .comment-box {
+    line-height: 2em;
+  }
+}
+
+@media screen and (min-width: 375px) {
+  .layout-uc {
+    height: 76vh;
+  }
+}
+
+@media screen and (min-width: 410px) {
+  .layout-uc {
+    height: 84vh;
+  }
+  .comment-box {
+    line-height: 6em;
+  }
+}
+
+@media screen and (min-width: 760px) {
+  .layout-uc {
+    height: 62vh;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
+        grid-template-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name  comment-date   comment-status     comment-button" "comment-image comment-text  comment-text   comment-text     comment-button" "comment-image comment-user-email comment-user-email comment-user-email   comment-button";
+  }
+  .layout-uc {
+    height: 46vh;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
+        grid-template-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name  comment-date   comment-status     comment-button" "comment-image comment-text  comment-text   comment-text     comment-button" "comment-image comment-user-email comment-user-email comment-user-email   comment-button";
+  }
+  .layout-uc {
+    padding: 4px;
+    height: 92vh;
+    margin-top: 16px;
+  }
+  .margin-line {
+    margin: 4px;
+  }
+  .margin-bottom {
+    margin: 0 0 20px 0;
+  }
+  .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  .icon-size {
+    font-size: 4em;
+    height: auto;
+    width: auto;
+  }
+  .md-headline {
+    font-size: 24px;
+  }
+  .md-title {
+    font-size: 20px;
+  }
+  .comment-box {
+    line-height: 2em;
+  }
+}
+
+.comment-image {
+  grid-area: comment-image;
+}
+
+.comment-name {
+  grid-area: comment-name;
+}
+
+.comment-text {
+  grid-area: comment-text;
+}
+
+.comment-button {
+  grid-area: comment-button;
+}
+
+.comment-list-layout:hover {
+  background-color: rgba(158, 158, 158, 0.1);
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.comment-null {
+  grid-area: comment-null;
+  color: gray;
+}
+
+.comment-status {
+  grid-area: comment-status;
+}
+
+.comment-date {
+  grid-area: comment-date;
+}
+
+.comment-user-email {
+  grid-area: comment-user-email;
+}
+
+.comment-buttons {
+  grid-area: comment-buttons;
+}
+
+md-list {
+  padding: 0;
+}
+
+md-card {
+  margin: 8px;
+}
+
+.comment-textarea {
+  border: black;
+  max-width: 100vw;
+}
+
+.comment-box {
+  height: auto;
+  color: #999;
+  font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+  width: 100%;
+  background: #fff;
+  border-radius: 5px;
+  line-height: 2em;
+  border: 2px;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  -webkit-transition: height 2s ease;
+  transition: height 2s ease;
+}
+
+@media screen and (min-width: 360px) {
   otus-dashboard-display .dashboard-display-layout {
     display: -ms-grid;
     display: grid;
     height: auto;
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
         grid-template-areas: "display-participant-info" "display-participant-attempt" "display-user-comment-list" "display-participant-heatmap" "display-participant-exam-heatmap" "display-report-dashboard";
   }
   otus-dashboard-display .mobile-width {
     width: 100vw;
+  }
+  otus-dashboard-display .mobile-width-left {
+    width: 100vw;
+  }
+  otus-dashboard-display .mobile-width-right {
+    width: 100vw;
+  }
+  otus-dashboard-display .mobile-height {
+    height: 100vh;
+  }
+}
+
+@media screen and (min-width: 375px) {
+  otus-dashboard-display .mobile-height {
+    height: 84vh;
+  }
+}
+
+@media screen and (min-width: 410px) {
+  otus-dashboard-display .mobile-height {
+    height: 90vh;
+  }
+}
+
+@media screen and (min-width: 760px) {
+  otus-dashboard-display .mobile-height {
+    height: 70vh;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  otus-dashboard-display .mobile-height {
+    height: 52vh;
   }
 }
 
@@ -1408,12 +1651,21 @@ otus-activity-stage-list .new-chip-white {
     width: auto;
     -ms-grid-columns: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "display-participant-info    display-user-comment-list" "display-participant-attempt    display-user-comment-list" "display-participant-heatmap    display-participant-heatmap" "display-participant-exam-heatmap    display-participant-exam-heatmap" "display-report-dashboard     display-report-dashboard";
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "display-participant-info    display-user-comment-list" "display-participant-attempt    display-user-comment-list" ". display-user-comment-list" "display-participant-heatmap    display-participant-heatmap" "display-participant-exam-heatmap    display-participant-exam-heatmap" "display-report-dashboard     display-report-dashboard";
   }
   otus-dashboard-display .mobile-width {
     width: auto;
+  }
+  otus-dashboard-display .mobile-height {
+    height: 100vh;
+  }
+  otus-dashboard-display .mobile-width-left {
+    width: 50vw;
+  }
+  otus-dashboard-display .mobile-width-right {
+    width: 48vw;
   }
 }
 

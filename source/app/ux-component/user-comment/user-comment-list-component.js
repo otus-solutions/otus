@@ -5,19 +5,18 @@
     .module('otusjs.otus.uxComponent')
     .component('otusUserCommentList', {
       controller: 'otusUserCommentListCtrl as $ctrl',
-      templateUrl: 'app/ux-component/user-comment-list/user-comment-list-template.html'
+      templateUrl: 'app/ux-component/user-comment/user-comment-list-template.html'
     }).controller('otusUserCommentListCtrl', Controller);
 
   Controller.$inject = [
     '$mdColors',
     '$mdToast',
     'otusjs.activity.core.EventService',
-    'otusjs.deploy.LoadingScreenService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdColors, $mdToast, EventService, LoadingScreenService, ApplicationStateService, DialogService) {
+  function Controller($mdColors, $mdToast, EventService, ApplicationStateService, DialogService) {
     var self = this;
 
     /* Public methods */
@@ -37,6 +36,53 @@
     }
 
     function refreshComment() {
+      self.items = [
+        {
+          _id: '113234',
+          recruitmentNumber: '132324',
+          name: 'Fulano',
+          date: '11/02/21',
+          edit: true,
+          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
+          email: 'fulano@gmail.com'
+        },
+        {
+          _id: '113234',
+          recruitmentNumber: '132324',
+          name: 'Fulano',
+          date: '11/02/21',
+          edit: true,
+          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
+          email: 'fulano@gmail.com'
+        },
+        {
+          _id: '113234',
+          recruitmentNumber: '132324',
+          name: 'Fulano',
+          date: '11/02/21',
+          edit: true,
+          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
+          email: 'fulano@gmail.com'
+        },
+        {
+          _id: '113234',
+          recruitmentNumber: '132324',
+          name: 'Fulano',
+          date: '11/02/21',
+          edit: true,
+          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
+          email: 'fulano@gmail.com'
+        },
+        {
+          _id: '113234',
+          recruitmentNumber: '132324',
+          name: 'Fulano',
+          date: '11/02/21',
+          edit: true,
+          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
+          email: 'fulano@gmail.com'
+        }
+      ];
     }
 
     function _setOrderByComment(items) { // TODO add service
@@ -67,7 +113,7 @@
     }
 
     function fillSelectedComment(itemComment) {
-      EventService.resetActivitySelected();
+
       // ParticipantActivityService.selectActivities([itemComment]);
       ApplicationStateService.activateActivityPlayer();
     }
