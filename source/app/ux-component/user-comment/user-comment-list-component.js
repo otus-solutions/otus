@@ -10,13 +10,13 @@
 
   Controller.$inject = [
     '$mdColors',
-    '$mdToast',
     'otusjs.activity.core.EventService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.user.comment.business.UserCommentService'
   ];
 
-  function Controller($mdColors, $mdToast, EventService, ApplicationStateService, DialogService) {
+  function Controller($mdColors, EventService, ApplicationStateService, DialogService, UserCommentService) {
     var self = this;
 
     /* Public methods */
@@ -36,6 +36,7 @@
     }
 
     function refreshComment() {
+      // _loadNoteAboutParticipant();
       self.items = [
         {
           _id: '113234',
@@ -44,7 +45,8 @@
           date: '11/02/21',
           edit: true,
           comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-          email: 'fulano@gmail.com'
+          email: 'fulano@gmail.com',
+          isCreate: true
         },
         {
           _id: '113234',
@@ -85,22 +87,10 @@
       ];
     }
 
-    function _setOrderByComment(items) { // TODO add service
-      items.map(item => {
-
-        item.acronyms.sort(function (a, b) {
-          var nameA = a.name.toUpperCase();
-          var nameB = b.name.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-
-          return 0;
-        });
-      });
+    function _loadNoteAboutParticipant() {
+      UserCommentService.getNoteAboutParticipant().then((arrayComment) => {
+        self.items = arrayComment
+      })
     }
 
     function _getFormattedDate(date) {//TODO add service
@@ -122,16 +112,9 @@
 
       DialogService.showConfirmationDialog().then(function () {
         refreshComment();
-        _showMsg();
+        UserCommentService.showMsg();
       });
     }
 
-    function _showMsg(msg) {// TODO add service
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent(msg)
-          .hideDelay(2000)
-      );
-    }
   }
 }());

@@ -102,9 +102,9 @@
     grid-template-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
     grid-template-rows: auto;
     grid-template-areas:
-      "comment-image comment-name  comment-date   comment-status     comment-button"
-      "comment-image comment-text  comment-text   comment-text     comment-button"
-      "comment-image comment-user-email comment-user-email comment-user-email   comment-button";
+      "comment-image comment-name  comment-date  comment-status  comment-button"
+      "comment-image comment-text  comment-text  comment-text    comment-button"
+      "comment-image comment-user-email comment-user-email comment-user-email comment-button";
   }
 
   .layout-uc {
@@ -127,7 +127,7 @@
   }
 
   .icon-size {
-    font-size: 4em;
+    font-size: 2em;
     height: auto;
     width: auto;
   }
@@ -184,10 +184,6 @@
   grid-area: comment-user-email;
 }
 
-.comment-buttons {
-  grid-area: comment-buttons;
-}
-
 md-list {
   padding: 0;
 }
@@ -213,4 +209,5 @@ md-card {
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
   padding: 4px;
   transition: height 2s ease;
+  resize: none;
 }

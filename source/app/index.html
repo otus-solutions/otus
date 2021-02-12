@@ -210,6 +210,7 @@
 <script src="app/deploy/bootstrap/pendency-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/project-communication-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/stage-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/user-comment-module-bootstrap.js"></script>
 
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
@@ -268,6 +269,7 @@
 <script src="app/deploy/rest/otus-api/project-communication/project-communication-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/stage/stage-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/contact/participant-contact-attempt-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/user-comment/user-comment-rest-service.js"></script>
 
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
@@ -520,6 +522,21 @@
 <!-- build:js scripts/user-comment-module.min.js -->
 <!-- # Module > User Comment -->
 <script src="app/module/user-comment/module.js"></script>
+
+<!-- # User Comment > Business -->
+<script src="app/module/user-comment/business/module.js"></script>
+<script src="app/module/user-comment/business/user-comment-service.js"></script>
+
+<!-- # User Comment > Repository -->
+<script src="app/module/user-comment/repository/module.js"></script>
+<script src="app/module/user-comment/repository/user-comment/user-comment-collection-service.js"></script>
+<script src="app/module/user-comment/repository/user-comment/user-comment-repository-service.js"></script>
+
+<!-- # User Comment > Core -->
+<script src="app/module/user-comment/core/module.js"></script>
+<script src="app/module/user-comment/core/context-service.js"></script>
+<script src="app/module/user-comment/core/event-service.js"></script>
+<script src="app/module/user-comment/core/module-service.js"></script>
 
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
