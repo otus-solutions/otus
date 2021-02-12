@@ -31,7 +31,8 @@
     'otusjs.deploy.LocationPointRestService',
     'otusjs.deploy.ProjectCommunicationRestService',
     'otusjs.deploy.ActivitySharingRestService',
-    'otusjs.deploy.StageRestService'
+    'otusjs.deploy.StageRestService',
+    'otusjs.deploy.UserCommentRestService'
   ];
 
   function Service(
@@ -60,7 +61,8 @@
     LocationPointRestService,
     ProjectCommunicationRestService,
     ActivitySharingRestService,
-    StageRestService
+    StageRestService,
+    UserCommentRestService
   ) {
     var self = this;
 
@@ -102,6 +104,7 @@
       ProjectCommunicationRestService.initialize();
       ActivitySharingRestService.initialize();
       StageRestService.initialize();
+      UserCommentRestService.initialize();
     }
   }
 }());
