@@ -7,10 +7,11 @@
 
   Service.$inject = [
     'STATE',
-    '$state'
+    '$state',
+    'otusjs.application.storage.SessionStorageService'
   ];
 
-  function Service(STATE, $state) {
+  function Service(STATE, $state, SessionStorageService) {
     var self = this;
 
     /* Public Interface */
@@ -212,11 +213,11 @@
     }
 
     function setCurrentStateStorage() {
-      sessionStorage.setItem("toState", getCurrentState())
+      SessionStorageService.setItem("toState", getCurrentState())
    }
 
     function getCurrentStateStorage() {
-      return sessionStorage.getItem("toState")
+      return SessionStorageService.getItem("toState")
     }
 
     function currentStateIsListViewer() {

@@ -1,4 +1,4 @@
-describe('ApplicationStateService', function () {
+fdescribe('ApplicationStateService', function () {
 
   var UNIT_NAME = 'otusjs.application.state.ApplicationStateService';
   var service = {};
@@ -10,6 +10,7 @@ describe('ApplicationStateService', function () {
     inject(function (_$injector_, _$state_, _STATE_) {
       injections.STATE = _$injector_.get('STATE');
       injections.$state = _$injector_.get('$state');
+      injections.SessionStorageService = _$injector_.get('otusjs.application.storage.SessionStorageService');
       service = _$injector_.get(UNIT_NAME, injections);
     });
 
