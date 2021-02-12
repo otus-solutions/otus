@@ -1391,8 +1391,8 @@ otus-activity-stage-list .new-chip-white {
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.4fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
-        grid-template-columns: 0.4fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+    -ms-grid-columns: 0.3fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+        grid-template-columns: 0.3fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
         grid-template-areas: "comment-image comment-name  comment-date  comment-status comment-button comment-button" "comment-image comment-text  comment-text comment-text comment-button  comment-button";
@@ -1417,12 +1417,6 @@ otus-activity-stage-list .new-chip-white {
     height: auto;
     width: auto;
   }
-  .md-headline {
-    font-size: 24px;
-  }
-  .md-title {
-    font-size: 20px;
-  }
   .comment-box {
     line-height: 2em;
   }
@@ -1444,8 +1438,8 @@ otus-activity-stage-list .new-chip-white {
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
-        grid-template-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
+    -ms-grid-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
+        grid-template-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
         grid-template-areas: "comment-image comment-name  comment-date   comment-status     comment-button" "comment-image comment-text  comment-text   comment-text    comment-button";
@@ -1462,8 +1456,8 @@ otus-activity-stage-list .new-chip-white {
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
-        grid-template-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
+    -ms-grid-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
+        grid-template-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
         grid-template-areas: "comment-image comment-name  comment-date  comment-status  comment-button" "comment-image comment-text  comment-text  comment-text    comment-button";
@@ -1553,8 +1547,16 @@ md-card {
   max-width: 100vw;
 }
 
-.clipped {
-  line-height: 2em;
+.md-body-3 {
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: pre-wrap;
+  text-overflow: ellipsis;
+  max-width: 100vw;
 }
 
 .comment-box {

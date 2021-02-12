@@ -12,7 +12,7 @@
           aria-label="star_rate">star_rate</md-icon>
       </div>
       <div class="comment-name" layout="row" layout-align="start center">
-        <p class="md-body-2 margin-line" md-truncate>{{item.name}}</p>
+        <p class="ng-binding margin-line" md-truncate>{{item.name}}</p>
         <md-tooltip md-direction="top">
           Nome
         </md-tooltip>
@@ -24,13 +24,13 @@
         </md-tooltip>
       </div>
       <div class="comment-date" layout="row" layout-align-gt-sm="center center">
-        <p class="md-body-2 margin-line">{{item.date}}</p>
+        <p class="md-subtitle ng-binding margin-line">{{item.date}}</p>
         <md-tooltip md-direction="top">
           Data de realização
         </md-tooltip>
       </div>
       <div class="comment-text" layout="row" layout-align="start center">
-        <p class="md-body-3 margin-line clipped" md-truncate>{{item.comment}}</p>
+        <p class="md-body-3 margin-line ellipsis">{{item.comment}}</p>
         <md-tooltip md-direction="top">
           Comentário
         </md-tooltip>
