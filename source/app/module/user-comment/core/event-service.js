@@ -12,6 +12,11 @@
 
     /* Public methods */
     self.onLogout = onLogout;
+    self.fireLogout = fireLogout;
+
+    function fireLogout(data) {
+      _notifyEventObj(_onLogoutListeners, data);
+    }
 
     function onLogout(listener) {
       Object.assign(_onLogoutListeners, listener);
