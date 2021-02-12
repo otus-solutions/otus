@@ -24,35 +24,8 @@ otus-dashboard-display {
     .mobile-width-right {
       width: 100vw;
     }
-
-    .mobile-height {
-      height: 100vh;
-    }
   }
 
-  @media screen and (min-width: 375px) {
-    .mobile-height {
-      height: 84vh;
-    }
-  }
-
-  @media screen and (min-width: 410px) {
-    .mobile-height {
-      height: 90vh;
-    }
-  }
-
-  @media screen and (min-width: 760px) {
-    .mobile-height {
-      height: 70vh;
-    }
-  }
-
-  @media screen and (min-width: 1024px) {
-    .mobile-height {
-      height: 52vh;
-    }
-  }
 
   @media screen and (min-width: 1200px) {
     .dashboard-display-layout {
@@ -75,10 +48,6 @@ otus-dashboard-display {
       width: auto;
     }
 
-    .mobile-height {
-      height: 100vh;
-    }
-
     .mobile-width-left {
       width: 50vw;
     }
@@ -87,6 +56,10 @@ otus-dashboard-display {
       width: 48vw;
     }
   }
+
+  .mobile-height {
+      min-height: 40vh;
+    }
 
   .display-participant-info {
     grid-area: display-participant-info;

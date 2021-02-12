@@ -5,16 +5,15 @@
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    grid-template-columns: 0.4fr 0.6fr 0.6fr 0.1fr 0.6fr;
+    grid-template-columns: 0.4fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
     grid-template-rows: auto;
     grid-template-areas:
-      "comment-image comment-name  comment-date  comment-button comment-button"
-      "comment-image comment-text  comment-text  comment-button  comment-button"
-      "comment-image comment-user-email comment-status comment-button  comment-button";
+      "comment-image comment-name  comment-date  comment-status comment-button comment-button"
+      "comment-image comment-text  comment-text comment-text comment-button  comment-button";
   }
   .layout-uc {
     padding: 4px;
-    height: 96vh;
+    height: auto;
     margin-top: 16px;
   }
 
@@ -50,25 +49,9 @@
   }
 }
 
-@media screen and (min-width: 375px) {
-  .layout-uc {
-    height: 76vh;
-  }
-}
-
 @media screen and (min-width: 410px) {
-  .layout-uc {
-    height: 84vh;
-  }
-
   .comment-box {
     line-height: 6em;
-  }
-}
-
-@media screen and (min-width: 760px) {
-  .layout-uc {
-    height: 62vh;
   }
 }
 
@@ -83,12 +66,7 @@
     grid-template-rows: auto;
     grid-template-areas:
       "comment-image comment-name  comment-date   comment-status     comment-button"
-      "comment-image comment-text  comment-text   comment-text     comment-button"
-      "comment-image comment-user-email comment-user-email comment-user-email   comment-button";
-  }
-
-  .layout-uc {
-    height: 46vh;
+      "comment-image comment-text  comment-text   comment-text    comment-button";
   }
 }
 
@@ -103,13 +81,12 @@
     grid-template-rows: auto;
     grid-template-areas:
       "comment-image comment-name  comment-date  comment-status  comment-button"
-      "comment-image comment-text  comment-text  comment-text    comment-button"
-      "comment-image comment-user-email comment-user-email comment-user-email comment-button";
+      "comment-image comment-text  comment-text  comment-text    comment-button";
   }
 
   .layout-uc {
     padding: 4px;
-    height: 92vh;
+    height: auto;
     margin-top: 16px;
   }
 
@@ -145,8 +122,12 @@
   }
 }
 
+.layout-box {
+  min-height: 20vh;
+}
+
 .comment-image {
-  grid-area: comment-image;
+ grid-area: comment-image;
 }
 
 .comment-name {
@@ -180,10 +161,6 @@
   grid-area: comment-date;
 }
 
-.comment-user-email {
-  grid-area: comment-user-email;
-}
-
 md-list {
   padding: 0;
 }
@@ -195,6 +172,10 @@ md-card {
 .comment-textarea {
   border: black;
   max-width: 100vw;
+}
+
+.clipped {
+  line-height: 2em;
 }
 
 .comment-box {

@@ -1391,15 +1391,15 @@ otus-activity-stage-list .new-chip-white {
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.4fr 0.6fr 0.6fr 0.1fr 0.6fr;
-        grid-template-columns: 0.4fr 0.6fr 0.6fr 0.1fr 0.6fr;
+    -ms-grid-columns: 0.4fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+        grid-template-columns: 0.4fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-image comment-name  comment-date  comment-button comment-button" "comment-image comment-text  comment-text  comment-button  comment-button" "comment-image comment-user-email comment-status comment-button  comment-button";
+        grid-template-areas: "comment-image comment-name  comment-date  comment-status comment-button comment-button" "comment-image comment-text  comment-text comment-text comment-button  comment-button";
   }
   .layout-uc {
     padding: 4px;
-    height: 96vh;
+    height: auto;
     margin-top: 16px;
   }
   .margin-line {
@@ -1428,24 +1428,9 @@ otus-activity-stage-list .new-chip-white {
   }
 }
 
-@media screen and (min-width: 375px) {
-  .layout-uc {
-    height: 76vh;
-  }
-}
-
 @media screen and (min-width: 410px) {
-  .layout-uc {
-    height: 84vh;
-  }
   .comment-box {
     line-height: 6em;
-  }
-}
-
-@media screen and (min-width: 760px) {
-  .layout-uc {
-    height: 62vh;
   }
 }
 
@@ -1463,10 +1448,7 @@ otus-activity-stage-list .new-chip-white {
         grid-template-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-image comment-name  comment-date   comment-status     comment-button" "comment-image comment-text  comment-text   comment-text     comment-button" "comment-image comment-user-email comment-user-email comment-user-email   comment-button";
-  }
-  .layout-uc {
-    height: 46vh;
+        grid-template-areas: "comment-image comment-name  comment-date   comment-status     comment-button" "comment-image comment-text  comment-text   comment-text    comment-button";
   }
 }
 
@@ -1484,11 +1466,11 @@ otus-activity-stage-list .new-chip-white {
         grid-template-columns: 0.4fr 1fr 0.8fr 0.6fr 0.6fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-image comment-name  comment-date  comment-status  comment-button" "comment-image comment-text  comment-text  comment-text    comment-button" "comment-image comment-user-email comment-user-email comment-user-email comment-button";
+        grid-template-areas: "comment-image comment-name  comment-date  comment-status  comment-button" "comment-image comment-text  comment-text  comment-text    comment-button";
   }
   .layout-uc {
     padding: 4px;
-    height: 92vh;
+    height: auto;
     margin-top: 16px;
   }
   .margin-line {
@@ -1515,6 +1497,10 @@ otus-activity-stage-list .new-chip-white {
   .comment-box {
     line-height: 2em;
   }
+}
+
+.layout-box {
+  min-height: 20vh;
 }
 
 .comment-image {
@@ -1554,10 +1540,6 @@ otus-activity-stage-list .new-chip-white {
   grid-area: comment-date;
 }
 
-.comment-user-email {
-  grid-area: comment-user-email;
-}
-
 md-list {
   padding: 0;
 }
@@ -1569,6 +1551,10 @@ md-card {
 .comment-textarea {
   border: black;
   max-width: 100vw;
+}
+
+.clipped {
+  line-height: 2em;
 }
 
 .comment-box {
@@ -1608,33 +1594,6 @@ md-card {
   otus-dashboard-display .mobile-width-right {
     width: 100vw;
   }
-  otus-dashboard-display .mobile-height {
-    height: 100vh;
-  }
-}
-
-@media screen and (min-width: 375px) {
-  otus-dashboard-display .mobile-height {
-    height: 84vh;
-  }
-}
-
-@media screen and (min-width: 410px) {
-  otus-dashboard-display .mobile-height {
-    height: 90vh;
-  }
-}
-
-@media screen and (min-width: 760px) {
-  otus-dashboard-display .mobile-height {
-    height: 70vh;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  otus-dashboard-display .mobile-height {
-    height: 52vh;
-  }
 }
 
 @media screen and (min-width: 1200px) {
@@ -1655,15 +1614,16 @@ md-card {
   otus-dashboard-display .mobile-width {
     width: auto;
   }
-  otus-dashboard-display .mobile-height {
-    height: 100vh;
-  }
   otus-dashboard-display .mobile-width-left {
     width: 50vw;
   }
   otus-dashboard-display .mobile-width-right {
     width: 48vw;
   }
+}
+
+otus-dashboard-display .mobile-height {
+  min-height: 40vh;
 }
 
 otus-dashboard-display .display-participant-info {

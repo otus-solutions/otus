@@ -37,6 +37,7 @@
 
     function refreshComment() {
       // _loadNoteAboutParticipant();
+      console.log(window.innerWidth)
       self.items = [
         {
           _id: '113234',
