@@ -14,6 +14,10 @@
     let _remoteStorage = ModuleService.getUserCommentRemoteStorage();
 
     self.getAllUserComments = getAllUserComments;
+    self.showStarSelectedUserComment = showStarSelectedUserComment;
+    self.deleteSelectedComment = deleteSelectedComment;
+    self.saveUserComment = saveUserComment;
+    self.updateUserComment = updateUserComment;
 
     function getAllUserComments() {
       return _remoteStorage.whenReady()
@@ -21,5 +25,28 @@
         .then(response => response.data);
     }
 
+    function showStarSelectedUserComment(commentId) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.showStarSelectedUserComment(commentId))
+        .then(response => response.data);
+    }
+
+    function deleteSelectedComment(commentId) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.deleteSelectedComment(commentId))
+        .then(response => response.data);
+    }
+
+    function saveUserComment(comment) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.saveUserComment(comment))
+        .then(response => response.data);
+    }
+
+    function updateUserComment(commentId, comment) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.updateUserComment(commentId, comment))
+        .then(response => response.data);
+    }
   }
 }());

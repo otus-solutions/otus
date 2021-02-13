@@ -9,26 +9,29 @@
     }).controller('otusUserCommentListCtrl', Controller);
 
   Controller.$inject = [
-    '$mdColors',
-    'otusjs.activity.core.EventService',
+    'otusjs.participant.core.EventService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentService'
   ];
 
-  function Controller($mdColors, EventService, ApplicationStateService, DialogService, UserCommentService) {
+  function Controller(EventService, ApplicationStateService, DialogService, UserCommentService) {
+    const COLOR_STAR = 'rgb(253, 204, 13)';
     var self = this;
 
     /* Public methods */
     self.fillSelectedComment = fillSelectedComment;
     self.deleteSelectedComment = deleteSelectedComment;
+    self.showStarSelectedUserComment = showStarSelectedUserComment;
+    self.saveUserComment = saveUserComment;
     self.refreshComment = refreshComment;
+    self.colorStar = colorStar;
+    self.getFormattedDate = getFormattedDate;
 
     self.$onInit = onInit;
 
     self.items = [];
-    self.itemsArrayNull = false;
-    self.colorStage = $mdColors.getThemeColor('primary-hue-1');
+    self.selectedCommentId = null;
 
     function onInit() {
       EventService.onParticipantSelected(refreshComment);
@@ -36,56 +39,7 @@
     }
 
     function refreshComment() {
-      // _loadNoteAboutParticipant();
-      console.log(window.innerWidth)
-      self.items = [
-        {
-          _id: '113234',
-          recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '11/02/21',
-          edit: true,
-          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-          email: 'fulano@gmail.com',
-          isCreate: true
-        },
-        {
-          _id: '113234',
-          recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '11/02/21',
-          edit: true,
-          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-          email: 'fulano@gmail.com'
-        },
-        {
-          _id: '113234',
-          recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '11/02/21',
-          edit: true,
-          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-          email: 'fulano@gmail.com'
-        },
-        {
-          _id: '113234',
-          recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '11/02/21',
-          edit: true,
-          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-          email: 'fulano@gmail.com'
-        },
-        {
-          _id: '113234',
-          recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '11/02/21',
-          edit: true,
-          comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-          email: 'fulano@gmail.com'
-        }
-      ];
+      _loadNoteAboutParticipant();
     }
 
     function _loadNoteAboutParticipant() {
@@ -94,27 +48,72 @@
       })
     }
 
-    function _getFormattedDate(date) {//TODO add service
-      try {
-        let formattedDate = new Date(date);
-        return formattedDate.getDate() + '/' + (formattedDate.getMonth() + 1) + '/' + formattedDate.getFullYear();
-      } catch (e) {
-        return null;
+    function showStarSelectedUserComment(userCommentId) {
+      UserCommentService.showStarSelectedUserComment(userCommentId)
+        .then(() => {
+          UserCommentService.showMsg();
+          _refreshComment();
+        })
+        .catch(() => {
+          UserCommentService.showMsg();
+        })
+    }
+
+    function colorStar(starSelected) {
+      return starSelected ? { color: COLOR_STAR } : null;
+    }
+
+    function getFormattedDate(date) {
+      return UserCommentService.getFormattedDate(date);
+    }
+
+    function _updateUserComment() {
+      UserCommentService.updateUserComment(self.selectedCommentId, self.comment)
+        .then(() => {
+          UserCommentService.showMsg();
+          refreshComment();
+          self.selectedCommentId = null;
+        })
+        .catch(() => {
+          UserCommentService.showMsg();
+        })
+    }
+
+    function saveUserComment() {
+      if (self.selectedCommentId) {
+        _updateUserComment();
+      } else {
+        UserCommentService.saveUserComment(self.comment)
+          .then(() => {
+            UserCommentService.showMsg();
+            refreshComment();
+          })
+          .catch(() => {
+            UserCommentService.showMsg();
+          })
       }
     }
 
     function fillSelectedComment(itemComment) {
-
+      self.comment = itemComment.comment;
+      console.log(self.comment)
+      self.selectedCommentId = itemComment._id;
       // ParticipantActivityService.selectActivities([itemComment]);
-      ApplicationStateService.activateActivityPlayer();
+      // ApplicationStateService.activateActivityPlayer();
     }
 
-    function deleteSelectedComment(itemComment) {
-
-      DialogService.showConfirmationDialog().then(function () {
-        refreshComment();
-        UserCommentService.showMsg();
-      });
+    function deleteSelectedComment(commentId) {
+      DialogService.showConfirmationDialog()
+        .then(function () {
+          UserCommentService.deleteSelectedComment(commentId)
+            .then(() => {
+              UserCommentService.showMsg();
+              refreshComment();
+            })
+            .catch(() => {
+              UserCommentService.showMsg();
+            })
+        });
     }
 
   }

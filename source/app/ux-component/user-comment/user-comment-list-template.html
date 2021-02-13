@@ -8,8 +8,10 @@
     <md-list class="comment-list-layout" ng-repeat="item in $ctrl.items track by $id(item)"
       ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
       <div class="comment-image">
-        <md-icon layout="row" layout-align="center center" class="md-default-theme material-icons icon-size"
-          aria-label="star_rate">star_rate</md-icon>
+        <md-button ng-click="$ctrl.showStarSelectedUserComment(item._id)">
+          <md-icon layout="row" layout-align="center center" ng-style="$ctrl.colorStar(item.starred)" class="md-default-theme material-icons icon-size"
+            aria-label="star_rate">star_rate</md-icon>
+        </md-button>
       </div>
       <div class="comment-name" layout="row" layout-align="start center">
         <p class="ng-binding margin-line" md-truncate>{{item.name}}</p>
@@ -24,7 +26,7 @@
         </md-tooltip>
       </div>
       <div class="comment-date" layout="row" layout-align-gt-sm="center center">
-        <p class="md-subtitle ng-binding margin-line">{{item.date}}</p>
+        <p class="md-subtitle ng-binding margin-line" ng-bind-html="$ctrl.getFormattedDate(item.date)"></p>
         <md-tooltip md-direction="top">
           Data de realização
         </md-tooltip>
@@ -38,24 +40,24 @@
       <div class="comment-button">
         <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
           <md-button class="md-icon-button md-warn" ng-show="item.isCreate" aria-label="Excluir"
-            ng-click="$ctrl.deleteSelectedActivity(item)">
+            ng-click="$ctrl.deleteSelectedActivity(item._id)">
             <md-tooltip md-direction="top">Excluir</md-tooltip>
             <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
           </md-button>
           <md-button class="md-accent md-icon-button" ng-show="item.isCreate" aria-label="Editar Comentário"
-            ng-click="$ctrl.fillSelectedActivity(item)">
+            ng-click="$ctrl.fillSelectedComment(item)">
             <md-tooltip md-direction="top">Editar Comentário</md-tooltip>
             <md-icon md-font-set="material-icons" aria-label="Editar Comentário">edit</md-icon>
           </md-button>
         </div>
         <div layout="row" layout-align="end center" hide-lg hide-xl>
           <md-button class="md-icon-button md-warn" ng-show="item.isCreate" aria-label="Excluir"
-            ng-click="$ctrl.deleteSelectedActivity(item)">
+            ng-click="$ctrl.deleteSelectedActivity(item._id)">
             <md-tooltip md-direction="top">Excluir</md-tooltip>
             <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
           </md-button>
           <md-button class="md-accent md-icon-button" ng-show="item.isCreate" aria-label="Editar Comentário"
-            ng-click="$ctrl.fillSelectedActivity(item)">
+            ng-click="$ctrl.fillSelectedComment(item)">
             <md-tooltip md-direction="top">Editar Comentário</md-tooltip>
             <md-icon md-font-set="material-icons" aria-label="Editar Comentário">edit</md-icon>
           </md-button>
@@ -74,7 +76,7 @@
       placeholder="Digite o texto aqui"></textarea>
   </div>
   <div layout="row" layout-align="end center">
-    <md-button class="md-primary md-raised" ng-disabled="!$ctrl.comment" aria-label="save">
+    <md-button class="md-primary md-raised" ng-disabled="!$ctrl.comment" aria-label="save" ng-click="$ctrl.saveUserComment()">
       Salvar
       <md-icon md-font-set="material-icons">save</md-icon>
     </md-button>
