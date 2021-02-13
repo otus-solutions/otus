@@ -24,6 +24,10 @@
       self.data = data;
       self.data.cancel = cancel;
 
+      if (data.buttons.typeConfirm) {
+        self.data.buttons = _getConfirmationDialogButtons();
+      }
+
       return $mdDialog.show({
         controller: 'dialogShowController',
         locals: { data: self.data },

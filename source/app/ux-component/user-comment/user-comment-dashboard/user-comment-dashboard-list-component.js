@@ -3,24 +3,26 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusUserCommentList', {
-      controller: 'otusUserCommentListCtrl as $ctrl',
-      templateUrl: 'app/ux-component/user-comment/user-comment-list-template.html'
-    }).controller('otusUserCommentListCtrl', Controller);
+    .component('otusUserCommentDashboardList', {
+      controller: 'otusUserCommentDashboardListCtrl as $ctrl',
+      templateUrl: 'app/ux-component/user-comment/user-comment-dashboard/user-comment-dashboard-list-template.html'
+    }).controller('otusUserCommentDashboardListCtrl', Controller);
 
   Controller.$inject = [
     'otusjs.participant.core.EventService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService',
-    'otusjs.user.comment.business.UserCommentService'
+    'otusjs.user.comment.business.UserCommentService',
+    'USER_COMMENT_MANAGER_LABELS'
   ];
 
-  function Controller(EventService, ApplicationStateService, DialogService, UserCommentService) {
+  function Controller(EventService, ApplicationStateService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
     var self = this;
 
     /* Public methods */
     self.fillSelectedComment = fillSelectedComment;
+    self.cancelFillSelectedComment = cancelFillSelectedComment;
     self.deleteSelectedComment = deleteSelectedComment;
     self.showStarSelectedUserComment = showStarSelectedUserComment;
     self.saveUserComment = saveUserComment;
@@ -73,6 +75,7 @@
           UserCommentService.showMsg();
           refreshComment();
           self.selectedCommentId = null;
+          self.comment = "";
         })
         .catch(() => {
           UserCommentService.showMsg();
@@ -86,6 +89,7 @@
         UserCommentService.saveUserComment(self.comment)
           .then(() => {
             UserCommentService.showMsg();
+            self.comment = "";
             refreshComment();
           })
           .catch(() => {
@@ -95,11 +99,24 @@
     }
 
     function fillSelectedComment(itemComment) {
-      self.comment = itemComment.comment;
-      console.log(self.comment)
-      self.selectedCommentId = itemComment._id;
+      if (self.selectedCommentId) {
+        DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
+          .then(function () {
+            self.comment = itemComment.comment;
+            self.selectedCommentId = itemComment._id;
+          });
+      } else {
+        self.comment = itemComment.comment;
+        self.selectedCommentId = itemComment._id;
+      }
+
       // ParticipantActivityService.selectActivities([itemComment]);
       // ApplicationStateService.activateActivityPlayer();
+    }
+
+    function cancelFillSelectedComment() {
+      self.comment = "";
+      self.selectedCommentId = null;
     }
 
     function deleteSelectedComment(commentId) {

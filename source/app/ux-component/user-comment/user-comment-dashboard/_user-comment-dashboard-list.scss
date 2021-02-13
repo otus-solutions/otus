@@ -1,0 +1,208 @@
+otus-user-comment-dashboard-list {
+  @media screen and (min-width: 360px) {
+    .comment-list-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.3fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "comment-image comment-name  comment-date  comment-status comment-button comment-button"
+        "comment-image comment-text  comment-text comment-text comment-button  comment-button";
+    }
+    .layout-uc {
+      padding: 4px;
+      height: auto;
+      margin-top: 16px;
+    }
+
+    .margin-bottom {
+      margin: 0 0 20px 0;
+    }
+
+    .md-body-2 {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .icon-size {
+      font-size: 3em;
+      height: auto;
+      width: auto;
+    }
+
+    .comment-box {
+      line-height: 2em;
+    }
+  }
+
+  @media screen and (min-width: 410px) {
+    .comment-box {
+      line-height: 6em;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .comment-list-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "comment-image comment-name  comment-date   comment-status     comment-button"
+        "comment-image comment-text  comment-text   comment-text    comment-button";
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .comment-list-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "comment-image comment-name  comment-date  comment-status  comment-button"
+        "comment-image comment-text  comment-text  comment-text    comment-button";
+    }
+
+    .layout-uc {
+      padding: 4px;
+      height: auto;
+      margin-top: 16px;
+    }
+
+    .margin-bottom {
+      margin: 0 0 20px 0;
+    }
+
+    .md-body-2 {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .icon-size {
+      font-size: 2em;
+      height: auto;
+      width: auto;
+    }
+
+    .md-headline {
+      font-size: 24px;
+    }
+
+    .md-title {
+      font-size: 20px;
+    }
+
+    .comment-box {
+      line-height: 2em;
+    }
+  }
+
+  .margin-line {
+    margin: 1px;
+  }
+
+  .layout-box {
+    min-height: 20vh;
+  }
+
+  .comment-image {
+    grid-area: comment-image;
+  }
+
+  .comment-name {
+    grid-area: comment-name;
+  }
+
+  .comment-text {
+    grid-area: comment-text;
+  }
+
+  .comment-button {
+    grid-area: comment-button;
+  }
+
+  .comment-list-layout:hover {
+    background-color: rgba(158, 158, 158, 0.1);
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+    transition: 0.3s;
+  }
+
+  .comment-null {
+    grid-area: comment-null;
+    color: gray;
+  }
+
+  .comment-status {
+    grid-area: comment-status;
+  }
+
+  .comment-date {
+    grid-area: comment-date;
+  }
+
+  md-list {
+    padding: 0;
+  }
+
+  md-card {
+    margin: 8px;
+  }
+
+  .comment-textarea {
+    border: black;
+    max-width: 100vw;
+  }
+
+  .md-caption {
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+
+  .md-body-2 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 20px;
+  }
+
+  .md-body-3 {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .md-button {
+    min-width: auto;
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    max-width: 100vw;
+  }
+
+  .comment-box {
+    height: auto;
+    color: #999;
+    font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    line-height: 2em;
+    border: 2px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+    padding: 4px;
+    transition: height 2s ease;
+    resize: none;
+  }
+}
