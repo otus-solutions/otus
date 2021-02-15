@@ -40,19 +40,19 @@
       <div class="comment-button">
         <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
           <md-button class="md-icon-button md-warn" ng-show="item.isCreate" aria-label="Excluir"
-            ng-click="$ctrl.deleteSelectedActivity(item._id)">
+            ng-click="$ctrl.deleteSelectedComment(item._id)">
             <md-tooltip md-direction="top">Excluir</md-tooltip>
             <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
           </md-button>
-          <md-button class="md-accent md-icon-button" ng-show="item.isCreate" aria-label="Editar Comentário"
+          <md-button class="md-accent md-icon-button" ng-show="item.isCreate" aria-label="Editar"
             ng-click="$ctrl.fillSelectedComment(item)">
-            <md-tooltip md-direction="top">Editar Comentário</md-tooltip>
-            <md-icon md-font-set="material-icons" aria-label="Editar Comentário">edit</md-icon>
+            <md-tooltip md-direction="top">Editar</md-tooltip>
+            <md-icon md-font-set="material-icons" aria-label="Editar">edit</md-icon>
           </md-button>
         </div>
         <div layout="row" layout-align="end center" hide-lg hide-xl>
           <md-button class="md-icon-button md-warn" ng-show="item.isCreate" aria-label="Excluir"
-            ng-click="$ctrl.deleteSelectedActivity(item._id)">
+            ng-click="$ctrl.deleteSelectedComment(item._id)">
             <md-tooltip md-direction="top">Excluir</md-tooltip>
             <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
           </md-button>

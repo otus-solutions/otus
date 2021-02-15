@@ -10,7 +10,14 @@
           titleToText: 'O comentário será trocado por outro selecionado.',
           textDialog: 'Gostaria de trocar?',
           ariaLabel: 'Confirmação de troca',
-          buttons: { typeConfirm: true }
+          buttons: { typeDialogTrueAndFalse: true }
+        },
+        deleteUserComment: {
+          dialogToTitle: 'Confirmação de deleção:',
+          titleToText: 'O comentário será removido.',
+          textDialog: 'Gostaria de remover?',
+          ariaLabel: 'Confirmação de deleção',
+          buttons: { typeDialogTrueAndFalse: true }
         }
       }
     })

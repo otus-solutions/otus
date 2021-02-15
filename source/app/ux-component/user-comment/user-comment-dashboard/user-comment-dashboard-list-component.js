@@ -26,7 +26,6 @@
     self.deleteSelectedComment = deleteSelectedComment;
     self.showStarSelectedUserComment = showStarSelectedUserComment;
     self.saveUserComment = saveUserComment;
-    self.refreshComment = refreshComment;
     self.colorStar = colorStar;
     self.getFormattedDate = getFormattedDate;
 
@@ -36,11 +35,7 @@
     self.selectedCommentId = null;
 
     function onInit() {
-      EventService.onParticipantSelected(refreshComment);
-      refreshComment();
-    }
-
-    function refreshComment() {
+      EventService.onParticipantSelected(_loadNoteAboutParticipant);
       _loadNoteAboutParticipant();
     }
 
@@ -53,11 +48,11 @@
     function showStarSelectedUserComment(userCommentId) {
       UserCommentService.showStarSelectedUserComment(userCommentId)
         .then(() => {
-          UserCommentService.showMsg();
-          _refreshComment();
+          UserCommentService.showMsg('successMessage');
+          __loadNoteAboutParticipant();
         })
         .catch(() => {
-          UserCommentService.showMsg();
+          UserCommentService.showMsg('failureMessage');
         })
     }
 
@@ -72,13 +67,13 @@
     function _updateUserComment() {
       UserCommentService.updateUserComment(self.selectedCommentId, self.comment)
         .then(() => {
-          UserCommentService.showMsg();
-          refreshComment();
+          UserCommentService.showMsg('updateSuccessMessage');
+          _loadNoteAboutParticipant();
           self.selectedCommentId = null;
           self.comment = "";
         })
         .catch(() => {
-          UserCommentService.showMsg();
+          UserCommentService.showMsg('failureMessage');
         })
     }
 
@@ -88,18 +83,19 @@
       } else {
         UserCommentService.saveUserComment(self.comment)
           .then(() => {
-            UserCommentService.showMsg();
+            UserCommentService.showMsg('successUserCommentCreation');
             self.comment = "";
-            refreshComment();
+            _loadNoteAboutParticipant();
           })
           .catch(() => {
-            UserCommentService.showMsg();
+            UserCommentService.showMsg('failUserCommentCreation');
           })
       }
     }
 
     function fillSelectedComment(itemComment) {
       if (self.selectedCommentId) {
+        UserCommentService.showMsg('conflictMessage');
         DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
           .then(function () {
             self.comment = itemComment.comment;
@@ -109,8 +105,6 @@
         self.comment = itemComment.comment;
         self.selectedCommentId = itemComment._id;
       }
-
-      // ParticipantActivityService.selectActivities([itemComment]);
       // ApplicationStateService.activateActivityPlayer();
     }
 
@@ -120,18 +114,17 @@
     }
 
     function deleteSelectedComment(commentId) {
-      DialogService.showConfirmationDialog()
+      DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.deleteUserComment)
         .then(function () {
           UserCommentService.deleteSelectedComment(commentId)
             .then(() => {
-              UserCommentService.showMsg();
-              refreshComment();
+              UserCommentService.showMsg('deleteSuccessMessage');
+              _loadNoteAboutParticipant();
             })
             .catch(() => {
-              UserCommentService.showMsg();
+              UserCommentService.showMsg('failureMessage');
             })
         });
     }
-
   }
 }());

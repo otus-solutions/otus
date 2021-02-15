@@ -7,10 +7,11 @@
 
   Service.$inject = [
     '$mdToast',
-    'otusjs.user.comment.repository.UserCommentRepositoryService'
+    'otusjs.user.comment.repository.UserCommentRepositoryService',
+    'otusjs.user.comment.business.UserCommentValues'
   ];
 
-  function Service($mdToast, UserCommentRepositoryService) {
+  function Service($mdToast, UserCommentRepositoryService, UserCommentValues) {
     const self = this;
 
     self.showMsg = showMsg;
@@ -46,33 +47,15 @@
         let formattedDate = new Date(date);
         return formattedDate.getDate() + '/' + (formattedDate.getMonth() + 1) + '/' + formattedDate.getFullYear();
       } catch (e) {
-        // return null;
+        return "";
       }
-    }
-
-    function _setOrderByComment(items) {
-      items.map(item => {
-
-        item.acronyms.sort(function (a, b) {
-          var nameA = a.name.toUpperCase();
-          var nameB = b.name.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-
-          return 0;
-        });
-      });
     }
 
     function showMsg(msg) {
       $mdToast.show(
         $mdToast.simple()
-          .textContent(msg)
-          .hideDelay(2000)
+          .textContent(UserCommentValues.toast[msg])
+          .hideDelay(4000)
       );
     }
   }
