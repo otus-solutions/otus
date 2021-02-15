@@ -25,9 +25,9 @@
         .then(response => response.data);
     }
 
-    function showStarSelectedUserComment(commentId) {
+    function showStarSelectedUserComment(commentId, starred) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.showStarSelectedUserComment(commentId))
+        .then(remoteStorage => remoteStorage.showStarSelectedUserComment(commentId, starred))
         .then(response => response.data);
     }
 

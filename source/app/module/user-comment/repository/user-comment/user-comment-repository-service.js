@@ -22,8 +22,8 @@
       return UserCommentCollectionService.getAllUsersComments(limit, skip);
     }
 
-    function showStarSelectedUserComment(commentId) {
-      return UserCommentCollectionService.showStarSelectedUserComment(commentId);
+    function showStarSelectedUserComment(commentId, starred) {
+      return UserCommentCollectionService.showStarSelectedUserComment(commentId, starred);
     }
 
     function showStarSelectedUserComment(commentId) {

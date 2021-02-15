@@ -96,12 +96,12 @@
 
     }
 
-    function showStarSelectedUserComment(commentId) {
+    function showStarSelectedUserComment(commentId, starred) {
       let request = $q.defer();
       var data = true;
       var test = {}
       test.data = data
-      // return _rest.showStarSelectedUserComment(commentId).$promise
+      // return _rest.showStarSelectedUserComment({id:commentId, starred: starred}).$promise
 
       request.resolve(test);
 

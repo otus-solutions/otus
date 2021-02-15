@@ -19,7 +19,7 @@
   function Controller(EventService, ApplicationStateService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
     const LIMIT = 5;
-    const SKIP = 0;// TODO get add url from and size
+    const SKIP = 0;
 
     var self = this;
 
@@ -46,15 +46,16 @@
     function _loadNoteAboutParticipantDashboard() {
       UserCommentService.getNoteAboutParticipant(LIMIT, SKIP).then((arrayComment) => {
         self.items = arrayComment
-      }) 
+      })
     }
 
     function viewPlusUserComment() {
       ApplicationStateService.userComment();
     }
 
-    function showStarSelectedUserComment(userCommentId) {
-      UserCommentService.showStarSelectedUserComment(userCommentId)
+    function showStarSelectedUserComment(userComment) {
+      let starred = userComment.starred ? false : true;
+      UserCommentService.showStarSelectedUserComment(userComment._id, starred)
         .then(() => {
           UserCommentService.showMsg('successMessage');
           __loadNoteAboutParticipantDashboard();

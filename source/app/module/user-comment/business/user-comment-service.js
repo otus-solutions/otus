@@ -26,8 +26,8 @@
       return UserCommentRepositoryService.getNoteAboutParticipant(limit, skip);
     }
 
-    function showStarSelectedUserComment(commentId) {
-      return UserCommentRepositoryService.showStarSelectedUserComment(commentId);
+    function showStarSelectedUserComment(commentId, starred) {
+      return UserCommentRepositoryService.showStarSelectedUserComment(commentId, starred);
     }
 
     function deleteSelectedComment(commentId) {
