@@ -56,6 +56,7 @@
     self.activateIssueViewer = activateIssueViewer;
     self.activateIssueMessagesViewer = activateIssueMessagesViewer;
     self.activateParticipantActivityStage = activateParticipantActivityStage;
+    self.userComment = userComment;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -227,6 +228,10 @@
 
     function activateMaterialLabelDashboard(){
       $state.go(STATE.MATERIAL_LABEL);
+    }
+
+    function userComment() {
+      $state.go(STATE.USER_COMMENT);
     }
   }
 }());

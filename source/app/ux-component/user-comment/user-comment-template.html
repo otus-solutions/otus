@@ -34,6 +34,9 @@
       </div>
       <div class="comment-text" layout="row" layout-align="start center">
         <p class="md-body-3 margin-line ellipsis">{{item.comment}}</p>
+        <md-tooltip md-direction="top">
+          Comentário
+        </md-tooltip>
       </div>
       <div class="comment-button">
         <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
@@ -64,7 +67,7 @@
     </md-list>
   </div>
   <div layout="row" layout-align="end center">
-    <md-button class="md-accent" ng-click="$ctrl.viewPlusUserComment()" aria-label="view comment">
+    <md-button class="md-accent" aria-label="view comment">
       Ver mais
       <md-icon md-font-set="material-icons">comment</md-icon>
     </md-button>

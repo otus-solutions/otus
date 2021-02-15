@@ -3,24 +3,20 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusUserCommentDashboardList', {
-      controller: 'otusUserCommentDashboardListCtrl as $ctrl',
-      templateUrl: 'app/ux-component/user-comment/user-comment-dashboard/user-comment-dashboard-list-template.html'
-    }).controller('otusUserCommentDashboardListCtrl', Controller);
+    .component('otusUserCommentList', {
+      controller: 'otusUserCommentListCtrl as $ctrl',
+      templateUrl: 'app/ux-component/user-comment/user-comment-list-template.html'
+    }).controller('otusUserCommentListCtrl', Controller);
 
   Controller.$inject = [
     'otusjs.participant.core.EventService',
-    'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentService',
     'USER_COMMENT_MANAGER_LABELS'
   ];
 
-  function Controller(EventService, ApplicationStateService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS) {
+  function Controller(EventService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
-    const LIMIT = 5;
-    const SKIP = 0;// TODO get add url from and size
-
     var self = this;
 
     /* Public methods */
@@ -31,7 +27,6 @@
     self.saveUserComment = saveUserComment;
     self.colorStar = colorStar;
     self.getFormattedDate = getFormattedDate;
-    self.viewPlusUserComment = viewPlusUserComment;
 
     self.$onInit = onInit;
 
@@ -39,29 +34,21 @@
     self.selectedCommentId = null;
 
     function onInit() {
-      EventService.onParticipantSelected(_loadNoteAboutParticipantDashboard);
-      _loadNoteAboutParticipantDashboard();
+      EventService.onParticipantSelected(_loadNoteAboutParticipant);
+      _loadNoteAboutParticipant();
     }
 
-    function _loadNoteAboutParticipantDashboard() {
-      // UserCommentService.getNoteAboutParticipant(LIMIT, SKIP).then((arrayComment) => {
-      //   self.items = arrayComment
-      // })
+    function _loadNoteAboutParticipant() {
       UserCommentService.getNoteAboutParticipant().then((arrayComment) => {
         self.items = arrayComment
       })
-
-    }
-
-    function viewPlusUserComment() {
-      ApplicationStateService.userComment();
     }
 
     function showStarSelectedUserComment(userCommentId) {
       UserCommentService.showStarSelectedUserComment(userCommentId)
         .then(() => {
           UserCommentService.showMsg('successMessage');
-          __loadNoteAboutParticipantDashboard();
+          __loadNoteAboutParticipant();
         })
         .catch(() => {
           UserCommentService.showMsg('failureMessage');
@@ -80,7 +67,7 @@
       UserCommentService.updateUserComment(self.selectedCommentId, self.comment)
         .then(() => {
           UserCommentService.showMsg('updateSuccessMessage');
-          _loadNoteAboutParticipantDashboard();
+          _loadNoteAboutParticipant();
           self.selectedCommentId = null;
           self.comment = "";
         })
@@ -97,7 +84,7 @@
           .then(() => {
             UserCommentService.showMsg('successUserCommentCreation');
             self.comment = "";
-            _loadNoteAboutParticipantDashboard();
+            _loadNoteAboutParticipant();
           })
           .catch(() => {
             UserCommentService.showMsg('failUserCommentCreation');
@@ -117,6 +104,7 @@
         self.comment = itemComment.comment;
         self.selectedCommentId = itemComment._id;
       }
+      // ApplicationStateService.activateActivityPlayer();
     }
 
     function cancelFillSelectedComment() {
@@ -130,7 +118,7 @@
           UserCommentService.deleteSelectedComment(commentId)
             .then(() => {
               UserCommentService.showMsg('deleteSuccessMessage');
-              _loadNoteAboutParticipantDashboard();
+              _loadNoteAboutParticipant();
             })
             .catch(() => {
               UserCommentService.showMsg('failureMessage');

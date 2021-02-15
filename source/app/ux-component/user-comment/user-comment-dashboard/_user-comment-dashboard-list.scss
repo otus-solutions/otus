@@ -1,4 +1,4 @@
-otus-user-comment-dashboard-list {
+otus-user-comment-dashboard-list, otus-user-comment-list {
   @media screen and (min-width: 360px) {
     .comment-list-layout {
       display: grid;
@@ -18,17 +18,13 @@ otus-user-comment-dashboard-list {
       margin-top: 16px;
     }
 
-    .margin-bottom {
-      margin: 0 0 20px 0;
-    }
-
     .md-body-2 {
       font-size: 14px;
       line-height: 14px;
     }
 
     .icon-size {
-      font-size: 3em;
+      font-size: 2em;
       height: auto;
       width: auto;
     }
@@ -79,17 +75,13 @@ otus-user-comment-dashboard-list {
       margin-top: 16px;
     }
 
-    .margin-bottom {
-      margin: 0 0 20px 0;
-    }
-
     .md-body-2 {
       font-size: 14px;
       line-height: 14px;
     }
 
     .icon-size {
-      font-size: 2em;
+      font-size: 1.5em;
       height: auto;
       width: auto;
     }
@@ -108,7 +100,7 @@ otus-user-comment-dashboard-list {
   }
 
   .margin-line {
-    margin: 1px;
+    margin: 0;
   }
 
   .layout-box {
