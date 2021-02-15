@@ -22,7 +22,7 @@
       parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.USER_COMMENT,
       url: '/' + STATE.USER_COMMENT,
-      template: '<otus-user-comment-list></otus-user-comment-list>',
+      template: '<otus-user-comment-list layout="column" flex></otus-user-comment-list>',
       data: {
         redirect: _redirect
       },

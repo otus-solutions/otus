@@ -104,7 +104,6 @@
         self.comment = itemComment.comment;
         self.selectedCommentId = itemComment._id;
       }
-      // ApplicationStateService.activateActivityPlayer();
     }
 
     function cancelFillSelectedComment() {

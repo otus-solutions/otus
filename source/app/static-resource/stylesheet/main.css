@@ -1382,7 +1382,7 @@ otus-activity-stage-list .new-chip-white {
 }
 
 @media screen and (min-width: 360px) {
-  otus-user-comment-dashboard-list .comment-list-layout, otus-user-comment-list .comment-list-layout {
+  otus-user-comment-dashboard-list .comment-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
@@ -1397,33 +1397,33 @@ otus-activity-stage-list .new-chip-white {
         grid-template-rows: auto;
         grid-template-areas: "comment-image comment-name  comment-date  comment-status comment-button comment-button" "comment-image comment-text  comment-text comment-text comment-button  comment-button";
   }
-  otus-user-comment-dashboard-list .layout-uc, otus-user-comment-list .layout-uc {
+  otus-user-comment-dashboard-list .layout-uc {
     padding: 4px;
     height: auto;
     margin-top: 16px;
   }
-  otus-user-comment-dashboard-list .md-body-2, otus-user-comment-list .md-body-2 {
+  otus-user-comment-dashboard-list .md-body-2 {
     font-size: 14px;
     line-height: 14px;
   }
-  otus-user-comment-dashboard-list .icon-size, otus-user-comment-list .icon-size {
+  otus-user-comment-dashboard-list .icon-size {
     font-size: 2em;
     height: auto;
     width: auto;
   }
-  otus-user-comment-dashboard-list .comment-box, otus-user-comment-list .comment-box {
+  otus-user-comment-dashboard-list .comment-box {
     line-height: 2em;
   }
 }
 
 @media screen and (min-width: 410px) {
-  otus-user-comment-dashboard-list .comment-box, otus-user-comment-list .comment-box {
+  otus-user-comment-dashboard-list .comment-box {
     line-height: 6em;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  otus-user-comment-dashboard-list .comment-list-layout, otus-user-comment-list .comment-list-layout {
+  otus-user-comment-dashboard-list .comment-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
@@ -1441,7 +1441,7 @@ otus-activity-stage-list .new-chip-white {
 }
 
 @media screen and (min-width: 1200px) {
-  otus-user-comment-dashboard-list .comment-list-layout, otus-user-comment-list .comment-list-layout {
+  otus-user-comment-dashboard-list .comment-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
@@ -1456,56 +1456,50 @@ otus-activity-stage-list .new-chip-white {
         grid-template-rows: auto;
         grid-template-areas: "comment-image comment-name  comment-date  comment-status  comment-button" "comment-image comment-text  comment-text  comment-text    comment-button";
   }
-  otus-user-comment-dashboard-list .layout-uc, otus-user-comment-list .layout-uc {
+  otus-user-comment-dashboard-list .layout-uc {
     padding: 4px;
     height: auto;
     margin-top: 16px;
   }
-  otus-user-comment-dashboard-list .md-body-2, otus-user-comment-list .md-body-2 {
+  otus-user-comment-dashboard-list .md-body-2 {
     font-size: 14px;
     line-height: 14px;
   }
-  otus-user-comment-dashboard-list .icon-size, otus-user-comment-list .icon-size {
+  otus-user-comment-dashboard-list .icon-size {
     font-size: 1.5em;
     height: auto;
     width: auto;
   }
-  otus-user-comment-dashboard-list .md-headline, otus-user-comment-list .md-headline {
-    font-size: 24px;
-  }
-  otus-user-comment-dashboard-list .md-title, otus-user-comment-list .md-title {
-    font-size: 20px;
-  }
-  otus-user-comment-dashboard-list .comment-box, otus-user-comment-list .comment-box {
+  otus-user-comment-dashboard-list .comment-box {
     line-height: 2em;
   }
 }
 
-otus-user-comment-dashboard-list .margin-line, otus-user-comment-list .margin-line {
+otus-user-comment-dashboard-list .margin-line {
   margin: 0;
 }
 
-otus-user-comment-dashboard-list .layout-box, otus-user-comment-list .layout-box {
+otus-user-comment-dashboard-list .layout-box {
   min-height: 20vh;
 }
 
-otus-user-comment-dashboard-list .comment-image, otus-user-comment-list .comment-image {
+otus-user-comment-dashboard-list .comment-image {
   grid-area: comment-image;
 }
 
-otus-user-comment-dashboard-list .comment-name, otus-user-comment-list .comment-name {
+otus-user-comment-dashboard-list .comment-name {
   grid-area: comment-name;
 }
 
-otus-user-comment-dashboard-list .comment-text, otus-user-comment-list .comment-text {
+otus-user-comment-dashboard-list .comment-text {
   grid-area: comment-text;
 }
 
-otus-user-comment-dashboard-list .comment-button, otus-user-comment-list .comment-button {
+otus-user-comment-dashboard-list .comment-button {
   grid-area: comment-button;
 }
 
-otus-user-comment-dashboard-list .comment-list-layout:hover, otus-user-comment-list .comment-list-layout:hover {
+otus-user-comment-dashboard-list .comment-list-layout:hover {
   background-color: rgba(158, 158, 158, 0.1);
   -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
           box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
@@ -1513,61 +1507,61 @@ otus-user-comment-dashboard-list .comment-list-layout:hover, otus-user-comment-l
   transition: 0.3s;
 }
 
-otus-user-comment-dashboard-list .comment-null, otus-user-comment-list .comment-null {
+otus-user-comment-dashboard-list .comment-null {
   grid-area: comment-null;
   color: gray;
 }
 
-otus-user-comment-dashboard-list .comment-status, otus-user-comment-list .comment-status {
+otus-user-comment-dashboard-list .comment-status {
   grid-area: comment-status;
 }
 
-otus-user-comment-dashboard-list .comment-date, otus-user-comment-list .comment-date {
+otus-user-comment-dashboard-list .comment-date {
   grid-area: comment-date;
 }
 
-otus-user-comment-dashboard-list md-list, otus-user-comment-list md-list {
+otus-user-comment-dashboard-list md-list {
   padding: 0;
 }
 
-otus-user-comment-dashboard-list md-card, otus-user-comment-list md-card {
+otus-user-comment-dashboard-list md-card {
   margin: 8px;
 }
 
-otus-user-comment-dashboard-list .comment-textarea, otus-user-comment-list .comment-textarea {
+otus-user-comment-dashboard-list .comment-textarea {
   border: black;
   max-width: 100vw;
 }
 
-otus-user-comment-dashboard-list .md-caption, otus-user-comment-list .md-caption {
+otus-user-comment-dashboard-list .md-caption {
   font-size: 11px;
   letter-spacing: 0.02em;
 }
 
-otus-user-comment-dashboard-list .md-body-2, otus-user-comment-list .md-body-2 {
+otus-user-comment-dashboard-list .md-body-2 {
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.01em;
   line-height: 20px;
 }
 
-otus-user-comment-dashboard-list .md-body-3, otus-user-comment-list .md-body-3 {
+otus-user-comment-dashboard-list .md-body-3 {
   font-size: 12px;
   letter-spacing: 0.02em;
 }
 
-otus-user-comment-dashboard-list .md-button, otus-user-comment-list .md-button {
+otus-user-comment-dashboard-list .md-button {
   min-width: auto;
 }
 
-otus-user-comment-dashboard-list .ellipsis, otus-user-comment-list .ellipsis {
+otus-user-comment-dashboard-list .ellipsis {
   overflow: hidden;
   white-space: pre-wrap;
   text-overflow: ellipsis;
   max-width: 100vw;
 }
 
-otus-user-comment-dashboard-list .comment-box, otus-user-comment-list .comment-box {
+otus-user-comment-dashboard-list .comment-box {
   height: auto;
   color: #999;
   font-family: "Ubuntu", Helvetica, Arial, sans-serif;
@@ -1658,5 +1652,138 @@ otus-dashboard-display .display-participant-exam-heatmap {
 
 otus-dashboard-display .display-report-dashboard {
   grid-area: display-report-dashboard;
+}
+
+@media screen and (min-width: 1200px) {
+  otus-user-comment-list .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    min-width: 90vw;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.1fr 2fr 0.8fr 0.6fr 0.6fr;
+        grid-template-columns: 0.1fr 2fr 0.8fr 0.6fr 0.6fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name comment-date comment-status comment-button" "comment-image comment-text comment-text comment-text comment-button";
+  }
+  otus-user-comment-list .comment-list-layout .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  otus-user-comment-list .comment-list-layout .icon-size {
+    font-size: 1.5em;
+    height: auto;
+    width: auto;
+  }
+  otus-user-comment-list .comment-list-layout .comment-box {
+    line-height: 2em;
+  }
+  otus-user-comment-list .comment-list-layout .margin-line {
+    margin: 0;
+  }
+}
+
+otus-user-comment-list .layout-box {
+  min-height: 20vh;
+}
+
+otus-user-comment-list .comment-image {
+  grid-area: comment-image;
+}
+
+otus-user-comment-list .comment-name {
+  grid-area: comment-name;
+}
+
+otus-user-comment-list .comment-text {
+  grid-area: comment-text;
+}
+
+otus-user-comment-list .comment-button {
+  grid-area: comment-button;
+}
+
+otus-user-comment-list .comment-list-layout:hover {
+  background-color: rgba(158, 158, 158, 0.1);
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+otus-user-comment-list .comment-null {
+  grid-area: comment-null;
+  color: gray;
+}
+
+otus-user-comment-list .comment-status {
+  grid-area: comment-status;
+}
+
+otus-user-comment-list .comment-date {
+  grid-area: comment-date;
+}
+
+otus-user-comment-list md-list {
+  padding: 0;
+}
+
+otus-user-comment-list md-card {
+  margin: 8px;
+}
+
+otus-user-comment-list .comment-textarea {
+  border: black;
+  max-width: 100vw;
+}
+
+otus-user-comment-list .md-caption {
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+otus-user-comment-list .md-body-2 {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 20px;
+}
+
+otus-user-comment-list .md-body-3 {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
+otus-user-comment-list .md-button {
+  min-width: auto;
+}
+
+otus-user-comment-list .ellipsis {
+  overflow: hidden;
+  white-space: pre-wrap;
+  text-overflow: ellipsis;
+  max-width: 100vw;
+}
+
+otus-user-comment-list .comment-box {
+  height: auto;
+  color: #999;
+  font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+  width: 100%;
+  background: #fff;
+  border-radius: 5px;
+  line-height: 2em;
+  border: 2px;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  -webkit-transition: height 2s ease;
+  transition: height 2s ease;
+  resize: none;
 }
 /*# sourceMappingURL=main.css.map */
