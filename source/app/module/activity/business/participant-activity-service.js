@@ -242,7 +242,7 @@
       return _prepareActivities(preActivity)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
         .then(() => {
-          _callToast('sucessActivityCreation');
+          _callToast('successActivityCreation');
           LoadingScreenService.finish();
         })
         .then(() => self.activities = [])
