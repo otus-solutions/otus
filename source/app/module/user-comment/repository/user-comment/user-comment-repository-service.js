@@ -18,8 +18,8 @@
     self.saveUserComment = saveUserComment;
     self.updateUserComment = updateUserComment;
 
-    function getNoteAboutParticipant() {
-      return UserCommentCollectionService.getAllUserComments();
+    function getNoteAboutParticipant(limit, skip) {
+      return UserCommentCollectionService.getAllUsersComments(limit, skip);
     }
 
     function showStarSelectedUserComment(commentId) {

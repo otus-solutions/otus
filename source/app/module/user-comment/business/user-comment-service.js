@@ -22,8 +22,8 @@
     self.updateUserComment = updateUserComment;
     self.getFormattedDate = getFormattedDate;
 
-    function getNoteAboutParticipant() {
-      return UserCommentRepositoryService.getNoteAboutParticipant();
+    function getNoteAboutParticipant(limit, skip) {
+      return UserCommentRepositoryService.getNoteAboutParticipant(limit, skip);
     }
 
     function showStarSelectedUserComment(commentId) {

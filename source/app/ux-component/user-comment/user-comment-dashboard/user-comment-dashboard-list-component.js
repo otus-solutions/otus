@@ -44,13 +44,9 @@
     }
 
     function _loadNoteAboutParticipantDashboard() {
-      // UserCommentService.getNoteAboutParticipant(LIMIT, SKIP).then((arrayComment) => {
-      //   self.items = arrayComment
-      // })
-      UserCommentService.getNoteAboutParticipant().then((arrayComment) => {
+      UserCommentService.getNoteAboutParticipant(LIMIT, SKIP).then((arrayComment) => {
         self.items = arrayComment
-      })
-
+      }) 
     }
 
     function viewPlusUserComment() {

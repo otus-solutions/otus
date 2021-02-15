@@ -15,7 +15,7 @@
     let _rest = null;
 
     self.initialize = initialize;
-    self.getAllUserComments = getAllUserComments;
+    self.getAllUsersComments = getAllUsersComments;
     self.showStarSelectedUserComment = showStarSelectedUserComment;
     self.deleteSelectedComment = deleteSelectedComment;
     self.saveUserComment = saveUserComment;
@@ -25,15 +25,16 @@
       _rest = OtusRestResourceService.getUserCommentResourceFactory();
     }
 
-    function getAllUserComments() {
+    function getAllUsersComments(limit, skip) {
       _checkRest();
       var data = [
         {
           "_id": "602699fcefc5ca1cb146be4a",
-           "recruitmentNumber": 1234567,
+          "recruitmentNumber": 1234567,
+          userName: 'Fulano',
           "creationDate": "2021-02-12T15:08:44.854Z",
           "lastUpdate": "2021-02-12T15:08:44.854Z",
-          "edited": false,
+          "editeded": false,
           "starred": false,
           "comment": "primeiro commentário",
           "userId": "5d1bbabe995e20d290d94e49"
@@ -41,9 +42,9 @@
         {
           _id: '113234',
           recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '2020-12-18T16:59:41.188',
-          edit: true,
+          userName: 'Fulano',
+          creationDate: '2020-12-18T16:59:41.188',
+          edited: true,
           comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
           isCreate: true,
           starred: true
@@ -51,34 +52,34 @@
         {
           _id: '113234',
           recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '2020-12-18T16:59:41.188',
-          edit: true,
+          userName: 'Fulano',
+          creationDate: '2020-12-18T16:59:41.188',
+          edited: true,
           comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd'
         },
         {
           _id: '113234',
           recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '2020-12-18T16:59:41.188',
-          edit: true,
+          userName: 'Fulano',
+          creationDate: '2020-12-18T16:59:41.188',
+          edited: true,
           comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd'
         },
         {
           _id: '113234',
           recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '2020-12-18T16:59:41.188',
-          edit: true,
+          userName: 'Fulano',
+          creationDate: '2020-12-18T16:59:41.188',
+          edited: true,
           comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdf',
           isCreate: true
         },
         {
           _id: '113234',
           recruitmentNumber: '132324',
-          name: 'Fulano',
-          date: '2020-12-18T16:59:41.188',
-          edit: true,
+          userName: 'Fulano',
+          creationDate: '2020-12-18T16:59:41.188',
+          edited: true,
           comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd'
         }
       ];
@@ -86,7 +87,7 @@
       test.data = data
 
       let request = $q.defer();
-      // return _rest.getAll().$promise
+      // return _rest.getAllUsersComments({limit: limit, skip: skip}).$promise
 
       request.resolve(test);
 

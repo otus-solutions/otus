@@ -13,15 +13,15 @@
     const self = this;
     let _remoteStorage = ModuleService.getUserCommentRemoteStorage();
 
-    self.getAllUserComments = getAllUserComments;
+    self.getAllUsersComments = getAllUsersComments;
     self.showStarSelectedUserComment = showStarSelectedUserComment;
     self.deleteSelectedComment = deleteSelectedComment;
     self.saveUserComment = saveUserComment;
     self.updateUserComment = updateUserComment;
 
-    function getAllUserComments() {
+    function getAllUsersComments(limit, skip) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.getAllUserComments())
+        .then(remoteStorage => remoteStorage.getAllUsersComments(limit, skip))
         .then(response => response.data);
     }
 
