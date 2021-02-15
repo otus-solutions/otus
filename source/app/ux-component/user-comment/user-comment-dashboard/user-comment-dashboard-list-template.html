@@ -9,6 +9,7 @@
       ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
       <div class="comment-image">
         <md-button ng-click="$ctrl.showStarSelectedUserComment(item._id)">
+          <md-tooltip md-direction="top">Favorito</md-tooltip>
           <md-icon layout="row" layout-align="center center" ng-style="$ctrl.colorStar(item.starred)"
             class="md-default-theme material-icons icon-size" aria-label="star_rate">star_rate</md-icon>
         </md-button>
