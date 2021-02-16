@@ -1,5 +1,5 @@
-<md-content layout="row" layout-align="center center" flex ng-cloak>
-  <div class="margin-top-layout">
+<md-content ng-cloak>
+  <div layout="row" layout-align="center center">
     <md-card>
       <div layout="row" layout-align="center center">
         <h2 class="md-display-1 label-light-gray" layout-padding ng-show="$ctrl.items.length == 0">
@@ -35,11 +35,10 @@
             </md-tooltip>
           </div>
           <div class="comment-text" layout="row" layout-align="start center">
-            <p class="md-body-3 margin-line ellipsis">{{item.comment}}</p>
+            <p class="md-body-3 margin-line">{{item.comment}}</p>
           </div>
           <div class="comment-button">
-            <div layout="row" layout-align="end center" hide-xs hide-sm hide-md
-              ng-show="$id == item.actionButtons">
+            <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
               <md-button class="md-icon-button md-warn" ng-show="item.isCreator" aria-label="Excluir"
                 ng-click="$ctrl.deleteSelectedComment(item._id)">
                 <md-tooltip md-direction="top">Excluir</md-tooltip>
@@ -66,15 +65,8 @@
           </div>
         </md-list>
       </div>
-      <div layout="row" layout-align="end center">
-        <otus-generic-list-paginator class="layout-pagination paginator" layout="row" layout-align="end center"
-          call-validation-items-limits="$ctrl.callValidationItemsLimits"
-          stuntman-search-settings="$ctrl.stuntmanSearchSettings" search-settings-parser="$ctrl.searchSettingsParser"
-          items="$ctrl.items" paginator-active="$ctrl.paginatorActive">
-        </otus-generic-list-paginator>
-      </div>
       <div layout="column" layout-padding class="comment-textarea">
-        <textarea maxlength="400" rows="5" max-rows="8" class="comment-box" ng-model="$ctrl.comment"
+        <textarea maxlength="800" rows="5" max-rows="10" class="comment-box" ng-model="$ctrl.comment"
           placeholder="Digite o texto aqui"></textarea>
       </div>
       <div layout="row" layout-align="end center">
@@ -91,3 +83,10 @@
     </md-card>
   </div>
 </md-content>
+<div layout="row" layout-align="end center">
+  <otus-generic-list-paginator class="layout-pagination paginator" layout="row" layout-align="end center"
+    call-validation-items-limits="$ctrl.callValidationItemsLimits"
+    stuntman-search-settings="$ctrl.stuntmanSearchSettings" search-settings-parser="$ctrl.searchSettingsParser"
+    items="$ctrl.items" paginator-active="$ctrl.paginatorActive">
+  </otus-generic-list-paginator>
+</div>

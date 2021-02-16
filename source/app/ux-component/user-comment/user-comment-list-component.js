@@ -60,7 +60,6 @@
 
       self.getAllItems(self.stuntmanSearchSettings)
         .then((items) => self.items = items);
-      console.log(self.items)
     }
 
     function initialize(skip, limit) {
@@ -77,8 +76,8 @@
       let starred = userComment.starred ? false : true;
       UserCommentService.showStarSelectedUserComment(userComment._id, starred)
         .then(() => {
+          userComment.starred = starred;
           UserCommentService.showMsg('successMessage');
-          _loadNoteAboutParticipant();
         })
         .catch(() => {
           UserCommentService.showMsg('failureMessage');

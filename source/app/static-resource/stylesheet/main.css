@@ -1559,6 +1559,7 @@ otus-user-comment-dashboard-list .ellipsis {
   white-space: pre-wrap;
   text-overflow: ellipsis;
   max-width: 100vw;
+  max-height: 10vh;
 }
 
 otus-user-comment-dashboard-list .comment-box {
@@ -1654,6 +1655,42 @@ otus-dashboard-display .display-report-dashboard {
   grid-area: display-report-dashboard;
 }
 
+@media screen and (min-width: 360px) {
+  otus-user-comment-list .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.3fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+        grid-template-columns: 0.3fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name  comment-date  comment-status comment-button comment-button" "comment-image comment-text  comment-text comment-text comment-button  comment-button";
+  }
+  otus-user-comment-list .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  otus-user-comment-list .icon-size {
+    font-size: 2em;
+    height: auto;
+    width: auto;
+  }
+  otus-user-comment-list .comment-box {
+    line-height: 2em;
+  }
+}
+
+@media screen and (min-width: 410px) {
+  otus-user-comment-list .comment-box {
+    line-height: 6em;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   otus-user-comment-list .comment-list-layout {
     display: -ms-grid;
@@ -1689,7 +1726,8 @@ otus-dashboard-display .display-report-dashboard {
 }
 
 otus-user-comment-list .layout-box {
-  min-height: 20vh;
+  min-height: 40vh;
+  min-width: 98vw;
 }
 
 otus-user-comment-list .comment-image {
@@ -1698,10 +1736,12 @@ otus-user-comment-list .comment-image {
 
 otus-user-comment-list .comment-name {
   grid-area: comment-name;
+  min-height: 5vh;
 }
 
 otus-user-comment-list .comment-text {
   grid-area: comment-text;
+  min-height: 8vh;
 }
 
 otus-user-comment-list .comment-button {
@@ -1763,13 +1803,6 @@ otus-user-comment-list .md-button {
   min-width: auto;
 }
 
-otus-user-comment-list .ellipsis {
-  overflow: hidden;
-  white-space: pre-wrap;
-  text-overflow: ellipsis;
-  max-width: 100vw;
-}
-
 otus-user-comment-list .comment-box {
   height: auto;
   color: #999;
@@ -1785,10 +1818,6 @@ otus-user-comment-list .comment-box {
   -webkit-transition: height 2s ease;
   transition: height 2s ease;
   resize: none;
-}
-
-otus-user-comment-list .margin-top-layout {
-  margin-top: 90px;
 }
 
 otus-user-comment-list .layout-pagination {
