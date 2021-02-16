@@ -77,6 +77,7 @@
       UserCommentService.showStarSelectedUserComment(userComment._id, starred)
         .then(() => {
           userComment.starred = starred;
+          starred = null;
           UserCommentService.showMsg('successMessage');
         })
         .catch(() => {

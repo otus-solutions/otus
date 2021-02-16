@@ -64,9 +64,10 @@
 
     function showStarSelectedUserComment(userComment) {
      let starred = userComment.starred ? false : true;
-      UserCommentService.showStarSelectedUserComment(userComment._id, userComment.starred)
+      UserCommentService.showStarSelectedUserComment(userComment._id, starred)
         .then(() => {
-          userComment.starred = starred; //note com a chave de identificação que do angular permite atualizar campos
+          userComment.starred = starred //note com a chave de identificação que do angular permite atualizar campos
+          starred = null;
           UserCommentService.showMsg('successMessage');
         })
         .catch(() => {
