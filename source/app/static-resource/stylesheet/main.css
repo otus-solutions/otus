@@ -1476,7 +1476,7 @@ otus-activity-stage-list .new-chip-white {
 }
 
 otus-user-comment-dashboard-list .margin-line {
-  margin: 0;
+  margin: 1px;
 }
 
 otus-user-comment-dashboard-list .layout-box {
@@ -1513,6 +1513,7 @@ otus-user-comment-dashboard-list .comment-status {
 
 otus-user-comment-dashboard-list .comment-date {
   grid-area: comment-date;
+  padding-left: 4px;
 }
 
 otus-user-comment-dashboard-list md-list {
@@ -1678,6 +1679,9 @@ otus-dashboard-display .display-report-dashboard {
   otus-user-comment-list .comment-box {
     line-height: 2em;
   }
+  otus-user-comment-list .layout-pagination {
+    width: 100vw;
+  }
 }
 
 @media screen and (min-width: 410px) {
@@ -1703,21 +1707,25 @@ otus-dashboard-display .display-report-dashboard {
         grid-template-rows: auto;
         grid-template-areas: "comment-image comment-name comment-date comment-status comment-button" "comment-image comment-text comment-text comment-text comment-button";
   }
-  otus-user-comment-list .comment-list-layout .md-body-2 {
+  otus-user-comment-list .md-body-2 {
     font-size: 14px;
     line-height: 14px;
   }
-  otus-user-comment-list .comment-list-layout .icon-size {
+  otus-user-comment-list .icon-size {
     font-size: 1.5em;
     height: auto;
     width: auto;
   }
-  otus-user-comment-list .comment-list-layout .comment-box {
+  otus-user-comment-list .comment-box {
     line-height: 2em;
   }
-  otus-user-comment-list .comment-list-layout .margin-line {
-    margin: 0;
+  otus-user-comment-list .layout-pagination {
+    width: 50vw;
   }
+}
+
+otus-user-comment-list .margin-line {
+  margin: 1px;
 }
 
 otus-user-comment-list .layout-box {
@@ -1758,6 +1766,7 @@ otus-user-comment-list .comment-status {
 
 otus-user-comment-list .comment-date {
   grid-area: comment-date;
+  padding-left: 4px;
 }
 
 otus-user-comment-list md-list {
@@ -1810,9 +1819,5 @@ otus-user-comment-list .comment-box {
   -webkit-transition: height 2s ease;
   transition: height 2s ease;
   resize: vertical;
-}
-
-otus-user-comment-list .layout-pagination {
-  width: 50vw;
 }
 /*# sourceMappingURL=main.css.map */

@@ -92,7 +92,7 @@ otus-user-comment-dashboard-list {
   }
 
   .margin-line {
-    margin: 0;
+    margin: 1px;
   }
 
   .layout-box {
@@ -127,6 +127,7 @@ otus-user-comment-dashboard-list {
 
   .comment-date {
     grid-area: comment-date;
+    padding-left: 4px;
   }
 
   md-list {

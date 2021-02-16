@@ -27,6 +27,10 @@ otus-user-comment-list {
     .comment-box {
       line-height: 2em;
     }
+
+    .layout-pagination {
+      width: 100vw;
+    }
   }
 
   @media screen and (min-width: 410px) {
@@ -49,26 +53,29 @@ otus-user-comment-list {
       grid-template-areas:
         "comment-image comment-name comment-date comment-status comment-button"
         "comment-image comment-text comment-text comment-text comment-button";
-
-      .md-body-2 {
-        font-size: 14px;
-        line-height: 14px;
-      }
-
-      .icon-size {
-        font-size: 1.5em;
-        height: auto;
-        width: auto;
-      }
-
-      .comment-box {
-        line-height: 2em;
-      }
-
-      .margin-line {
-        margin: 0;
-      }
     }
+    .md-body-2 {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .icon-size {
+      font-size: 1.5em;
+      height: auto;
+      width: auto;
+    }
+
+    .comment-box {
+      line-height: 2em;
+    }
+
+    .layout-pagination {
+      width: 50vw;
+    }
+  }
+
+  .margin-line {
+    margin: 1px;
   }
 
   .layout-box {
@@ -88,7 +95,7 @@ otus-user-comment-list {
   .comment-text {
     grid-area: comment-text;
     min-height: 8vh;
-     white-space: pre-line;
+    white-space: pre-line;
   }
 
   .comment-button {
@@ -107,6 +114,7 @@ otus-user-comment-list {
 
   .comment-date {
     grid-area: comment-date;
+    padding-left: 4px;
   }
 
   md-list {
@@ -157,9 +165,5 @@ otus-user-comment-list {
     padding: 4px;
     transition: height 2s ease;
     resize: vertical;
-  }
-
-  .layout-pagination {
-    width: 50vw;
   }
 }
