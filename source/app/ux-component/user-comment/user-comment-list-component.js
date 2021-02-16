@@ -12,11 +12,16 @@
     'otusjs.participant.core.EventService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentService',
-    'USER_COMMENT_MANAGER_LABELS'
+    'USER_COMMENT_MANAGER_LABELS',
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.genericListViewer.GenericListViewerService',
   ];
 
-  function Controller(EventService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS) {
+  function Controller(EventService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS, LoadingScreenService, GenericListViewerService) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
+    const LIMIT = 10;
+    const SKIP = 0;
+
     var self = this;
 
     /* Public methods */
@@ -27,11 +32,15 @@
     self.saveUserComment = saveUserComment;
     self.colorStar = colorStar;
     self.getFormattedDate = getFormattedDate;
-
+    self.getAllItems = GenericListViewerService.getAllItems;
+    self.callValidationItemsLimits = GenericListViewerService.callValidationItemsLimits;
     self.$onInit = onInit;
 
     self.items = [];
-    self.selectedCommentId = null;
+    self.selectedComment = null;
+    self.recruitmentNumber = null;
+    self.paginatorActive = true;
+    self.stuntmanSearchSettings = {};
 
     function onInit() {
       EventService.onParticipantSelected(_loadNoteAboutParticipant);
@@ -39,16 +48,37 @@
     }
 
     function _loadNoteAboutParticipant() {
-      UserCommentService.getNoteAboutParticipant().then((arrayComment) => {
-        self.items = arrayComment
-      })
+      self.recruitmentNumber = UserCommentService.getSelectedParticipant().recruitmentNumber
+
+      self.stuntmanSearchSettings = {
+        currentQuantity: SKIP,
+        quantityToGet: LIMIT,
+        recruitmentNumber: self.recruitmentNumber
+      }
+
+      initialize(SKIP, LIMIT);
+
+      self.getAllItems(self.stuntmanSearchSettings)
+        .then((items) => self.items = items);
+      console.log(self.items)
     }
 
-    function showStarSelectedUserComment(userCommentId) {
-      UserCommentService.showStarSelectedUserComment(userCommentId)
+    function initialize(skip, limit) {
+      angular.extend(self, self, GenericListViewerService);
+      self.init(null, skip, limit,
+        UserCommentService.getNoteAboutParticipant, null, _genericParse);
+    }
+
+    function _genericParse(items) {
+      return items;
+    }
+
+    function showStarSelectedUserComment(userComment) {
+      let starred = userComment.starred ? false : true;
+      UserCommentService.showStarSelectedUserComment(userComment._id, starred)
         .then(() => {
           UserCommentService.showMsg('successMessage');
-          __loadNoteAboutParticipant();
+          _loadNoteAboutParticipant();
         })
         .catch(() => {
           UserCommentService.showMsg('failureMessage');
@@ -64,11 +94,12 @@
     }
 
     function _updateUserComment() {
-      UserCommentService.updateUserComment(self.selectedCommentId, self.comment)
+      self.selectedComment.comment = self.comment;
+      UserCommentService.updateUserComment(self.selectedComment)
         .then(() => {
           UserCommentService.showMsg('updateSuccessMessage');
           _loadNoteAboutParticipant();
-          self.selectedCommentId = null;
+          self.selectedComment = null;
           self.comment = "";
         })
         .catch(() => {
@@ -77,10 +108,10 @@
     }
 
     function saveUserComment() {
-      if (self.selectedCommentId) {
+      if (self.selectedComment) {
         _updateUserComment();
       } else {
-        UserCommentService.saveUserComment(self.comment)
+        UserCommentService.saveUserComment({ comment: self.comment, recruitmentNumber: self.recruitmentNumber })
           .then(() => {
             UserCommentService.showMsg('successUserCommentCreation');
             self.comment = "";
@@ -93,22 +124,22 @@
     }
 
     function fillSelectedComment(itemComment) {
-      if (self.selectedCommentId) {
+      if (self.selectedComment) {
         UserCommentService.showMsg('conflictMessage');
         DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
           .then(function () {
             self.comment = itemComment.comment;
-            self.selectedCommentId = itemComment._id;
+            self.selectedComment = itemComment;
           });
       } else {
         self.comment = itemComment.comment;
-        self.selectedCommentId = itemComment._id;
+        self.selectedComment = itemComment;
       }
     }
 
     function cancelFillSelectedComment() {
       self.comment = "";
-      self.selectedCommentId = null;
+      self.selectedComment = null;
     }
 
     function deleteSelectedComment(commentId) {

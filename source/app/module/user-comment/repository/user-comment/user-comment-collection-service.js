@@ -19,9 +19,9 @@
     self.saveUserComment = saveUserComment;
     self.updateUserComment = updateUserComment;
 
-    function getAllUsersComments(limit, skip) {
+    function getAllUsersComments(stuntmanSearchSettings) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.getAllUsersComments(limit, skip))
+        .then(remoteStorage => remoteStorage.getAllUsersComments(stuntmanSearchSettings))
         .then(response => response.data);
     }
 
@@ -43,9 +43,9 @@
         .then(response => response.data);
     }
 
-    function updateUserComment(commentId, comment) {
+    function updateUserComment(comment) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.updateUserComment(commentId, comment))
+        .then(remoteStorage => remoteStorage.updateUserComment(comment))
         .then(response => response.data);
     }
   }

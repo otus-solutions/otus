@@ -10,7 +10,7 @@
         <md-list class="comment-list-layout" ng-repeat="item in $ctrl.items track by $id(item)"
           ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
           <div class="comment-image">
-            <md-button ng-click="$ctrl.showStarSelectedUserComment(item._id)">
+            <md-button ng-click="$ctrl.showStarSelectedUserComment(item)">
               <md-tooltip md-direction="top">Favorito</md-tooltip>
               <md-icon layout="row" layout-align="center center" ng-style="$ctrl.colorStar(item.starred)"
                 class="md-default-theme material-icons icon-size" aria-label="star_rate">star_rate</md-icon>
@@ -38,25 +38,26 @@
             <p class="md-body-3 margin-line ellipsis">{{item.comment}}</p>
           </div>
           <div class="comment-button">
-            <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
-              <md-button class="md-icon-button md-warn" ng-show="item.isCreate" aria-label="Excluir"
+            <div layout="row" layout-align="end center" hide-xs hide-sm hide-md
+              ng-show="$id == item.actionButtons">
+              <md-button class="md-icon-button md-warn" ng-show="item.isCreator" aria-label="Excluir"
                 ng-click="$ctrl.deleteSelectedComment(item._id)">
                 <md-tooltip md-direction="top">Excluir</md-tooltip>
                 <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
               </md-button>
-              <md-button class="md-accent md-icon-button" ng-show="item.isCreate" aria-label="Editar"
+              <md-button class="md-accent md-icon-button" ng-show="item.isCreator" aria-label="Editar"
                 ng-click="$ctrl.fillSelectedComment(item)">
                 <md-tooltip md-direction="top">Editar</md-tooltip>
                 <md-icon md-font-set="material-icons" aria-label="Editar">edited</md-icon>
               </md-button>
             </div>
-            <div layout="row" layout-align="end center" hide-lg hide-xl>
-              <md-button class="md-icon-button md-warn" ng-show="item.isCreate" aria-label="Excluir"
+            <div layout="row" layout-align="end center" ng-show="item.isCreator" hide-lg hide-xl>
+              <md-button class="md-icon-button md-warn" aria-label="Excluir"
                 ng-click="$ctrl.deleteSelectedComment(item._id)">
                 <md-tooltip md-direction="top">Excluir</md-tooltip>
                 <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
               </md-button>
-              <md-button class="md-accent md-icon-button" ng-show="item.isCreate" aria-label="Editar Comentário"
+              <md-button class="md-accent md-icon-button" aria-label="Editar Comentário"
                 ng-click="$ctrl.fillSelectedComment(item)">
                 <md-tooltip md-direction="top">Editar Comentário</md-tooltip>
                 <md-icon md-font-set="material-icons" aria-label="Editar Comentário">edited</md-icon>
@@ -64,6 +65,13 @@
             </div>
           </div>
         </md-list>
+      </div>
+      <div layout="row" layout-align="end center">
+        <otus-generic-list-paginator class="layout-pagination paginator" layout="row" layout-align="end center"
+          call-validation-items-limits="$ctrl.callValidationItemsLimits"
+          stuntman-search-settings="$ctrl.stuntmanSearchSettings" search-settings-parser="$ctrl.searchSettingsParser"
+          items="$ctrl.items" paginator-active="$ctrl.paginatorActive">
+        </otus-generic-list-paginator>
       </div>
       <div layout="column" layout-padding class="comment-textarea">
         <textarea maxlength="400" rows="5" max-rows="8" class="comment-box" ng-model="$ctrl.comment"

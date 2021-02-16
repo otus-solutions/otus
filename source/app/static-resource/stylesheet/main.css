@@ -1480,7 +1480,7 @@ otus-user-comment-dashboard-list .margin-line {
 }
 
 otus-user-comment-dashboard-list .layout-box {
-  min-height: 20vh;
+  min-height: 40vh;
 }
 
 otus-user-comment-dashboard-list .comment-image {
@@ -1785,5 +1785,13 @@ otus-user-comment-list .comment-box {
   -webkit-transition: height 2s ease;
   transition: height 2s ease;
   resize: none;
+}
+
+otus-user-comment-list .margin-top-layout {
+  margin-top: 90px;
+}
+
+otus-user-comment-list .layout-pagination {
+  width: 50vw;
 }
 /*# sourceMappingURL=main.css.map */

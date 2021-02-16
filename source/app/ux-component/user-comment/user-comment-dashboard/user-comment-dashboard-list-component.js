@@ -36,7 +36,9 @@
     self.$onInit = onInit;
 
     self.items = [];
-    self.selectedCommentId = null;
+    self.selectedComment = null;
+    self.stuntmanSearchSettings = {};
+    self.recruitmentNumber = null;
 
     function onInit() {
       EventService.onParticipantSelected(_loadNoteAboutParticipantDashboard);
@@ -44,7 +46,14 @@
     }
 
     function _loadNoteAboutParticipantDashboard() {
-      UserCommentService.getNoteAboutParticipant(LIMIT, SKIP).then((arrayComment) => {
+      self.recruitmentNumber = UserCommentService.getSelectedParticipant().recruitmentNumber
+      self.stuntmanSearchSettings = {
+        currentQuantity: SKIP,
+        quantityToGet: LIMIT,
+        recruitmentNumber: self.recruitmentNumber
+      }
+
+      UserCommentService.getNoteAboutParticipant(self.stuntmanSearchSettings).then((arrayComment) => {
         self.items = arrayComment
       })
     }
@@ -58,7 +67,7 @@
       UserCommentService.showStarSelectedUserComment(userComment._id, starred)
         .then(() => {
           UserCommentService.showMsg('successMessage');
-          __loadNoteAboutParticipantDashboard();
+          _loadNoteAboutParticipantDashboard();
         })
         .catch(() => {
           UserCommentService.showMsg('failureMessage');
@@ -74,11 +83,12 @@
     }
 
     function _updateUserComment() {
-      UserCommentService.updateUserComment(self.selectedCommentId, self.comment)
+      self.selectedComment.comment = self.comment;
+      UserCommentService.updateUserComment(self.selectedComment)
         .then(() => {
           UserCommentService.showMsg('updateSuccessMessage');
           _loadNoteAboutParticipantDashboard();
-          self.selectedCommentId = null;
+          self.selectedComment = null;
           self.comment = "";
         })
         .catch(() => {
@@ -87,10 +97,10 @@
     }
 
     function saveUserComment() {
-      if (self.selectedCommentId) {
+      if (self.selectedComment) {
         _updateUserComment();
       } else {
-        UserCommentService.saveUserComment(self.comment)
+        UserCommentService.saveUserComment({ comment: self.comment, recruitmentNumber: self.recruitmentNumber })
           .then(() => {
             UserCommentService.showMsg('successUserCommentCreation');
             self.comment = "";
@@ -103,22 +113,22 @@
     }
 
     function fillSelectedComment(itemComment) {
-      if (self.selectedCommentId) {
+      if (self.selectedComment) {
         UserCommentService.showMsg('conflictMessage');
         DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
           .then(function () {
             self.comment = itemComment.comment;
-            self.selectedCommentId = itemComment._id;
+            self.selectedComment = itemComment;
           });
       } else {
         self.comment = itemComment.comment;
-        self.selectedCommentId = itemComment._id;
+        self.selectedComment = itemComment;
       }
     }
 
     function cancelFillSelectedComment() {
       self.comment = "";
-      self.selectedCommentId = null;
+      self.selectedComment = null;
     }
 
     function deleteSelectedComment(commentId) {

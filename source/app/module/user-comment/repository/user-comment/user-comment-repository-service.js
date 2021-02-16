@@ -18,16 +18,12 @@
     self.saveUserComment = saveUserComment;
     self.updateUserComment = updateUserComment;
 
-    function getNoteAboutParticipant(limit, skip) {
-      return UserCommentCollectionService.getAllUsersComments(limit, skip);
+    function getNoteAboutParticipant(stuntmanSearchSettings) {
+      return UserCommentCollectionService.getAllUsersComments(stuntmanSearchSettings);
     }
 
     function showStarSelectedUserComment(commentId, starred) {
       return UserCommentCollectionService.showStarSelectedUserComment(commentId, starred);
-    }
-
-    function showStarSelectedUserComment(commentId) {
-      return UserCommentCollectionService.showStarSelectedUserComment(commentId);
     }
 
     function deleteSelectedComment(commentId) {
@@ -38,8 +34,8 @@
       return UserCommentCollectionService.saveUserComment(comment);
     }
 
-    function updateUserComment(commentId, comment) {
-      return UserCommentCollectionService.updateUserComment(commentId, comment)
+    function updateUserComment(comment) {
+      return UserCommentCollectionService.updateUserComment(comment)
     }
   }
 }());

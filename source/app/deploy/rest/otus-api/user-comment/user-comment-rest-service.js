@@ -22,10 +22,10 @@
     self.updateUserComment = updateUserComment;
 
     function initialize() {
-      _rest = OtusRestResourceService.getUserCommentResourceFactory();
+      _rest = OtusRestResourceService.getNoteAboutParticipantResourceFactory();
     }
 
-    function getAllUsersComments(limit, skip) {
+    function getAllUsersComments(searchSettings) {
       _checkRest();
       var data = [
         {
@@ -87,12 +87,12 @@
       test.data = data
 
       let request = $q.defer();
-      // return _rest.getAllUsersComments({limit: limit, skip: skip}).$promise
+      return _rest.getAll({ rn: searchSettings.recruitmentNumber }, searchSettings).$promise
+      // searchSettings
+      // request.resolve(test);
 
-      request.resolve(test);
 
-
-      return request.promise;
+      // return request.promise;
 
     }
 
@@ -101,24 +101,24 @@
       var data = true;
       var test = {}
       test.data = data
-      // return _rest.showStarSelectedUserComment({id:commentId, starred: starred}).$promise
+      return _rest.updateStarred({id:commentId, starred: starred}).$promise
 
-      request.resolve(test);
+      // request.resolve(test);
 
 
-      return request.promise;
+      // return request.promise;
     }
 
     function deleteSelectedComment(commentId) {
-      // return _rest.deleteSelectedComment(commentId);
+      return _rest.delete({ id: commentId }).$promise;
     }
 
     function saveUserComment(comment) {
-      // return _rest.saveUserComment(comment);
+      return _rest.create(comment).$promise;
     }
 
-    function updateUserComment(commentId, comment) {
-      // return _rest.updateUserComment(commentId, comment)
+    function updateUserComment(comment) {
+      return _rest.update(comment).$promise;
     }
 
     function _checkRest() {

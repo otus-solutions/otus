@@ -8,10 +8,11 @@
   Service.$inject = [
     '$mdToast',
     'otusjs.user.comment.repository.UserCommentRepositoryService',
-    'otusjs.user.comment.business.UserCommentValues'
+    'otusjs.user.comment.business.UserCommentValues',
+    'otusjs.participant.core.ContextService'
   ];
 
-  function Service($mdToast, UserCommentRepositoryService, UserCommentValues) {
+  function Service($mdToast, UserCommentRepositoryService, UserCommentValues, ContextService) {
     const self = this;
 
     self.showMsg = showMsg;
@@ -21,9 +22,14 @@
     self.saveUserComment = saveUserComment;
     self.updateUserComment = updateUserComment;
     self.getFormattedDate = getFormattedDate;
+    self.getSelectedParticipant = getSelectedParticipant;
 
-    function getNoteAboutParticipant(limit, skip) {
-      return UserCommentRepositoryService.getNoteAboutParticipant(limit, skip);
+    function getSelectedParticipant() {
+      return ContextService.getSelectedParticipant();
+    }
+
+    function getNoteAboutParticipant(stuntmanSearchSettings) {
+      return UserCommentRepositoryService.getNoteAboutParticipant(stuntmanSearchSettings);
     }
 
     function showStarSelectedUserComment(commentId, starred) {
@@ -34,12 +40,12 @@
       return UserCommentRepositoryService.deleteSelectedComment(commentId);
     }
 
-    function  saveUserComment(comment) {
+    function saveUserComment(comment) {
       return UserCommentRepositoryService.saveUserComment(comment);
     }
 
-    function updateUserComment(commentId, comment) {
-      return UserCommentRepositoryService.updateUserComment(commentId, comment)
+    function updateUserComment(comment) {
+      return UserCommentRepositoryService.updateUserComment(comment)
     }
 
     function getFormattedDate(date) {
