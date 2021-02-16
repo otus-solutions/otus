@@ -9,6 +9,7 @@
     }).controller('otusUserCommentListCtrl', Controller);
 
   Controller.$inject = [
+    '$element',
     'otusjs.participant.core.EventService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentService',
@@ -17,7 +18,7 @@
     'otusjs.genericListViewer.GenericListViewerService',
   ];
 
-  function Controller(EventService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS, LoadingScreenService, GenericListViewerService) {
+  function Controller($element, EventService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS, LoadingScreenService, GenericListViewerService) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
     const LIMIT = 10;
     const SKIP = 0;
@@ -124,16 +125,18 @@
     }
 
     function fillSelectedComment(itemComment) {
-      if (self.selectedComment) {
+      if (self.selectedComment && self.selectedComment._id !== itemComment._id) {
         UserCommentService.showMsg('conflictMessage');
         DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
           .then(function () {
             self.comment = itemComment.comment;
             self.selectedComment = itemComment;
+            $element.find('#focus-textarea').focus();
           });
       } else {
         self.comment = itemComment.comment;
         self.selectedComment = itemComment;
+        $element.find('#focus-textarea').focus();
       }
     }
 

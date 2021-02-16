@@ -114,7 +114,7 @@
     }
 
     function fillSelectedComment(itemComment) {
-      if (self.selectedComment) {
+      if (self.selectedComment && self.selectedComment._id !== itemComment._id) {
         UserCommentService.showMsg('conflictMessage');
         DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
           .then(function () {
