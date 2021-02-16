@@ -89,6 +89,13 @@
         </md-button>
         <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
         <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
+        <generate-custom-label-dialog
+          primary-button="true"
+          participant-button="false"
+          bio-material-button="true"
+          label-data="$ctrl.participantLabel"
+          style="float: right;"
+        />
       </md-list>
 
       <div ng-if="!$ctrl.originalTubeHasCode()">
