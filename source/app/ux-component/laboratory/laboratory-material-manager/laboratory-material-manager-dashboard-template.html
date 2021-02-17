@@ -84,6 +84,7 @@
             </div>
           </md-card>
         </div>
+        
         <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
           COLETAR
         </md-button>
@@ -93,7 +94,6 @@
           primary-button="true"
           participant-button="false"
           bio-material-button="true"
-          label-data="$ctrl.participantLabel"
           style="float: right;"
         />
       </md-list>
