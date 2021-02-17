@@ -36,14 +36,14 @@
         <p class="md-body-3 margin-line ellipsis">{{item.comment}}</p>
       </div>
       <div class="comment-button">
-        <div layout="row" layout-align="end center" hide-xs hide-sm hide-md
-          ng-show="$id == item.actionButtons">
-          <md-button class="md-icon-button md-warn" ng-show="item.isCreator"aria-label="Excluir"
+        <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
+          <md-button class="md-icon-button md-warn" ng-show="item.isCreator" aria-label="Excluir"
             ng-click="$ctrl.deleteSelectedComment(item._id)">
             <md-tooltip md-direction="top">Excluir</md-tooltip>
             <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
           </md-button>
-          <md-button class="md-accent md-icon-button" ng-show="item.isCreator" aria-label="Editar" ng-click="$ctrl.fillSelectedComment(item)">
+          <md-button class="md-accent md-icon-button" ng-show="item.isCreator" aria-label="Editar"
+            ng-click="$ctrl.fillSelectedComment(item)">
             <md-tooltip md-direction="top">Editar</md-tooltip>
             <md-icon md-font-set="material-icons" aria-label="Editar">edited</md-icon>
           </md-button>
@@ -69,10 +69,17 @@
       <md-icon md-font-set="material-icons">comment</md-icon>
     </md-button>
   </div>
-  <div layout="column" layout-padding class="comment-textarea">
-    <textarea maxlength="800" rows="5" max-rows="10" class="comment-box" ng-model="$ctrl.comment"
-      placeholder="Digite o texto aqui"></textarea>
-  </div>
+  <form name="userComment">
+    <md-input-container layout="column" layout-padding class="comment-textarea">
+      <label>Comentar</label>
+      <textarea name="comment" id="focus-textarea" md-no-resize md-maxlength="800" rows="5" max-rows="10" class="comment-box"
+        ng-model="$ctrl.comment" aria-label="comentar"
+        placeholder="Digite o texto aqui"></textarea>
+      <div ng-messages="userComment.comment.$error" ng-show="userComment.comment.$dirty">
+        <div ng-message="md-maxlength">comprimento máximo de 800 caracteres apenas!</div>
+      </div>
+    </md-input-container>
+  </form>
   <div layout="row" layout-align="end center">
     <md-button class="md-raised" ng-show="$ctrl.comment" aria-label="cancel edited"
       ng-click="$ctrl.cancelFillSelectedComment()">

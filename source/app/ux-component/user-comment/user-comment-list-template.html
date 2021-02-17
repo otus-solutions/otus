@@ -65,10 +65,16 @@
           </div>
         </md-list>
       </div>
-      <div layout="column" layout-padding class="comment-textarea">
-        <textarea id="focus-textarea" maxlength="800" rows="5" max-rows="10" class="comment-box" ng-model="$ctrl.comment"
-          placeholder="Digite o texto aqui"></textarea>
-      </div>
+      <form name="userComment">
+        <md-input-container layout="column" class="comment-textarea">
+          <label>Comentar</label>
+          <textarea name="comment" id="focus-textarea" md-maxlength="800" rows="5" max-rows="10" class="md-textarea comment-box"
+            ng-model="$ctrl.comment" aria-label="comentar" placeholder="Digite o texto aqui"></textarea>
+          <div ng-messages="userComment.comment.$error" ng-show="userComment.comment.$dirty">
+            <div ng-message="md-maxlength">comprimento máximo de 800 caracteres apenas!</div>
+          </div>
+        </md-input-container>
+      </form>
       <div layout="row" layout-align="end center">
         <md-button class="md-raised" ng-show="$ctrl.comment" aria-label="cancel edited"
           ng-click="$ctrl.cancelFillSelectedComment()">

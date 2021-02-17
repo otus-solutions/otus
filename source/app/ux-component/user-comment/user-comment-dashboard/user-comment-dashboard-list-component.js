@@ -9,6 +9,7 @@
     }).controller('otusUserCommentDashboardListCtrl', Controller);
 
   Controller.$inject = [
+    '$element',
     'otusjs.participant.core.EventService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService',
@@ -16,7 +17,7 @@
     'USER_COMMENT_MANAGER_LABELS'
   ];
 
-  function Controller(EventService, ApplicationStateService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS) {
+  function Controller($element, EventService, ApplicationStateService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
     const LIMIT = 5;
     const SKIP = 0;
@@ -120,10 +121,12 @@
           .then(function () {
             self.comment = itemComment.comment;
             self.selectedComment = itemComment;
+            $element.find('#focus-textarea').focus();
           });
       } else {
         self.comment = itemComment.comment;
         self.selectedComment = itemComment;
+        $element.find('#focus-textarea').focus();
       }
     }
 
