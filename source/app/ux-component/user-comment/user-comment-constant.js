@@ -12,6 +12,13 @@
           ariaLabel: 'Confirmação de troca',
           buttons: { typeDialogTrueAndFalse: true }
         },
+        confirmEditSelected: {
+          dialogToTitle: 'Confirmação de seleção:',
+          titleToText: 'O comentário poderá ser editado.',
+          textDialog: 'Gostaria de editar?',
+          ariaLabel: 'Confirmação de edição',
+          buttons: { typeDialogTrueAndFalse: true }
+        },
         deleteUserComment: {
           dialogToTitle: 'Confirmação de deleção:',
           titleToText: 'O comentário será removido.',

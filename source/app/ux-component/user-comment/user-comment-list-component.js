@@ -148,9 +148,12 @@
             $element.find('#focus-textarea').focus();
           });
       } else {
-        self.comment = itemComment.comment;
-        self.selectedComment = itemComment;
-        $element.find('#focus-textarea').focus();
+        DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmEditSelected)
+          .then(function () {
+            self.comment = itemComment.comment;
+            self.selectedComment = itemComment;
+            $element.find('#focus-textarea').focus();
+          })
       }
     }
 
