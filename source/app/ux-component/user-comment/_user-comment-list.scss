@@ -9,8 +9,9 @@ otus-user-comment-list {
       grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
       grid-template-rows: auto;
       grid-template-areas:
-        "comment-image comment-name  comment-date  comment-status  comment-show-more comment-show-more"
-        "comment-image comment-text  comment-text  comment-text  comment-button comment-button";
+        "comment-image . comment-date comment-status comment-button comment-button"
+        "comment-image comment-name  comment-name  comment-name comment-name comment-show-more"
+        ". comment-text  comment-text  comment-text  comment-text   .";
     }
 
     .md-body-2 {
