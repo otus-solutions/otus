@@ -96,16 +96,17 @@
             bio-material-button="true"
             ng-style="{
               'width': $ctrl.$mdMedia('xs') && '100%',
-              'padding-right': '15px',
-              'margin-right': 'auto'
+              'padding-right': '15px'
             }"
             class="responsive-label-button-wrapper"
           />
-          <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
-            COLETAR
-          </md-button>
-          <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
-          <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
+          <div style="margin-left: auto;">
+            <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
+              COLETAR
+            </md-button>
+            <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
+            <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
+          </div>
         </div>
       </md-list>
 
