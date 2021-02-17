@@ -8,6 +8,7 @@
   Controller.$inject = [
     '$mdToast',
     '$filter',
+    '$mdMedia',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.participant.business.ParticipantManagerService',
@@ -16,10 +17,11 @@
     'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($mdToast, $filter, LoadingScreenService,
+  function Controller($mdToast, $filter, $mdMedia, LoadingScreenService,
                       ParticipantLaboratoryService, ParticipantManagerService,
                       DialogService, UserAccessPermissionService, LaboratoryViewerService) {
     var self = this;
+    self.$mdMedia = $mdMedia;
     self.participantManagerService = ParticipantManagerService;
     self.tubeCode = "";
     self.originalTube = {};
