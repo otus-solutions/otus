@@ -18,6 +18,10 @@
       grid-area: customMetadataItem;
     }
   }
+
+  .responsive-label-button-wrapper button {
+    width: 100%;
+  }
 </style>
 
 <md-content flex="" ng-if="$ctrl.laboratoryExists">
@@ -84,11 +88,26 @@
             </div>
           </md-card>
         </div>
-        <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
-          COLETAR
-        </md-button>
-        <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
-        <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
+        
+        <div layout="row" layout-wrap>
+          <generate-custom-label-dialog
+            primary-button="true"
+            participant-button="false"
+            bio-material-button="true"
+            ng-style="{
+              'width': $ctrl.$mdMedia('xs') && '100%',
+              'padding-right': '15px'
+            }"
+            class="responsive-label-button-wrapper"
+          />
+          <div style="margin-left: auto;">
+            <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
+              COLETAR
+            </md-button>
+            <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
+            <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
+          </div>
+        </div>
       </md-list>
 
       <div ng-if="!$ctrl.originalTubeHasCode()">
