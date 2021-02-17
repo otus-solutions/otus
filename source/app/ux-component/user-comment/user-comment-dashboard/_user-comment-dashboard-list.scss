@@ -6,7 +6,7 @@ otus-user-comment-dashboard-list {
       height: auto;
       padding-top: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      grid-template-columns: 0.3fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+      grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
       grid-template-rows: auto;
       grid-template-areas:
         "comment-image comment-name  comment-date  comment-status comment-button comment-button"
@@ -109,6 +109,10 @@ otus-user-comment-dashboard-list {
 
   .comment-text {
     grid-area: comment-text;
+    border-radius: 5px;
+    background-color: rgba(158, 158, 158, 0.1);
+    margin-bottom: 8px;
+    padding-left: 8px;
   }
 
   .comment-button {

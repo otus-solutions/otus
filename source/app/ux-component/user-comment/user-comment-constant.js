@@ -19,6 +19,16 @@
           ariaLabel: 'Confirmação de deleção',
           buttons: { typeDialogTrueAndFalse: true }
         }
+      },
+      VISIBILITY_ICON: {
+        'true': {
+          icon: 'visibility',
+          tooltip: 'Ocultar Detalhes'
+        },
+        'false': {
+          icon: 'visibility_off',
+          tooltip: 'Mostrar Detalhes'
+        }
       }
     })
 }());

@@ -34,8 +34,15 @@
               Data de realização
             </md-tooltip>
           </div>
-          <div class="comment-text" layout="row" layout-align="start center">
-            <p class="md-body-3 margin-line">{{item.comment}}</p>
+          <div class="comment-show-more" layout="row" layout-align="start center">
+            <md-button class="see-last-msg md-mini" ng-click="$ctrl.showMore(item)">
+              <md-icon>{{item.showMoreIcon.icon}}
+                <md-tooltip md-direction="top">{{item.showMoreIcon.tooltip}}</md-tooltip>
+              </md-icon>
+            </md-button>
+          </div>
+          <div class="comment-text md-accordion" ng-cloak ng-init="$ctrl.showAttribute(item)" layout="row">
+            <p ng-class="{dataContent:true, activeContent:item.expanded}" class="md-body-3 margin-line" md-truncate>{{item.comment}}</p>
           </div>
           <div class="comment-button">
             <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
@@ -68,11 +75,8 @@
       <form name="userComment">
         <md-input-container layout="column" class="comment-textarea">
           <label>Comentar</label>
-          <textarea name="comment" id="focus-textarea" md-maxlength="800" rows="5" max-rows="10" class="md-textarea comment-box"
+          <textarea name="comment" id="focus-textarea" rows="5" max-rows="10" class="md-textarea comment-box"
             ng-model="$ctrl.comment" aria-label="comentar" placeholder="Digite o texto aqui"></textarea>
-          <div ng-messages="userComment.comment.$error" ng-show="userComment.comment.$dirty">
-            <div ng-message="md-maxlength">comprimento máximo de 800 caracteres apenas!</div>
-          </div>
         </md-input-container>
       </form>
       <div layout="row" layout-align="end center">

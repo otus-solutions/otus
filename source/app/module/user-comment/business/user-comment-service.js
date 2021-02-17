@@ -9,10 +9,10 @@
     '$mdToast',
     'otusjs.user.comment.repository.UserCommentRepositoryService',
     'otusjs.user.comment.business.UserCommentValues',
-    'otusjs.participant.core.ContextService'
+    'otusjs.participant.core.ContextService',
   ];
 
-  function Service($mdToast, UserCommentRepositoryService, UserCommentValues, ContextService) {
+  function Service($mdToast, UserCommentRepositoryService, UserCommentValues, CommentContextService) {
     const self = this;
 
     self.showMsg = showMsg;
@@ -25,7 +25,7 @@
     self.getSelectedParticipant = getSelectedParticipant;
 
     function getSelectedParticipant() {
-      return ContextService.getSelectedParticipant();
+      return CommentContextService.getSelectedParticipant();
     }
 
     function getNoteAboutParticipant(stuntmanSearchSettings) {

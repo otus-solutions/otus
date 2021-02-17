@@ -72,12 +72,9 @@
   <form name="userComment">
     <md-input-container layout="column" layout-padding class="comment-textarea">
       <label>Comentar</label>
-      <textarea name="comment" id="focus-textarea" md-no-resize md-maxlength="800" rows="5" max-rows="10" class="comment-box"
+      <textarea name="comment" id="focus-textarea" md-no-resize rows="5" max-rows="10" class="comment-box"
         ng-model="$ctrl.comment" aria-label="comentar"
         placeholder="Digite o texto aqui"></textarea>
-      <div ng-messages="userComment.comment.$error" ng-show="userComment.comment.$dirty">
-        <div ng-message="md-maxlength">comprimento máximo de 800 caracteres apenas!</div>
-      </div>
     </md-input-container>
   </form>
   <div layout="row" layout-align="end center">
