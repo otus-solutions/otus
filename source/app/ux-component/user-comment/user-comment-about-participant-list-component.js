@@ -10,14 +10,15 @@
 
   Controller.$inject = [
     '$element',
-    'otusjs.participant.core.EventService',
+    'otusjs.otus.dashboard.core.EventService',
+    'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentAboutParticipantService',
     'USER_COMMENT_MANAGER_LABELS',
     'otusjs.genericListViewer.GenericListViewerService',
   ];
 
-  function Controller($element, EventService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS, GenericListViewerService) {
+  function Controller($element, DashboardEventService, DashboardService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS, GenericListViewerService) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
     const LIMIT = 10;
     const SKIP = 0;
@@ -40,22 +41,38 @@
 
     self.items = [];
     self.selectedComment = null;
-    self.recruitmentNumber = null;
+    self.selectedParticipant = null;
     self.paginatorActive = true;
     self.stuntmanSearchSettings = {};
 
     function onInit() {
-      EventService.onParticipantSelected(_loadNoteAboutParticipant);
-      _loadNoteAboutParticipant();
+      _loadSelectedParticipant();
+      DashboardEventService.onParticipantSelected(_loadSelectedParticipant);
+    }
+
+    function _loadSelectedParticipant(participantData) {
+      if (participantData) {
+        self.selectedParticipant = participantData;
+        self.isEmpty = false;
+        _loadNoteAboutParticipant();
+      } else {
+        DashboardService
+          .getSelectedParticipant()
+          .then(function (participantData) {
+            if (participantData) {
+              self.selectedParticipant = participantData;
+              self.isEmpty = false;
+              _loadNoteAboutParticipant();
+            }
+          });
+      }
     }
 
     function _loadNoteAboutParticipant() {
-      self.recruitmentNumber = UserCommentAboutParticipantService.getSelectedParticipant().recruitmentNumber
-
       self.stuntmanSearchSettings = {
         currentQuantity: SKIP,
         quantityToGet: LIMIT,
-        recruitmentNumber: self.recruitmentNumber
+        recruitmentNumber: self.selectedParticipant.recruitmentNumber
       }
 
       initialize(SKIP, LIMIT);
@@ -123,7 +140,7 @@
       if (self.selectedComment) {
         _updateUserCommentAboutParticipant();
       } else {
-        UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.recruitmentNumber })
+        UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.selectedParticipant.recruitmentNumber })
           .then(() => {
             UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
             self.comment = "";

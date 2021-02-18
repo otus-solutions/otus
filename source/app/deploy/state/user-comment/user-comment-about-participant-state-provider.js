@@ -58,7 +58,7 @@
       'otusjs.user.business.UserAccessPermissionService'
     ];
 
-    function _loadStateData(ActivityContextService, ParticipantContextService, SessionContextService, Application, ActivityDataSourceService) {
+    function _loadStateData(ParticipantContextService, SessionContextService, Application) {
       Application
         .isDeployed()
         .then(function () {
@@ -71,11 +71,9 @@
         });
     }
     _loadStateData.$inject = [
-      'otusjs.activity.core.ContextService',
       'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService',
-      'otusjs.deploy.ActivityDataSourceService'
+      'otusjs.application.core.ModuleService'
     ];
   }
 }());

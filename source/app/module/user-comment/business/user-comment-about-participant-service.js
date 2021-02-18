@@ -8,8 +8,7 @@
   Service.$inject = [
     '$mdToast',
     'otusjs.user.comment.repository.UserCommentAboutParticipantRepositoryService',
-    'otusjs.user.comment.business.UserCommentAboutParticipantValues',
-    'otusjs.participant.core.ContextService',
+    'otusjs.user.comment.business.UserCommentAboutParticipantValues'
   ];
 
   function Service($mdToast, UserCommentAboutParticipantRepositoryService, UserCommentAboutParticipantValues, CommentContextService) {
@@ -22,11 +21,6 @@
     self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
     self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
     self.getFormattedDate = getFormattedDate;
-    self.getSelectedParticipant = getSelectedParticipant;
-
-    function getSelectedParticipant() {
-      return CommentContextService.getSelectedParticipant();
-    }
 
     function getNoteAboutParticipant(stuntmanSearchSettings) {
       return UserCommentAboutParticipantRepositoryService.getNoteAboutParticipant(stuntmanSearchSettings);

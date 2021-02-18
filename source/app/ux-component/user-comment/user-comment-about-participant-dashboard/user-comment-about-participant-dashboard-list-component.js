@@ -5,19 +5,32 @@
     .module('otusjs.otus.uxComponent')
     .component('otusUserCommentAboutParticipantDashboardList', {
       controller: 'otusUserCommentAboutParticipantDashboardListCtrl as $ctrl',
-      templateUrl: ' app/ux-component/user-comment/user-comment-about-participant-dashboard/user-comment-about-participant-dashboard-list-template.html'
+      templateUrl: ' app/ux-component/user-comment/user-comment-about-participant-dashboard/user-comment-about-participant-dashboard-list-template.html',
+      bindings: {
+        participant: '<'
+      }
     }).controller('otusUserCommentAboutParticipantDashboardListCtrl', Controller);
 
   Controller.$inject = [
     '$element',
+    'otusjs.otus.dashboard.core.EventService',
     'otusjs.participant.core.EventService',
+    'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentAboutParticipantService',
     'USER_COMMENT_MANAGER_LABELS'
   ];
 
-  function Controller($element, EventService, ApplicationStateService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS) {
+  function Controller(
+    $element,
+    DashboardEventService,
+    ParticipantEventService,
+    DashboardService,
+    ApplicationStateService,
+    DialogService,
+    UserCommentAboutParticipantService,
+    USER_COMMENT_MANAGER_LABELS) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
     const LIMIT = 5;
     const SKIP = 0;
@@ -42,16 +55,43 @@
     self.recruitmentNumber = null;
 
     function onInit() {
-      EventService.onParticipantSelected(_loadNoteAboutParticipantDashboard);
-      _loadNoteAboutParticipantDashboard();
+      _loadSelectedByBindingParticipant()
+      _loadSelectedParticipant();
+      DashboardEventService.onParticipantSelected(_loadSelectedParticipant);
+    }
+
+    function _loadSelectedParticipant(participantData) {
+      if (participantData) {
+        self.selectedParticipant = participantData;
+        self.isEmpty = false;
+        _loadNoteAboutParticipantDashboard();
+        ParticipantEventService.fireParticipantLoaded(participantData);
+      } else {
+        DashboardService
+          .getSelectedParticipant()
+          .then(function (participantData) {
+            if (participantData) {
+              self.selectedParticipant = participantData;
+              ParticipantEventService.fireParticipantLoaded(participantData)
+              self.isEmpty = false;
+              _loadNoteAboutParticipantDashboard();
+            }
+          });
+      }
+    }
+
+    function _loadSelectedByBindingParticipant() {
+      if (self.participant) {
+        self.selectedParticipant = self.participant;
+        _loadNoteAboutParticipantDashboard();
+      }
     }
 
     function _loadNoteAboutParticipantDashboard() {
-      self.recruitmentNumber = UserCommentAboutParticipantService.getSelectedParticipant().recruitmentNumber
       self.stuntmanSearchSettings = {
         currentQuantity: SKIP,
         quantityToGet: LIMIT,
-        recruitmentNumber: self.recruitmentNumber
+        recruitmentNumber: self.selectedParticipant.recruitmentNumber
       }
 
       UserCommentAboutParticipantService.getNoteAboutParticipant(self.stuntmanSearchSettings).then((arrayComment) => {
@@ -102,7 +142,7 @@
       if (self.selectedComment) {
         _updateUserCommentAboutParticipant();
       } else {
-        UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.recruitmentNumber })
+        UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.selectedParticipant.recruitmentNumber })
           .then(() => {
             UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
             self.comment = "";
