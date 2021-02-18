@@ -1,4 +1,4 @@
-describe('otusUserCommentAboutParticipantListCtrl Test', function () {
+describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
 
   let Mock = {};
   let Injections = [];
@@ -14,11 +14,11 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
       Injections.UserCommentAboutParticipantService = $injector.get('otusjs.user.comment.business.UserCommentAboutParticipantService');
       Injections.DialogShowService = $injector.get('otusjs.application.dialog.DialogShowService');
       Injections.USER_COMMENT_MANAGER_LABELS = $injector.get('USER_COMMENT_MANAGER_LABELS');
-      Injections.GenericListViewerService = $injector.get('otusjs.genericListViewer.GenericListViewerService')
+      Injections.ApplicationStateService = $injector.get('otusjs.application.state.ApplicationStateService');
 
       mockInitialize($rootScope, $q);
 
-      controller = $controller('otusUserCommentAboutParticipantListCtrl', Injections);
+      controller = $controller('otusUserCommentAboutParticipantDashboardListCtrl', Injections);
     });
   });
 
@@ -35,10 +35,7 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
     expect(controller.saveUserCommentAboutParticipant).toBeDefined();
     expect(controller.colorStar).toBeDefined();
     expect(controller.getFormattedDate).toBeDefined();
-    expect(controller.showMore).toBeDefined();
-    expect(controller.showAttribute).toBeDefined();
-    expect(controller.getAllItems).toBeDefined();
-    expect(controller.callValidationItemsLimits).toBeDefined();
+    expect(controller.viewPlusUserCommentAboutParticipant).toBeDefined();
   });
 
   describe('Methods Suite Test', function () {
@@ -158,17 +155,12 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
       expect(Injections.UserCommentAboutParticipantService.getFormattedDate).toHaveBeenCalledWith(Mock.items[0].creationDate);
     });
 
-    it('showMoreMethod should initialized the controller variable show more', function () {
-      Mock.items[0].expanded = false;
-      controller.showMore(Mock.items[0]);
-      expect(Mock.items[0].expanded).toEqual(true);
-      expect(Mock.items[0].showMoreIcon).toEqual(Mock.showMoreIcon);
-    });
+    it('viewPlusUserCommentAboutParticipantMethod should initialized the state userCommentAboutParticipant', function () {
+      spyOn(Injections.ApplicationStateService, 'userCommentAboutParticipant').and.callThrough();
 
-    it('showAttributeMethod should initialized the controller variable show attribute', function () {
-      controller.showAttribute(Mock.items[0]);
-      expect(Mock.items[0].expanded).toEqual(false);
-      expect(Mock.items[0].showMoreIcon).toEqual(Mock.showMoreIcon2);
+      controller.viewPlusUserCommentAboutParticipant();
+
+      expect(Injections.ApplicationStateService.userCommentAboutParticipant).toHaveBeenCalledTimes(1);
     });
 
   });

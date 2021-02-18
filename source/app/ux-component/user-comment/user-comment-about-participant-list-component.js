@@ -128,8 +128,7 @@
         .then(() => {
           UserCommentAboutParticipantService.showMsg('updateSuccessMessage');
           _loadNoteAboutParticipant();
-          self.selectedComment = null;
-          self.comment = "";
+          cancelFillSelectedComment();
         })
         .catch(() => {
           UserCommentAboutParticipantService.showMsg('failureMessage');

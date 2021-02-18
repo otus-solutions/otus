@@ -52,7 +52,7 @@
     self.items = [];
     self.selectedComment = null;
     self.stuntmanSearchSettings = {};
-    self.recruitmentNumber = null;
+    self.selectedParticipant = null;
 
     function onInit() {
       _loadSelectedByBindingParticipant()
