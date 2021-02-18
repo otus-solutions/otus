@@ -14,11 +14,10 @@
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentAboutParticipantService',
     'USER_COMMENT_MANAGER_LABELS',
-    'otusjs.deploy.LoadingScreenService',
     'otusjs.genericListViewer.GenericListViewerService',
   ];
 
-  function Controller($element, EventService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS, LoadingScreenService, GenericListViewerService) {
+  function Controller($element, EventService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS, GenericListViewerService) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
     const LIMIT = 10;
     const SKIP = 0;
@@ -46,8 +45,6 @@
     self.stuntmanSearchSettings = {};
 
     function onInit() {
-      // self.expanded = false;
-      // self.showMoreIcon = VISIBILITY_ICON['false'];
       EventService.onParticipantSelected(_loadNoteAboutParticipant);
       _loadNoteAboutParticipant();
     }
