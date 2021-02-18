@@ -30,7 +30,7 @@
       'MATERIAL_LABEL': 'material-label',
       'RECOVERY': 'recovery',
       'ACTIVITY_IMPORT': 'activity-import',
-      'USER_COMMENT': 'user-comment'
+      'USER_COMMENT_ABOUT_PARTICIPANT': 'user-comment-about-participant'
     });
 
 }());

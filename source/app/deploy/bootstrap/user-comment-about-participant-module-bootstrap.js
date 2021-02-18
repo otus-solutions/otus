@@ -1,15 +1,15 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.UserCommentModuleBootstrap', Service);
+    .service('otusjs.deploy.UserCommentAboutParticipantModuleBootstrap', Service);
 
   Service.$inject = [
     'otusjs.user.comment.core.ModuleService',
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
-    'otusjs.deploy.UserCommentRestService'
+    'otusjs.deploy.UserCommentAboutParticipantRestService'
   ];
 
   function Service(

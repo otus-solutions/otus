@@ -3,21 +3,21 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusUserCommentDashboardList', {
-      controller: 'otusUserCommentDashboardListCtrl as $ctrl',
-      templateUrl: 'app/ux-component/user-comment/user-comment-dashboard/user-comment-dashboard-list-template.html'
-    }).controller('otusUserCommentDashboardListCtrl', Controller);
+    .component('otusUserCommentAboutParticipantDashboardList', {
+      controller: 'otusUserCommentAboutParticipantDashboardListCtrl as $ctrl',
+      templateUrl: ' app/ux-component/user-comment/user-comment-about-participant-dashboard/user-comment-about-participant-dashboard-list-template.html'
+    }).controller('otusUserCommentAboutParticipantDashboardListCtrl', Controller);
 
   Controller.$inject = [
     '$element',
     'otusjs.participant.core.EventService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService',
-    'otusjs.user.comment.business.UserCommentService',
+    'otusjs.user.comment.business.UserCommentAboutParticipantService',
     'USER_COMMENT_MANAGER_LABELS'
   ];
 
-  function Controller($element, EventService, ApplicationStateService, DialogService, UserCommentService, USER_COMMENT_MANAGER_LABELS) {
+  function Controller($element, EventService, ApplicationStateService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS) {
     const COLOR_STAR = 'rgb(253, 204, 13)';
     const LIMIT = 5;
     const SKIP = 0;
@@ -28,11 +28,11 @@
     self.fillSelectedComment = fillSelectedComment;
     self.cancelFillSelectedComment = cancelFillSelectedComment;
     self.deleteSelectedComment = deleteSelectedComment;
-    self.showStarSelectedUserComment = showStarSelectedUserComment;
-    self.saveUserComment = saveUserComment;
+    self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
+    self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
     self.colorStar = colorStar;
     self.getFormattedDate = getFormattedDate;
-    self.viewPlusUserComment = viewPlusUserComment;
+    self.viewPlusUserCommentAboutParticipant = viewPlusUserCommentAboutParticipant;
 
     self.$onInit = onInit;
 
@@ -47,32 +47,32 @@
     }
 
     function _loadNoteAboutParticipantDashboard() {
-      self.recruitmentNumber = UserCommentService.getSelectedParticipant().recruitmentNumber
+      self.recruitmentNumber = UserCommentAboutParticipantService.getSelectedParticipant().recruitmentNumber
       self.stuntmanSearchSettings = {
         currentQuantity: SKIP,
         quantityToGet: LIMIT,
         recruitmentNumber: self.recruitmentNumber
       }
 
-      UserCommentService.getNoteAboutParticipant(self.stuntmanSearchSettings).then((arrayComment) => {
+      UserCommentAboutParticipantService.getNoteAboutParticipant(self.stuntmanSearchSettings).then((arrayComment) => {
         self.items = arrayComment
       })
     }
 
-    function viewPlusUserComment() {
-      ApplicationStateService.userComment();
+    function viewPlusUserCommentAboutParticipant() {
+      ApplicationStateService.userCommentAboutParticipant();
     }
 
-    function showStarSelectedUserComment(userComment) {
-     let starred = userComment.starred ? false : true;
-      UserCommentService.showStarSelectedUserComment(userComment._id, starred)
+    function showStarSelectedUserCommentAboutParticipant(userCommentAboutParticipant) {
+      let starred = userCommentAboutParticipant.starred ? false : true;
+      UserCommentAboutParticipantService.showStarSelectedUserCommentAboutParticipant(userCommentAboutParticipant._id, starred)
         .then(() => {
-          userComment.starred = starred //note com a chave de identificação que do angular permite atualizar campos
+          userCommentAboutParticipant.starred = starred //note com a chave de identificação que do angular permite atualizar campos
           starred = null;
-          UserCommentService.showMsg('successMessage');
+          UserCommentAboutParticipantService.showMsg('successMessage');
         })
         .catch(() => {
-          UserCommentService.showMsg('failureMessage');
+          UserCommentAboutParticipantService.showMsg('failureMessage');
         })
     }
 
@@ -81,42 +81,42 @@
     }
 
     function getFormattedDate(date) {
-      return UserCommentService.getFormattedDate(date);
+      return UserCommentAboutParticipantService.getFormattedDate(date);
     }
 
-    function _updateUserComment() {
+    function _updateUserCommentAboutParticipant() {
       self.selectedComment.comment = self.comment;
-      UserCommentService.updateUserComment(self.selectedComment)
+      UserCommentAboutParticipantService.updateUserCommentAboutParticipant(self.selectedComment)
         .then(() => {
-          UserCommentService.showMsg('updateSuccessMessage');
+          UserCommentAboutParticipantService.showMsg('updateSuccessMessage');
           _loadNoteAboutParticipantDashboard();
           self.selectedComment = null;
           self.comment = "";
         })
         .catch(() => {
-          UserCommentService.showMsg('failureMessage');
+          UserCommentAboutParticipantService.showMsg('failureMessage');
         })
     }
 
-    function saveUserComment() {
+    function saveUserCommentAboutParticipant() {
       if (self.selectedComment) {
-        _updateUserComment();
+        _updateUserCommentAboutParticipant();
       } else {
-        UserCommentService.saveUserComment({ comment: self.comment, recruitmentNumber: self.recruitmentNumber })
+        UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.recruitmentNumber })
           .then(() => {
-            UserCommentService.showMsg('successUserCommentCreation');
+            UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
             self.comment = "";
             _loadNoteAboutParticipantDashboard();
           })
           .catch(() => {
-            UserCommentService.showMsg('failUserCommentCreation');
+            UserCommentAboutParticipantService.showMsg('failUserCommentAboutParticipantCreation');
           })
       }
     }
 
     function fillSelectedComment(itemComment) {
       if (self.selectedComment && self.selectedComment._id !== itemComment._id) {
-        UserCommentService.showMsg('conflictMessage');
+        UserCommentAboutParticipantService.showMsg('conflictMessage');
         DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
           .then(function () {
             self.comment = itemComment.comment;
@@ -139,15 +139,15 @@
     }
 
     function deleteSelectedComment(commentId) {
-      DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.deleteUserComment)
+      DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.deleteUserCommentAboutParticipant)
         .then(function () {
-          UserCommentService.deleteSelectedComment(commentId)
+          UserCommentAboutParticipantService.deleteSelectedComment(commentId)
             .then(() => {
-              UserCommentService.showMsg('deleteSuccessMessage');
+              UserCommentAboutParticipantService.showMsg('deleteSuccessMessage');
               _loadNoteAboutParticipantDashboard();
             })
             .catch(() => {
-              UserCommentService.showMsg('failureMessage');
+              UserCommentAboutParticipantService.showMsg('failureMessage');
             })
         });
     }

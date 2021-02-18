@@ -56,7 +56,7 @@
     self.activateIssueViewer = activateIssueViewer;
     self.activateIssueMessagesViewer = activateIssueMessagesViewer;
     self.activateParticipantActivityStage = activateParticipantActivityStage;
-    self.userComment = userComment;
+    self.userCommentAboutParticipant = userCommentAboutParticipant;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -226,12 +226,12 @@
       $state.go(STATE.ISSUE_MESSAGES_VIEWER);
     }
 
-    function activateMaterialLabelDashboard(){
+    function activateMaterialLabelDashboard() {
       $state.go(STATE.MATERIAL_LABEL);
     }
 
-    function userComment() {
-      $state.go(STATE.USER_COMMENT);
+    function userCommentAboutParticipant() {
+      $state.go(STATE.USER_COMMENT_ABOUT_PARTICIPANT);
     }
   }
 }());

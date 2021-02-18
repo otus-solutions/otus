@@ -10,7 +10,7 @@
     let _context = null;
     let _storage = null;
 
-    const CONTEXT = 'user_comment';
+    const CONTEXT = 'USER_COMMENT_ABOUT_PARTICIPANT';
 
     //* Public methods */
     self.begin = begin;

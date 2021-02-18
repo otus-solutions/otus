@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.user.comment.repository')
-    .service('otusjs.user.comment.repository.UserCommentCollectionService', Service);
+    .service('otusjs.user.comment.repository.UserCommentAboutParticipantCollectionService', Service);
 
   Service.$inject = [
     'otusjs.user.comment.core.ModuleService'
@@ -11,13 +11,13 @@
 
   function Service(ModuleService) {
     const self = this;
-    let _remoteStorage = ModuleService.getUserCommentRemoteStorage();
+    let _remoteStorage = ModuleService.getUserCommentAboutParticipantRemoteStorage();
 
     self.getAllUsersComments = getAllUsersComments;
-    self.showStarSelectedUserComment = showStarSelectedUserComment;
+    self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
     self.deleteSelectedComment = deleteSelectedComment;
-    self.saveUserComment = saveUserComment;
-    self.updateUserComment = updateUserComment;
+    self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
+    self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
 
     function getAllUsersComments(stuntmanSearchSettings) {
       return _remoteStorage.whenReady()
@@ -25,9 +25,9 @@
         .then(response => response.data);
     }
 
-    function showStarSelectedUserComment(commentId, starred) {
+    function showStarSelectedUserCommentAboutParticipant(commentId, starred) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.showStarSelectedUserComment(commentId, starred))
+        .then(remoteStorage => remoteStorage.showStarSelectedUserCommentAboutParticipant(commentId, starred))
         .then(response => response.data);
     }
 
@@ -37,15 +37,15 @@
         .then(response => response.data);
     }
 
-    function saveUserComment(comment) {
+    function saveUserCommentAboutParticipant(comment) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.saveUserComment(comment))
+        .then(remoteStorage => remoteStorage.saveUserCommentAboutParticipant(comment))
         .then(response => response.data);
     }
 
-    function updateUserComment(comment) {
+    function updateUserCommentAboutParticipant(comment) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.updateUserComment(comment))
+        .then(remoteStorage => remoteStorage.updateUserCommentAboutParticipant(comment))
         .then(response => response.data);
     }
   }

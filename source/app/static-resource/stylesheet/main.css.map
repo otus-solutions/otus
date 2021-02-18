@@ -6,9 +6,9 @@
         "_components-style.scss",
         "../../ux-component/activity-stage-list/_activity-stage-list.scss",
         "../../ux-component/dialog-show/express-activity-creator/_express-activity-creator-dialog-show-styles.scss",
-        "../../ux-component/user-comment/user-comment-dashboard/_user-comment-dashboard-list.scss",
+        "../../ux-component/user-comment-about-participant/user-comment-about-participant-dashboard/_user-comment-dashboard-list.scss",
         "../../ux-component/dashboard-display/_dashboard-display.scss",
-        "../../ux-component/user-comment/_user-comment-list.scss"
+        "../../ux-component/user-comment-about-participant/_user-comment-list.scss"
     ],
     "names": [],
     "file": "main.css"

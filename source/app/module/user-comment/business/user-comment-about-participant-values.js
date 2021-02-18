@@ -2,10 +2,10 @@
   'use strict';
 
   angular.module('otusjs.user.comment.business')
-    .value('otusjs.user.comment.business.UserCommentValues', {
-      toast : {
-        successUserCommentCreation: "Commentário criada com sucesso",
-        failUserCommentCreation: "Ocorreu um erro ao adicionar o comentário",
+    .value('otusjs.user.comment.business.UserCommentAboutParticipantValues', {
+      toast: {
+        successUserCommentAboutParticipantCreation: "Commentário criada com sucesso",
+        failUserCommentAboutParticipantCreation: "Ocorreu um erro ao adicionar o comentário",
         successMessage: "Solicitação realizada com sucesso!",
         failureMessage: "Ocorreu algum problema, tente novamente mais tarde.",
         deleteSuccessMessage: "Remoção realizada com sucesso!",

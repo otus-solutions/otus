@@ -8,7 +8,7 @@
     <md-list class="comment-list-layout" ng-repeat="item in $ctrl.items track by $id(item)"
       ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
       <div class="comment-image">
-        <md-button ng-click="$ctrl.showStarSelectedUserComment(item)">
+        <md-button ng-click="$ctrl.showStarSelectedUserCommentAboutParticipant(item)">
           <md-tooltip md-direction="top">Favorito</md-tooltip>
           <md-icon layout="row" layout-align="center center" ng-style="$ctrl.colorStar(item.starred)"
             class="md-default-theme material-icons icon-size" aria-label="star_rate">star_rate</md-icon>
@@ -64,17 +64,16 @@
     </md-list>
   </div>
   <div layout="row" layout-align="end center">
-    <md-button class="md-accent" ng-click="$ctrl.viewPlusUserComment()" aria-label="view comment">
+    <md-button class="md-accent" ng-click="$ctrl.viewPlusUserCommentAboutParticipant()" aria-label="view comment">
       Ver mais
       <md-icon md-font-set="material-icons">comment</md-icon>
     </md-button>
   </div>
-  <form name="userComment">
+  <form name="userCommentAboutParticipant">
     <md-input-container layout="column" layout-padding class="comment-textarea">
       <label>Comentar</label>
       <textarea name="comment" id="focus-textarea" md-no-resize rows="5" max-rows="10" class="comment-box"
-        ng-model="$ctrl.comment" aria-label="comentar"
-        placeholder="Digite o texto aqui"></textarea>
+        ng-model="$ctrl.comment" aria-label="comentar" placeholder="Digite o texto aqui"></textarea>
     </md-input-container>
   </form>
   <div layout="row" layout-align="end center">
@@ -83,7 +82,7 @@
       Cancelar
     </md-button>
     <md-button class="md-primary md-raised" ng-disabled="!$ctrl.comment" aria-label="save"
-      ng-click="$ctrl.saveUserComment()">
+      ng-click="$ctrl.saveUserCommentAboutParticipant()">
       Salvar
       <md-icon md-font-set="material-icons">save</md-icon>
     </md-button>

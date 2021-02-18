@@ -3,9 +3,12 @@
     <div class="dashboard-display-layout">
       <otus-participant-info class="display-participant-info mobile-width-left" has-laboratory="$ctrl.hasLaboratory"
         participant-laboratory="$ctrl.participantLaboratory"></otus-participant-info>
-      <otus-participant-attempt class="display-participant-attempt mobile-width-left" participant="$ctrl.participantLaboratory">
+      <otus-participant-attempt class="display-participant-attempt mobile-width-left"
+        participant="$ctrl.participantLaboratory">
       </otus-participant-attempt>
-      <otus-user-comment-dashboard-list class="display-user-comment-list mobile-width-right mobile-height"></otus-user-comment-dashboard-list>
+      <otus-user-comment-about-participant-dashboard-list
+        class="display-user-comment-about-participant-list mobile-width-right mobile-height">
+      </otus-user-comment-about-participant-dashboard-list>
       <otus-participant-heatmap class="display-participant-heatmap mobile-width"></otus-participant-heatmap>
       <otus-participant-exam-heatmap class="display-participant-exam-heatmap mobile-width"
         ng-if="($ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking && $ctrl.selectedParticipant)">

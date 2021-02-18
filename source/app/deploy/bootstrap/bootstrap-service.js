@@ -30,7 +30,7 @@
     'otus.deploy.PendencyModuleBootstrap',
     'otus.deploy.ProjectCommunicationModuleBootstrap',
     'otusjs.deploy.StageModuleBootstrap',
-    'otusjs.deploy.UserCommentModuleBootstrap'
+    'otusjs.deploy.UserCommentAboutParticipantModuleBootstrap'
   ];
 
   function Service(
@@ -58,7 +58,7 @@
     PendencyModuleBootstrap,
     ProjectCommunicationModuleBootstrap,
     StageModuleBootstrap,
-    UserCommentModuleBootstrap
+    UserCommentAboutParticipantModuleBootstrap
   ) {
     var self = this;
     self.run = run;
@@ -77,7 +77,7 @@
       PendencyModuleBootstrap.bootstrap();
       ProjectCommunicationModuleBootstrap.bootstrap();
       StageModuleBootstrap.bootstrap();
-      UserCommentModuleBootstrap.bootstrap();
+      UserCommentAboutParticipantModuleBootstrap.bootstrap();
 
       //--------------------------------------------------------------------------------------------
       // Here the application identifies if should recover a "logged state" or request a new

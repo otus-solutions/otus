@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.UserCommentRestService', Service);
+    .service('otusjs.deploy.UserCommentAboutParticipantRestService', Service);
 
   Service.$inject = [
     '$q',
@@ -16,10 +16,10 @@
 
     self.initialize = initialize;
     self.getAllUsersComments = getAllUsersComments;
-    self.showStarSelectedUserComment = showStarSelectedUserComment;
+    self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
     self.deleteSelectedComment = deleteSelectedComment;
-    self.saveUserComment = saveUserComment;
-    self.updateUserComment = updateUserComment;
+    self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
+    self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
 
     function initialize() {
       _rest = OtusRestResourceService.getNoteAboutParticipantResourceFactory();
@@ -96,12 +96,12 @@
 
     }
 
-    function showStarSelectedUserComment(commentId, starred) {
+    function showStarSelectedUserCommentAboutParticipant(commentId, starred) {
       let request = $q.defer();
       var data = true;
       var test = {}
       test.data = data
-      return _rest.updateStarred({id:commentId, starred: starred}).$promise
+      return _rest.updateStarred({ id: commentId, starred: starred }).$promise
 
       // request.resolve(test);
 
@@ -113,17 +113,17 @@
       return _rest.delete({ id: commentId }).$promise;
     }
 
-    function saveUserComment(comment) {
+    function saveUserCommentAboutParticipant(comment) {
       return _rest.create(comment).$promise;
     }
 
-    function updateUserComment(comment) {
+    function updateUserCommentAboutParticipant(comment) {
       return _rest.update(comment).$promise;
     }
 
     function _checkRest() {
       if (!_rest) {
-        throw new Error('UserCommentRestService resource is not initialized.');
+        throw new Error('UserCommentAboutParticipantRestService resource is not initialized.');
       }
     }
   }

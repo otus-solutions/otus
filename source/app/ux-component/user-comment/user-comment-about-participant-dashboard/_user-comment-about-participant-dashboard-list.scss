@@ -1,4 +1,4 @@
-otus-user-comment-dashboard-list {
+otus-user-comment-about-participant-dashboard-list {
   @media screen and (min-width: 360px) {
     .comment-list-layout {
       display: grid;
@@ -190,7 +190,7 @@ otus-user-comment-dashboard-list {
     resize: none;
   }
 
-   .comment-box:focus {
+  .comment-box:focus {
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
   }
 }

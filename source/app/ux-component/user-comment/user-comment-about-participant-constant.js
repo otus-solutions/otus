@@ -19,7 +19,7 @@
           ariaLabel: 'Confirmação de edição',
           buttons: { typeDialogTrueAndFalse: true }
         },
-        deleteUserComment: {
+        deleteUserCommentAboutParticipant: {
           dialogToTitle: 'Confirmação de deleção:',
           titleToText: 'O comentário será removido.',
           textDialog: 'Gostaria de remover?',

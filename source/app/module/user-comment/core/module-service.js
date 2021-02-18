@@ -19,7 +19,7 @@
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
     self.configureRemoteStorage = configureRemoteStorage;
-    self.getUserCommentRemoteStorage = getUserCommentRemoteStorage;
+    self.getUserCommentAboutParticipantRemoteStorage = getUserCommentAboutParticipantRemoteStorage;
 
     function configureContext(context) {
       ContextService.configureContext(context);
@@ -30,14 +30,14 @@
     }
 
     function configureRemoteStorage(restService) {
-      _remoteStorage.genericUserComment = restService;
-      _genericStorageDefer.resolve(_remoteStorage.genericUserComment);
+      _remoteStorage.genericUserCommentAboutParticipant = restService;
+      _genericStorageDefer.resolve(_remoteStorage.genericUserCommentAboutParticipant);
     }
 
-    function getUserCommentRemoteStorage() {
-      if(_remoteStorage.genericUserComment){
+    function getUserCommentAboutParticipantRemoteStorage() {
+      if (_remoteStorage.genericUserCommentAboutParticipant) {
         _genericStorageDefer = $q.defer();
-        _genericStorageDefer.resolve(_remoteStorage.genericUserComment);
+        _genericStorageDefer.resolve(_remoteStorage.genericUserCommentAboutParticipant);
       }
       return {
         whenReady() {

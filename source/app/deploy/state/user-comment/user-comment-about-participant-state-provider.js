@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.UserCommentState', Provider);
+    .provider('otusjs.deploy.UserCommentAboutParticipantState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.PARTICIPANT_DASHBOARD,
-      name: STATE.USER_COMMENT,
-      url: '/' + STATE.USER_COMMENT,
-      template: '<otus-user-comment-list layout="column" flex></otus-user-comment-list>',
+      name: STATE.USER_COMMENT_ABOUT_PARTICIPANT,
+      url: '/' + STATE.USER_COMMENT_ABOUT_PARTICIPANT,
+      template: '<otus-user-comment-about-participant-list layout="column" flex></otus-user-comment-about-participant-list>',
       data: {
         redirect: _redirect
       },
