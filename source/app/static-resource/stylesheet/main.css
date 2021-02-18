@@ -92,8 +92,8 @@ otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     z-index: 20;
   }
   otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger {
@@ -141,8 +141,8 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     z-index: 20;
   }
   lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-trigger {
@@ -184,8 +184,8 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     z-index: 20;
   }
   lab-control-panel .mobile-collect-control-toolbar fast-collection {
@@ -220,8 +220,8 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     z-index: 20;
   }
 }
@@ -256,11 +256,7 @@ otus-sample-transportation-manager-list otus-sample-transportation-lot-info-side
 }
 
 @media screen and (max-width: 726px) {
-  otus-sample-transportation-manager-list
-    .sample-transportation-lot-manager-list-component
-    .desktop-filter
-    div
-    .md-subheader {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter div .md-subheader {
     display: none !important;
   }
 }
@@ -278,29 +274,13 @@ otus-sample-transportation-manager-list otus-sample-transportation-lot-info-side
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card {
     width: 300px;
   }
-  otus-sample-transportation-manager-list
-    .sample-transportation-lot-manager-list-component
-    md-card
-    md-card-title
-    md-card-title-text
-    .md-subhead {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-subhead {
     font-size: 10px;
   }
-  otus-sample-transportation-manager-list
-    .sample-transportation-lot-manager-list-component
-    md-card
-    md-card-title
-    md-card-title-text
-    .md-headline {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-headline {
     font-size: 14px;
   }
-  otus-sample-transportation-manager-list
-    .sample-transportation-lot-manager-list-component
-    md-card
-    md-card-title
-    div
-    div
-    otus-sample-transportation-lot-aliquots-chart {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title div div otus-sample-transportation-lot-aliquots-chart {
     display: block;
     height: 87px;
     width: 128px;
@@ -484,7 +464,7 @@ otus-activity-category-adder otus-activity-category-adder-list md-card md-input-
 activity-grid-list .gridListDynamicTiles md-grid-list {
   margin: 10px;
   -webkit-transition-duration: 0s;
-  transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
@@ -496,17 +476,17 @@ activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
 
 activity-grid-list .gridListDynamicTiles md-grid-tile figure {
   -webkit-box-pack: normal;
-  -ms-flex-pack: normal;
-  justify-content: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: start;
+      -ms-flex-align: start;
+          align-items: start;
   -webkit-transition-duration: 0s;
-  transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
@@ -573,17 +553,17 @@ otus-activity-adder .button-hover :hover {
 
 otus-activity-adder md-grid-tile figure {
   -webkit-box-pack: normal;
-  -ms-flex-pack: normal;
-  justify-content: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: start;
+      -ms-flex-align: start;
+          align-items: start;
   -webkit-transition-duration: 0s;
-  transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
@@ -603,7 +583,7 @@ otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-footer {
 otus-activity-adder md-grid-list {
   margin: 10px;
   -webkit-transition-duration: 0s;
-  transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 otus-activity-adder md-select {
@@ -643,7 +623,7 @@ otus-activity-adder md-input-container {
   -webkit-transition: none !important;
   transition: none !important;
   -webkit-box-shadow: none !important;
-  box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 md-toast.md-error-toast-theme .md-toast-content {
@@ -654,7 +634,7 @@ md-toast.md-error-toast-theme .md-toast-content {
 otus-dashboard-pendency md-grid-list {
   margin: 10px;
   -webkit-transition-duration: 0s;
-  transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 otus-dashboard-pendency md-grid-tile {
@@ -663,17 +643,17 @@ otus-dashboard-pendency md-grid-tile {
 
 otus-dashboard-pendency md-grid-tile figure {
   -webkit-box-pack: normal;
-  -ms-flex-pack: normal;
-  justify-content: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: normal;
-  -ms-flex-align: normal;
-  align-items: normal;
+      -ms-flex-align: normal;
+          align-items: normal;
   -webkit-transition-duration: 0s;
-  transition-duration: 0s;
+          transition-duration: 0s;
   padding: 8px;
 }
 
@@ -810,36 +790,15 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
   color: white !important;
 }
 
-otus-participant-dashboard-toolbar
-  div
-  md-toolbar
-  div
-  otus-participant-search
-  md-autocomplete
-  md-autocomplete-wrap
-  input {
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap input {
   color: white !important;
 }
 
-otus-participant-dashboard-toolbar
-  div
-  md-toolbar
-  div
-  otus-participant-search
-  md-autocomplete
-  md-autocomplete-wrap
-  button {
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap button {
   color: white !important;
 }
 
-otus-participant-dashboard-toolbar
-  div
-  md-toolbar
-  div
-  otus-participant-search
-  md-autocomplete
-  md-autocomplete-wrap
-  input::-webkit-input-placeholder {
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap input::-webkit-input-placeholder {
   color: white !important;
 }
 
@@ -848,41 +807,41 @@ otus-participant-dashboard-toolbar
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     -ms-grid-columns: 0.2fr 1fr 0.2fr;
-    grid-template-columns: 0.2fr 1fr 0.2fr;
+        grid-template-columns: 0.2fr 1fr 0.2fr;
     -ms-grid-rows: 0.6fr;
-    grid-template-rows: 0.6fr;
-    grid-template-areas: "activity-acronym   activity-name   activity-button";
+        grid-template-rows: 0.6fr;
+        grid-template-areas: "activity-acronym   activity-name   activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     padding-top: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
-    grid-template-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
+        grid-template-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
     justify-items: stretch;
-    grid-template-areas: "activity-status  activity-mode  activity-date  activity-category" "activity-status  activity-user-email   activity-user-email activity-user-email" "activity-externalID  activity-externalID  activity-externalID  activity-button";
+        grid-template-areas: "activity-status  activity-mode  activity-date  activity-category" "activity-status  activity-user-email   activity-user-email activity-user-email" "activity-externalID  activity-externalID  activity-externalID  activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     -ms-grid-columns: 0.1fr 1fr;
-    grid-template-columns: 0.1fr 1fr;
+        grid-template-columns: 0.1fr 1fr;
     -ms-grid-rows: 0.8fr;
-    grid-template-rows: 0.8fr;
-    grid-template-areas: ".    activity-null" ".    activity-null";
+        grid-template-rows: 0.8fr;
+        grid-template-areas: ".    activity-null" ".    activity-null";
   }
   otus-activity-stage-list .md-headline {
     font-size: 4.2vw;
@@ -919,40 +878,40 @@ otus-participant-dashboard-toolbar
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 16vh;
-    -ms-grid-columns: 0.1fr (1fr) [3] 0.1fr;
-    grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
+    -ms-grid-columns: 0.1fr (1fr)[3] 0.1fr;
+        grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr (0.8fr) [2];
-    grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr repeat(2, 0.8fr);
-    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr (0.8fr)[2];
+        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr repeat(2, 0.8fr);
+        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 12vh;
-    -ms-grid-columns: 0.1fr (1fr) [4];
-    grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 8px 4px 8px 4px;
@@ -986,42 +945,42 @@ otus-participant-dashboard-toolbar
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 8vh;
-    -ms-grid-columns: 0.1fr (1fr) [3] 0.6fr;
-    grid-template-columns: 0.1fr repeat(3, 1fr) 0.6fr;
+    -ms-grid-columns: 0.1fr (1fr)[3] 0.6fr;
+        grid-template-columns: 0.1fr repeat(3, 1fr) 0.6fr;
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 6.5vh;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
-    grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
+        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 6vh;
-    -ms-grid-columns: 0.1fr (1fr) [4];
-    grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 8px 4px 8px 4px;
@@ -1058,42 +1017,42 @@ otus-participant-dashboard-toolbar
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 15vh;
-    -ms-grid-columns: 0.1fr (1fr) [3] 0.1fr;
-    grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
+    -ms-grid-columns: 0.1fr (1fr)[3] 0.1fr;
+        grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 15.5vh;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr (1fr) [2];
-    grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr repeat(2, 1fr);
+    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr (1fr)[2];
+        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr repeat(2, 1fr);
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-status     activity-mode    activity-date    activity-user-email    activity-category    activity-externalID     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-status     activity-mode    activity-date    activity-user-email    activity-category    activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 12vh;
-    -ms-grid-columns: 0.1fr (1fr) [4];
-    grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 8px 4px 8px 4px;
@@ -1130,42 +1089,42 @@ otus-participant-dashboard-toolbar
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 5.2vh;
-    -ms-grid-columns: 0.2fr (1fr) [3] 0.1fr;
-    grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+    -ms-grid-columns: 0.2fr (1fr)[3] 0.1fr;
+        grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.15fr 0.15fr (0.8fr) [5];
-    grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
+    -ms-grid-columns: 0.15fr 0.15fr (0.8fr)[5];
+        grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
-    -ms-grid-columns: 0.1fr (1fr) [4];
-    grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 4px;
@@ -1202,42 +1161,42 @@ otus-participant-dashboard-toolbar
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 7.8vh;
-    -ms-grid-columns: 0.2fr (1fr) [3] 0.1fr;
-    grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+    -ms-grid-columns: 0.2fr (1fr)[3] 0.1fr;
+        grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.15fr 0.15fr (0.8fr) [5];
-    grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
+    -ms-grid-columns: 0.15fr 0.15fr (0.8fr)[5];
+        grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
-    -ms-grid-columns: 0.1fr (1fr) [4];
-    grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
     -ms-grid-rows: 1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 16px 24px 2px 24px;
@@ -1291,9 +1250,8 @@ otus-activity-stage-list .activity-button {
 
 otus-activity-stage-list .activity-list-layout:hover {
   background-color: rgba(158, 158, 158, 0.1);
-  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
-    0 3px 3px -2px rgba(0, 0, 0, 0.12);
-  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -1330,7 +1288,7 @@ otus-activity-stage-list .activity-buttons {
 otus-activity-stage-list md-chips.md-default-theme .md-chips,
 otus-activity-stage-list md-chips .md-chips {
   -webkit-box-shadow: none;
-  box-shadow: none;
+          box-shadow: none;
 }
 
 otus-activity-stage-list md-list {
@@ -1343,9 +1301,8 @@ otus-activity-stage-list md-card {
 
 otus-activity-stage-list .stage-list-layout:hover {
   background-color: rgba(158, 158, 158, 0.1);
-  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
-    0 3px 3px -2px rgba(0, 0, 0, 0.12);
-  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -1364,7 +1321,7 @@ otus-activity-stage-list .new-chip-white {
 .dialog-layout md-chips.md-default-theme .md-chips,
 .dialog-layout md-chips .md-chips {
   -webkit-box-shadow: none;
-  box-shadow: none;
+          box-shadow: none;
 }
 
 .dialog-layout .activity-creation-form-layout {
@@ -1373,8 +1330,8 @@ otus-activity-stage-list .new-chip-white {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-flow: column wrap;
-  flex-flow: column wrap;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
 }
 
 .dialog-layout .date-container {
@@ -1383,8 +1340,8 @@ otus-activity-stage-list .new-chip-white {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-flow: column;
-  flex-flow: column;
+      -ms-flex-flow: column;
+          flex-flow: column;
   margin-top: 1em;
 }
 
@@ -1404,8 +1361,8 @@ otus-activity-stage-list .new-chip-white {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-flow: column;
-  flex-flow: column;
+      -ms-flex-flow: column;
+          flex-flow: column;
 }
 
 .dialog-layout .external-id-input {
@@ -1414,8 +1371,8 @@ otus-activity-stage-list .new-chip-white {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-flow: column;
-  flex-flow: column;
+      -ms-flex-flow: column;
+          flex-flow: column;
 }
 
 .dialog-layout .date-input {
@@ -1429,16 +1386,16 @@ otus-activity-stage-list .new-chip-white {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.2fr 0.6fr;
-    grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.2fr 0.6fr;
+        grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.2fr 0.6fr;
     -ms-grid-rows: auto;
-    grid-template-rows: auto;
-    grid-template-areas: "comment-image comment-name  comment-date  comment-status comment-button comment-button" "comment-image comment-text  comment-text comment-text comment-button  comment-button";
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name  comment-date  comment-status comment-button comment-button" "comment-image comment-text  comment-text comment-text comment-button  comment-button";
   }
   otus-user-comment-about-participant-dashboard-list .layout-uc {
     padding: 4px;
@@ -1470,16 +1427,16 @@ otus-activity-stage-list .new-chip-white {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
-    grid-template-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
+        grid-template-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
     -ms-grid-rows: auto;
-    grid-template-rows: auto;
-    grid-template-areas: "comment-image comment-name  comment-date   comment-status     comment-button" "comment-image comment-text  comment-text   comment-text    comment-button";
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name  comment-date   comment-status     comment-button" "comment-image comment-text  comment-text   comment-text    comment-button";
   }
 }
 
@@ -1488,16 +1445,16 @@ otus-activity-stage-list .new-chip-white {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
-    grid-template-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
+        grid-template-columns: 0.3fr 1fr 0.8fr 0.6fr 0.6fr;
     -ms-grid-rows: auto;
-    grid-template-rows: auto;
-    grid-template-areas: "comment-image comment-name  comment-date  comment-status  comment-button" "comment-image comment-text  comment-text  comment-text    comment-button";
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name  comment-date  comment-status  comment-button" "comment-image comment-text  comment-text  comment-text    comment-button";
   }
   otus-user-comment-about-participant-dashboard-list .layout-uc {
     padding: 4px;
@@ -1548,9 +1505,8 @@ otus-user-comment-about-participant-dashboard-list .comment-button {
 
 otus-user-comment-about-participant-dashboard-list .comment-list-layout:hover {
   background-color: rgba(158, 158, 158, 0.1);
-  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
-    0 3px 3px -2px rgba(0, 0, 0, 0.12);
-  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -1615,7 +1571,7 @@ otus-user-comment-about-participant-dashboard-list .comment-box {
   line-height: 2em;
   border: 2px;
   -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
   padding: 4px;
   -webkit-transition: height 2s ease;
   transition: height 2s ease;
@@ -1624,7 +1580,7 @@ otus-user-comment-about-participant-dashboard-list .comment-box {
 
 otus-user-comment-about-participant-dashboard-list .comment-box:focus {
   -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
 }
 
 @media screen and (min-width: 360px) {
@@ -1633,10 +1589,10 @@ otus-user-comment-about-participant-dashboard-list .comment-box:focus {
     display: grid;
     height: auto;
     -ms-grid-columns: 1fr;
-    grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
     -ms-grid-rows: auto;
-    grid-template-rows: auto;
-    grid-template-areas: "display-participant-info" "display-participant-attempt" "display-user-comment-about-participant-list" "display-participant-heatmap" "display-participant-exam-heatmap" "display-report-dashboard";
+        grid-template-rows: auto;
+        grid-template-areas: "display-participant-info" "display-participant-attempt" "display-user-comment-about-participant-list" "display-participant-heatmap" "display-participant-exam-heatmap" "display-report-dashboard";
   }
   otus-dashboard-display .mobile-width {
     width: 100vw;
@@ -1654,15 +1610,15 @@ otus-user-comment-about-participant-dashboard-list .comment-box:focus {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     width: auto;
     -ms-grid-columns: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
     -ms-grid-rows: auto;
-    grid-template-rows: auto;
-    grid-template-areas: "display-participant-info    display-user-comment-about-participant-list" "display-participant-attempt    display-user-comment-about-participant-list" ". display-user-comment-about-participant-list" "display-participant-heatmap    display-participant-heatmap" "display-participant-exam-heatmap    display-participant-exam-heatmap" "display-report-dashboard     display-report-dashboard";
+        grid-template-rows: auto;
+        grid-template-areas: "display-participant-info    display-user-comment-about-participant-list" "display-participant-attempt    display-user-comment-about-participant-list" ". display-user-comment-about-participant-list" "display-participant-heatmap    display-participant-heatmap" "display-participant-exam-heatmap    display-participant-exam-heatmap" "display-report-dashboard     display-report-dashboard";
   }
   otus-dashboard-display .mobile-width {
     width: auto;
@@ -1708,16 +1664,16 @@ otus-dashboard-display .display-report-dashboard {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
-    grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+        grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
     -ms-grid-rows: auto;
-    grid-template-rows: auto;
-    grid-template-areas: "comment-image . comment-date comment-status comment-button comment-button" "comment-image comment-name  comment-name  comment-name comment-name comment-show-more" "comment-text comment-text  comment-text  comment-text  comment-text comment-text";
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image . comment-date comment-status comment-button comment-button" "comment-image comment-name  comment-name  comment-name comment-name comment-show-more" "comment-text comment-text  comment-text  comment-text  comment-text comment-text";
   }
   otus-user-comment-about-participant-list .md-body-2 {
     font-size: 14px;
@@ -1747,17 +1703,17 @@ otus-dashboard-display .display-report-dashboard {
     display: -ms-grid;
     display: grid;
     -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: auto;
     min-width: 90vw;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.1fr 2fr 0.8fr 0.6fr 0.4fr 0.6fr;
-    grid-template-columns: 0.1fr 2fr 0.8fr 0.6fr 0.4fr 0.6fr;
+    -ms-grid-columns: 0.1fr 2fr 0.8fr 0.6fr 0.6fr 0.4fr;
+        grid-template-columns: 0.1fr 2fr 0.8fr 0.6fr 0.6fr 0.4fr;
     -ms-grid-rows: auto;
-    grid-template-rows: auto;
-    grid-template-areas: "comment-image comment-name comment-date comment-status comment-show-more comment-button" "comment-image comment-text comment-text comment-text comment-text comment-button";
+        grid-template-rows: auto;
+        grid-template-areas: "comment-image comment-name comment-date comment-status comment-show-more comment-button" "comment-image comment-text comment-text comment-text comment-text comment-button";
   }
   otus-user-comment-about-participant-list .md-body-2 {
     font-size: 14px;
@@ -1811,9 +1767,8 @@ otus-user-comment-about-participant-list .comment-button {
 
 otus-user-comment-about-participant-list .comment-list-layout:hover {
   background-color: rgba(158, 158, 158, 0.1);
-  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
-    0 3px 3px -2px rgba(0, 0, 0, 0.12);
-  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
@@ -1877,7 +1832,7 @@ otus-user-comment-about-participant-list .comment-box {
   line-height: 2em;
   border: 2px;
   -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
   padding: 4px;
   -webkit-transition: height 2s ease;
   transition: height 2s ease;
@@ -1886,7 +1841,7 @@ otus-user-comment-about-participant-list .comment-box {
 
 otus-user-comment-about-participant-list .comment-box:focus {
   -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
 }
 
 otus-user-comment-about-participant-list .md-accordion .dataContent {
@@ -1899,7 +1854,7 @@ otus-user-comment-about-participant-list .md-accordion .dataContent {
 otus-user-comment-about-participant-list .md-accordion .activeContent {
   height: auto;
   display: block;
-  white-space: pre-line;
+  white-space: pre-wrap;
   word-break: break-word;
 }
 
@@ -1946,7 +1901,7 @@ otus-user-comment-about-participant-list .md-accordion .activeContent {
 .md-accordion .expandCollapse:after {
   opacity: 1;
   -webkit-transform: rotate(-90deg);
-  transform: rotate(-90deg);
+          transform: rotate(-90deg);
   content: "|";
   margin-left: -3px;
 }
@@ -1954,7 +1909,7 @@ otus-user-comment-about-participant-list .md-accordion .activeContent {
 .md-accordion .active:before {
   opacity: 1;
   -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);
+          transform: rotate(90deg);
   margin-left: 3px;
   margin-top: 0px;
 }
