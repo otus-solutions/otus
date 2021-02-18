@@ -88,18 +88,20 @@
             </div>
           </md-card>
         </div>
-        
+
         <div layout="row" layout-wrap>
           <generate-custom-label-dialog
             primary-button="true"
             participant-button="false"
             bio-material-button="true"
+            labels="$ctrl.tubeLabelsData"
+            label-data="{}"
             ng-style="{
               'width': $ctrl.$mdMedia('xs') && '100%',
               'padding-right': '15px'
             }"
             class="responsive-label-button-wrapper"
-          />
+          ></generate-custom-label-dialog>
           <div style="margin-left: auto;">
             <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
               COLETAR

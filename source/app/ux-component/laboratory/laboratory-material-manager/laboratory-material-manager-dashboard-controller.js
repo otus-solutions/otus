@@ -27,6 +27,8 @@
     self.originalTube = {};
     self.selectedTube = {};
     self.tubeCustomMetadataOptions = null;
+    self.tubeLabelsData = {};
+
 
     self.$onInit = onInit;
     self.participantManagerService = ParticipantManagerService;
@@ -77,6 +79,7 @@
       if(tubeCode.length === 9) {
         ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService)
           .then(participantLaboratory => {
+            self.tubeLabelsData.tubes = participantLaboratory.tubes
             self.participantLaboratory = participantLaboratory;
             const foundTube = self.participantLaboratory.tubes.find(tube => {
               return tube.code == tubeCode;
