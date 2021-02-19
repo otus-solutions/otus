@@ -1,4 +1,4 @@
-fdescribe('ApplicationStateService', function () {
+describe('ApplicationStateService', function () {
 
   var UNIT_NAME = 'otusjs.application.state.ApplicationStateService';
   var service = {};

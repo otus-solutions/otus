@@ -99,10 +99,10 @@
 
     function updateContact(updatedContactItem, position, type) {
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
-      let updatedDialogData = {
-        ...self.dialogData,
-        position: position
-      }
+      // let updatedDialogData = {
+      //   ...self.dialogData,
+      //   position: position
+      // }
       if(self.oldContact.main.value.census) {
         DialogShowService.showCustomizedDialog(
           updatedDialogData,

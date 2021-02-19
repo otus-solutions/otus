@@ -266,8 +266,7 @@
           'Salvar Lista de Formulários',
           'Deseja adicionar os itens ao participante?',
           'Confirmação de exclusão')
-          .then(() => ParticipantActivityService.saveActivities(self.preActivities))
-        // .then(() => ApplicationStateService.activateActivityAdder())
+          .then(() => ParticipantActivityService.saveActivities(self.preActivities));
       } else {
         DialogService.showWarningDialog(
           'Pendência de Informações',
