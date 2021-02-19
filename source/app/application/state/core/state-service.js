@@ -7,10 +7,11 @@
 
   Service.$inject = [
     'STATE',
-    '$state'
+    '$state',
+    'otusjs.application.storage.SessionStorageService'
   ];
 
-  function Service(STATE, $state) {
+  function Service(STATE, $state, SessionStorageService) {
     var self = this;
 
     /* Public Interface */
@@ -56,6 +57,8 @@
     self.activateIssueViewer = activateIssueViewer;
     self.activateIssueMessagesViewer = activateIssueMessagesViewer;
     self.activateParticipantActivityStage = activateParticipantActivityStage;
+    self.getCurrentStateStorage = getCurrentStateStorage;
+    self.setCurrentStateStorage = setCurrentStateStorage;
     self.userCommentAboutParticipant = userCommentAboutParticipant;
 
     function activateMonitoring() {
@@ -208,6 +211,14 @@
 
     function getCurrentState() {
       return $state.current.name;
+    }
+
+    function setCurrentStateStorage() {
+      SessionStorageService.setItem("toState", getCurrentState())
+   }
+
+    function getCurrentStateStorage() {
+      return SessionStorageService.getItem("toState")
     }
 
     function currentStateIsListViewer() {

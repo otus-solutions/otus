@@ -125,6 +125,17 @@ describe('ApplicationStateService', function () {
 
   });
 
+  describe('getCurrentStateStorage method and setCurrentStateStorage return state', function () {
+
+    it('should return state', function () {
+      injections.$state.current.name = injections.STATE.PARTICIPANT_ACTIVITY_STAGE;
+      service.setCurrentStateStorage();
+
+      expect(service.getCurrentStateStorage()).toEqual(injections.STATE.PARTICIPANT_ACTIVITY_STAGE);
+    });
+
+  });
+
   describe('user comment about participant method', function () {
 
     it('should activate the USER_COMMENT_ABOUT_PARTICIPANT state', function () {
