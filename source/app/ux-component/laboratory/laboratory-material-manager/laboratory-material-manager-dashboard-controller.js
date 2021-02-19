@@ -79,7 +79,10 @@
       if(tubeCode.length === 9) {
         ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService)
           .then(participantLaboratory => {
-            self.tubeLabelsData.tubes = participantLaboratory.tubes
+            self.tubeLabelsData = {
+              type:"laboratoryParticipantLabel",
+              recruitment_number: participantLaboratory.recruitmentNumber
+            }
             self.participantLaboratory = participantLaboratory;
             const foundTube = self.participantLaboratory.tubes.find(tube => {
               return tube.code == tubeCode;
