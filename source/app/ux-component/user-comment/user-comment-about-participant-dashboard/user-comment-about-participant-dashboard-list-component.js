@@ -14,7 +14,6 @@
   Controller.$inject = [
     '$element',
     'otusjs.otus.dashboard.core.EventService',
-    'otusjs.participant.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService',
@@ -25,7 +24,6 @@
   function Controller(
     $element,
     DashboardEventService,
-    ParticipantEventService,
     DashboardService,
     ApplicationStateService,
     DialogService,
@@ -65,14 +63,12 @@
         self.selectedParticipant = participantData;
         self.isEmpty = false;
         _loadNoteAboutParticipantDashboard();
-        ParticipantEventService.fireParticipantLoaded(participantData);
       } else {
         DashboardService
           .getSelectedParticipant()
           .then(function (participantData) {
             if (participantData) {
               self.selectedParticipant = participantData;
-              ParticipantEventService.fireParticipantLoaded(participantData)
               self.isEmpty = false;
               _loadNoteAboutParticipantDashboard();
             }
