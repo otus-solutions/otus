@@ -7,15 +7,5 @@
       'otusjs.user.comment.core',
       'otusjs.user.comment.repository'
     ])
-    .run(Runner);
-
-  Runner.$inject = [
-    'otusjs.user.comment.core.ContextService',
-    'otusjs.user.comment.core.EventService'
-  ];
-
-  function Runner(ContextService, EventService) {
-    EventService.onLogout(ContextService.end);
-  }
 
 }());

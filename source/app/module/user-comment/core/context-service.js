@@ -24,6 +24,7 @@
     }
 
     function end() {
+      _testInternalState();
       _storage.removeItem(CONTEXT);
     }
 
