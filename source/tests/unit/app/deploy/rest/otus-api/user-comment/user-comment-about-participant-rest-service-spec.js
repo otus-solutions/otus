@@ -1,4 +1,4 @@
-fdescribe('UserCommentAboutParticipantRestService_UnitTest_Suite', () => {
+describe('UserCommentAboutParticipantRestService_UnitTest_Suite', () => {
   let service;
   let Injections = [];
   let Mock = {};
