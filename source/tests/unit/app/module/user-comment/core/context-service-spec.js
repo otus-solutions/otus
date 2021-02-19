@@ -1,4 +1,4 @@
-fdescribe('ContextService_UnitTest_Suite', () => {
+describe('ContextService_UnitTest_Suite', () => {
   let service;
   let Mock = {};
 
