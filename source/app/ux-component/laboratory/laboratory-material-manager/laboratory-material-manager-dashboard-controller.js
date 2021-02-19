@@ -8,6 +8,7 @@
   Controller.$inject = [
     '$mdToast',
     '$filter',
+    '$mdMedia',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.participant.business.ParticipantManagerService',
@@ -16,15 +17,18 @@
     'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($mdToast, $filter, LoadingScreenService,
+  function Controller($mdToast, $filter, $mdMedia, LoadingScreenService,
                       ParticipantLaboratoryService, ParticipantManagerService,
                       DialogService, UserAccessPermissionService, LaboratoryViewerService) {
     var self = this;
+    self.$mdMedia = $mdMedia;
     self.participantManagerService = ParticipantManagerService;
     self.tubeCode = "";
     self.originalTube = {};
     self.selectedTube = {};
     self.tubeCustomMetadataOptions = null;
+    self.tubeLabelsData = {};
+
 
     self.$onInit = onInit;
     self.participantManagerService = ParticipantManagerService;
@@ -75,6 +79,7 @@
       if(tubeCode.length === 9) {
         ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService)
           .then(participantLaboratory => {
+            self.tubeLabelsData.tubes = participantLaboratory.tubes
             self.participantLaboratory = participantLaboratory;
             const foundTube = self.participantLaboratory.tubes.find(tube => {
               return tube.code == tubeCode;

@@ -92,6 +92,7 @@
 
       function activateMaterialLabelDashboard() {
         if(self.labels){
+          LaboratoryLocalStorageService.clear()
           LaboratoryLocalStorageService.insert(self.labels)
         }
         $location.path('material-label-dashboard')
