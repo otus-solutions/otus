@@ -1,15 +1,15 @@
-describe('StageModuleBootstrap_UnitTest_Suite', () => {
+describe('UserCommentAboutParticipantModuleBootstrap_UnitTest_Suite', () => {
   let service;
   let Injections = [];
 
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
     angular.mock.inject($injector => {
-      Injections.ModuleService = $injector.get('otusjs.stage.core.ModuleService');
+      Injections.ModuleService = $injector.get('otusjs.user.comment.core.ModuleService');
       Injections.ContextFactory = $injector.get('otusjs.application.context.ContextFactory');
       Injections.StorageService = $injector.get('otusjs.application.storage.StorageService');
-      Injections.StageRestService = $injector.get('otusjs.deploy.StageRestService');
-      service = $injector.get('otusjs.deploy.StageModuleBootstrap', Injections);
+      Injections.UserCommentAboutParticipantRestService = $injector.get('otusjs.deploy.UserCommentAboutParticipantRestService');
+      service = $injector.get('otusjs.deploy.UserCommentAboutParticipantModuleBootstrap', Injections);
 
       spyOn(Injections.ModuleService, 'configureRemoteStorage');
       spyOn(Injections.ModuleService, 'configureContext');
