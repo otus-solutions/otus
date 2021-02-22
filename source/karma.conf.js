@@ -157,11 +157,11 @@ module.exports = function (config) {
         flags: ['--no-sandbox', '--disable-translate', '--disable-extensions', '--remote-debugging-port=9223']
       }
     },
-    
+
     capabilities: {
       'browserName': 'chrome',
       'chromeOptions': {
-        args: ['--disable-browser-side-navigation']
+        args: ['--headless', '--disable-browser-side-navigation']
       }
     }
   });
