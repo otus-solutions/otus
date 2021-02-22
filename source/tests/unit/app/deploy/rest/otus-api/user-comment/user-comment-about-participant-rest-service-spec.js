@@ -46,20 +46,20 @@ describe('UserCommentAboutParticipantRestService_UnitTest_Suite', () => {
   it('showStarSelectedUserCommentAboutParticipantMethod should_return_promise_and_call_updateStarred_rest_method', () => {
     spyOn(Mock._rest, 'updateStarred').and.callThrough();
 
-    expect(service.showStarSelectedUserCommentAboutParticipant(Mock.items[0]._id, Mock.starred)).toBePromise();
+    expect(service.showStarSelectedUserCommentAboutParticipant(Mock.userCommentsAboutParticipant[0]._id, Mock.starred)).toBePromise();
     expect(Mock._rest.updateStarred).toHaveBeenCalledTimes(1);
   });
 
   it('deleteSelectedCommentMethod should_return_promise_and_call_delete_rest_method', () => {
     spyOn(Mock._rest, 'delete').and.callThrough();
 
-    expect(service.deleteSelectedComment(Mock.items[0]._id)).toBePromise();
+    expect(service.deleteSelectedComment(Mock.userCommentsAboutParticipant[0]._id)).toBePromise();
     expect(Mock._rest.delete).toHaveBeenCalledTimes(1);
   });
 
   it('saveUserCommentAboutParticipantMethod should_return_promise_and_call_create_rest_method', () => {
     let userComment = {
-      comment: Mock.items[0].comment,
+      comment: Mock.userCommentsAboutParticipant[0].comment,
       recruitmentNumber: Mock.participant.recruitmentNumber
     }
     spyOn(Mock._rest, 'create').and.callThrough();
@@ -71,7 +71,7 @@ describe('UserCommentAboutParticipantRestService_UnitTest_Suite', () => {
   it('updateUserCommentAboutParticipantMethod should_return_promise_and_call_update_rest_method', () => {
     spyOn(Mock._rest, 'update').and.callThrough();
 
-    expect(service.updateUserCommentAboutParticipant(Mock.items[0])).toBePromise();
+    expect(service.updateUserCommentAboutParticipant(Mock.userCommentsAboutParticipant[0])).toBePromise();
     expect(Mock._rest.update).toHaveBeenCalledTimes(1);
   });
 
@@ -81,51 +81,7 @@ describe('UserCommentAboutParticipantRestService_UnitTest_Suite', () => {
     Mock.searchSettings = {
       recruitmentNumber: '02'
     }
-    Mock.items = [
-      {
-        _id: '113234',
-        recruitmentNumber: '132324',
-        userName: 'Fulano',
-        creationDate: '2020-12-18T16:59:41.188',
-        edited: true,
-        comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-        isCreate: true,
-        starred: true
-      },
-      {
-        _id: '113235',
-        recruitmentNumber: '132324',
-        userName: 'Fulano',
-        creationDate: '2020-12-18T16:59:41.188',
-        edited: true,
-        comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd'
-      },
-      {
-        _id: '113236',
-        recruitmentNumber: '132324',
-        userName: 'Fulano',
-        creationDate: '2020-12-18T16:59:41.188',
-        edited: true,
-        comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd'
-      },
-      {
-        _id: '113237',
-        recruitmentNumber: '132324',
-        userName: 'Fulano',
-        creationDate: '2020-12-18T16:59:41.188',
-        edited: true,
-        comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdf',
-        isCreate: true
-      },
-      {
-        _id: '113238',
-        recruitmentNumber: '132324',
-        userName: 'Fulano',
-        creationDate: '2020-12-18T16:59:41.188',
-        edited: true,
-        comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd'
-      }
-    ];
+    Mock.userCommentsAboutParticipant = Test.utils.data.userCommentsAboutParticipant;
   }
 
 });
