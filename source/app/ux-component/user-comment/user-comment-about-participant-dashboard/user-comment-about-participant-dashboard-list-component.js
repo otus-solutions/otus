@@ -29,7 +29,7 @@
     DialogService,
     UserCommentAboutParticipantService,
     USER_COMMENT_MANAGER_LABELS) {
-    const COLOR_STAR = 'rgb(253, 204, 13)';
+    const STAR_COLOR = 'rgb(253, 204, 13)';
     const LIMIT = 5;
     const SKIP = 0;
 
@@ -100,10 +100,10 @@
     }
 
     function showStarSelectedUserCommentAboutParticipant(userCommentAboutParticipant) {
-      let starred = userCommentAboutParticipant.starred ? false : true;
+      let starred = !userCommentAboutParticipant.starred;
       UserCommentAboutParticipantService.showStarSelectedUserCommentAboutParticipant(userCommentAboutParticipant._id, starred)
         .then(() => {
-          userCommentAboutParticipant.starred = starred //note com a chave de identificação que do angular permite atualizar campos
+          userCommentAboutParticipant.starred = starred; //note com a chave de identificação do angular permite atribuir e atualiza o campo
           starred = null;
           UserCommentAboutParticipantService.showMsg('successMessage');
         })
@@ -113,7 +113,7 @@
     }
 
     function colorStar(starSelected) {
-      return starSelected ? { color: COLOR_STAR } : null;
+      return starSelected ? { color: STAR_COLOR } : null;
     }
 
     function getFormattedDate(date) {

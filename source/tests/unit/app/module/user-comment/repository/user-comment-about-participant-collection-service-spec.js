@@ -30,37 +30,37 @@ describe('UserCommentAboutParticipantCollectionService_UnitTest_Suite', () => {
 
   it('updateUserCommentAboutParticipantMethod should evoke the service ModuleService for successful', function () {
     _prepareRemoteStorageSuccess("updateUserCommentAboutParticipant");
-    service.updateUserCommentAboutParticipant(Mock.items[1]).then(data => expect(data).toBeTruthy());
+    service.updateUserCommentAboutParticipant(Mock.userCommentsAboutParticipant[1]).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('updateUserCommentAboutParticipantMethod should handle error coming by exception', () => {
     _prepareRemoteStorageError("updateUserCommentAboutParticipant");
-    service.updateUserCommentAboutParticipant(Mock.items[1]).catch(e => expect(e.error).toBeFalsy());
+    service.updateUserCommentAboutParticipant(Mock.userCommentsAboutParticipant[1]).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
   it('deleteSelectedCommentMethod should evoke the service ModuleService for successful', function () {
     _prepareRemoteStorageSuccess("deleteSelectedComment");
-    service.deleteSelectedComment(Mock.items[0]._id).then(data => expect(data).toBeTruthy());
+    service.deleteSelectedComment(Mock.userCommentsAboutParticipant[0]._id).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('deleteSelectedCommentMethod should handle error coming by exception', () => {
     _prepareRemoteStorageError("deleteSelectedComment");
-    service.deleteSelectedComment(Mock.items[1]).catch(e => expect(e.error).toBeFalsy());
+    service.deleteSelectedComment(Mock.userCommentsAboutParticipant[1]).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
   it('showStarSelectedUserCommentAboutParticipantMethod should evoke the service ModuleService', function () {
     _prepareRemoteStorageSuccess("showStarSelectedUserCommentAboutParticipant");
-    service.showStarSelectedUserCommentAboutParticipant(Mock.items[0]._id, Mock.starred).then(data => expect(data).toBeTruthy());
+    service.showStarSelectedUserCommentAboutParticipant(Mock.userCommentsAboutParticipant[0]._id, Mock.starred).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('showStarSelectedUserCommentAboutParticipantMethod should handle error coming by exception', () => {
     _prepareRemoteStorageError("showStarSelectedUserCommentAboutParticipant");
-    service.showStarSelectedUserCommentAboutParticipant(Mock.items[1]).catch(e => expect(e.error).toBeFalsy());
+    service.showStarSelectedUserCommentAboutParticipant(Mock.userCommentsAboutParticipant[1]).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
@@ -78,7 +78,7 @@ describe('UserCommentAboutParticipantCollectionService_UnitTest_Suite', () => {
 
   it('saveUserCommentAboutParticipantMethod should evoke the service ModuleService', function () {
     let userComment = {
-      comment: Mock.items[0].comment,
+      comment: Mock.userCommentsAboutParticipant[0].comment,
       recruitmentNumber: Mock.participant.recruitmentNumber
     }
     _prepareRemoteStorageSuccess("saveUserCommentAboutParticipant");
@@ -113,28 +113,7 @@ describe('UserCommentAboutParticipantCollectionService_UnitTest_Suite', () => {
 
     Mock.participant = { recruitmentNumber: '02' };
     Mock.starred = false;
-    Mock.items = [
-      {
-        _id: '113234',
-        recruitmentNumber: '132324',
-        userName: 'Fulano',
-        creationDate: '2020-12-18T16:59:41.188',
-        edited: true,
-        comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-        isCreate: true,
-        starred: true
-      },
-      {
-        _id: '113234',
-        recruitmentNumber: '132324',
-        userName: 'Fulano',
-        creationDate: '2020-12-18T16:59:41.188',
-        edited: true,
-        comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
-        isCreate: true,
-        starred: true
-      }
-    ]
+    Mock.userCommentsAboutParticipant = Test.utils.data.userCommentsAboutParticipant;
 
     /*Injection of a restServiceMock in context(boostrap action simulation)*/
     Injections.ModuleService.configureRemoteStorage(Mock.remoteStorage);
