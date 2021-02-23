@@ -8175,3 +8175,51 @@ Test.utils.data.codeConfiguration = {
   cryotubeToken: 'cryotubeToken',
   palletToken: 'palletToken'
 };
+
+Test.utils.data.userCommentsAboutParticipant = [
+  {
+    _id: '113234',
+    recruitmentNumber: '132324',
+    userName: 'Fulano',
+    creationDate: '2020-12-18T16:59:41.188',
+    edited: true,
+    comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
+    isCreate: true,
+    starred: true
+  },
+  {
+    _id: '113235',
+    recruitmentNumber: '132324',
+    userName: 'Fulano',
+    creationDate: '2020-12-18T16:59:41.188',
+    edited: true,
+    comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd'
+  },
+  {
+    _id: '113236',
+    recruitmentNumber: '132324',
+    userName: 'Fulano',
+    creationDate: '2020-12-18T16:59:41.188',
+    edited: true,
+    comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd',
+    starred: true
+  },
+  {
+    _id: '113237',
+    recruitmentNumber: '132324',
+    userName: 'Fulano',
+    creationDate: '2020-12-18T16:59:41.188',
+    edited: true,
+    comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdf',
+    isCreate: true
+  },
+  {
+    _id: '113238',
+    recruitmentNumber: '132324',
+    userName: 'Fulano',
+    creationDate: '2020-12-18T16:59:41.188',
+    edited: true,
+    comment: 'primeiro teste de commentários cf4trehyrgwsfwartshdfhdseyhrdyhseedgsegsdgsdhdfhdfhrsdghsgsgdrfhgdghdghsdfghdfhfghjftujhgfjdshfd'
+  }
+];
+

@@ -1,4 +1,4 @@
-xdescribe('StageModuleBootstrap_UnitTest_Suite', () => {
+describe('StageModuleBootstrap_UnitTest_Suite', () => {
   let service;
   let Injections = [];
 

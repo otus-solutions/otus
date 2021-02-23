@@ -47,7 +47,7 @@
       _getPage(stuntmanSearchSettings, 'refreshListByCurrentQuantity');
     }
 
-    function _getPage(stuntmanSearchSettings, mode){
+    function _getPage(stuntmanSearchSettings, mode) {
       if(self.searchSettingsParser){
         LoadingScreenService.start();
         self.searchSettingsParser(stuntmanSearchSettings)

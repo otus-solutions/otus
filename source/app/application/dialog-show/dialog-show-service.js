@@ -24,6 +24,14 @@
       self.data = data;
       self.data.cancel = cancel;
 
+      if (data.buttons.typeConfirm) {
+        self.data.buttons = _getConfirmationDialogButtons();
+      }
+
+      if (data.buttons.typeDialogTrueAndFalse) {
+        self.data.buttons = _getDialogTrueAndFalseButtons();
+      }
+
       return $mdDialog.show({
         controller: 'dialogShowController',
         locals: { data: self.data },
@@ -73,6 +81,26 @@
         }
       ]
     }
+
+    function _getDialogTrueAndFalseButtons() {
+      return [
+        {
+          message: 'Sim',
+          action: function () {
+            $mdDialog.hide()
+          },
+          class: 'md-raised md-primary'
+        },
+        {
+          message: 'Não',
+          action: function () {
+            $mdDialog.cancel()
+          },
+          class: 'md-raised md-no-focus'
+        }
+      ]
+    }
+
     function showWarningDialog(dialogToTitle, titleToText, textDialog, ariaLabel){
       self.data = {
         dialogToTitle: dialogToTitle,

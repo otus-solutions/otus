@@ -135,4 +135,14 @@ describe('ApplicationStateService', function () {
     });
 
   });
+
+  describe('user comment about participant method', function () {
+
+    it('should activate the USER_COMMENT_ABOUT_PARTICIPANT state', function () {
+      service.userCommentAboutParticipant();
+
+      expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.USER_COMMENT_ABOUT_PARTICIPANT);
+    });
+
+  });
 });
