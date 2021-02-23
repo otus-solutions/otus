@@ -19,11 +19,11 @@ describe('ExamRestService Suite Test', function () {
 
   beforeEach(function () {
     _rest = {
-      getLots: function () {
+      getLots: function (item) {
       },
       getLotAliquots: function () {
       },
-      getAliquot: function () {
+      getAliquot: function (item) {
       },
     };
 
@@ -32,7 +32,7 @@ describe('ExamRestService Suite Test', function () {
         return {$promise: Promise.resolve()};
       },
       getExamLotResource: function () {
-        return _rest;
+        return _rest
       }
     };
 
@@ -46,13 +46,13 @@ describe('ExamRestService Suite Test', function () {
       service = $injector.get('otusjs.deploy.ExamsRestService');
 
       spyOn(_rest, 'getLots')
-        .and.returnValue({$promise: Promise.resolve(EXAM_LOTS)});
+        .and.returnValue({$promise:EXAM_LOTS});
 
       spyOn(_rest, 'getLotAliquots')
-        .and.returnValue({$promise: Promise.resolve(ALIQUOTS)});
+        .and.returnValue({$promise: ALIQUOTS});
 
       spyOn(_rest, 'getAliquot')
-        .and.returnValue({$promise: Promise.resolve(ALIQUOTS[0])});
+        .and.returnValue({$promise: ALIQUOTS[0]});
     });
   });
 
@@ -78,9 +78,9 @@ describe('ExamRestService Suite Test', function () {
 
   it('getLotsMethod should delivery lots of Exams', function () {
     service.initialize();
-    expect(service.getLots(CENTER_ACRONYM)._v.length).toEqual(2);
-    expect(service.getLots(CENTER_ACRONYM)._v[1].code).toEqual('300000052');
-    expect(service.getLots(CENTER_ACRONYM)._v[0].objectType).toEqual(EXAM_LOT_TYPE);
+    expect(service.getLots(CENTER_ACRONYM).length).toEqual(2);
+    expect(service.getLots(CENTER_ACRONYM)[1].code).toEqual('300000052');
+    expect(service.getLots(CENTER_ACRONYM)[0].objectType).toEqual(EXAM_LOT_TYPE);
   });
 
   it('getLotsMethod should to call getLots of  ExamLotResource', function () {
@@ -98,8 +98,8 @@ describe('ExamRestService Suite Test', function () {
 
   it('getLotAliquots should delivery lots of Aliquots ', function () {
     service.initialize();
-    expect(service.getLotAliquots(EXAM_LOT_ID)._v.length).toEqual(2);
-    expect(service.getLotAliquots(EXAM_LOT_ID)._v[1].objectType).toEqual(ALIQUOT_TYPE)
+    expect(service.getLotAliquots(EXAM_LOT_ID).length).toEqual(2);
+    expect(service.getLotAliquots(EXAM_LOT_ID)[1].objectType).toEqual(ALIQUOT_TYPE)
   });
 
   it('getLotAliquotsMethod should to call getLotAliquots of  ExamLotResource ', function () {
@@ -117,7 +117,7 @@ describe('ExamRestService Suite Test', function () {
 
   it('getAliquot should delivery aliquot by filter', function () {
     service.initialize();
-    expect(service.getAliquot(ALIQUOT_FILTER)._v).toEqual(ALIQUOTS[0]);
+    expect(service.getAliquot(ALIQUOT_FILTER)).toEqual(ALIQUOTS[0]);
   });
 
   it('getAliquotMethod should to call getAliquot of  ExamLotResource', function () {
