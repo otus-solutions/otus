@@ -35,8 +35,6 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
     expect(controller.saveUserCommentAboutParticipant).toBeDefined();
     expect(controller.colorStar).toBeDefined();
     expect(controller.getFormattedDate).toBeDefined();
-    expect(controller.showMore).toBeDefined();
-    expect(controller.showAttribute).toBeDefined();
     expect(controller.getAllItems).toBeDefined();
     expect(controller.callValidationItemsLimits).toBeDefined();
   });
@@ -106,7 +104,7 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
       Mock.scope.$digest();
 
       expect(Injections.UserCommentAboutParticipantService.showStarSelectedUserCommentAboutParticipant).toHaveBeenCalledTimes(1);
-      expect(Injections.UserCommentAboutParticipantService.showStarSelectedUserCommentAboutParticipant).toHaveBeenCalledWith(Mock.userCommentsAboutParticipant[0]._id, Mock.starred);
+      expect(Injections.UserCommentAboutParticipantService.showStarSelectedUserCommentAboutParticipant).toHaveBeenCalledWith(Mock.userCommentsAboutParticipant[0]._id, Mock.userCommentsAboutParticipant[0].starred);
       expect(Injections.UserCommentAboutParticipantService.showMsg).toHaveBeenCalledTimes(1);
     });
 
@@ -155,20 +153,6 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
       expect(Injections.UserCommentAboutParticipantService.getFormattedDate).toHaveBeenCalledTimes(1);
       expect(Injections.UserCommentAboutParticipantService.getFormattedDate).toHaveBeenCalledWith(Mock.userCommentsAboutParticipant[0].creationDate);
     });
-
-    it('showMoreMethod should initialized the controller variable show more', function () {
-      Mock.userCommentsAboutParticipant[0].expanded = false;
-      controller.showMore(Mock.userCommentsAboutParticipant[0]);
-      expect(Mock.userCommentsAboutParticipant[0].expanded).toEqual(true);
-      expect(Mock.userCommentsAboutParticipant[0].showMoreIcon).toEqual(Mock.showMoreIcon);
-    });
-
-    it('showAttributeMethod should initialized the controller variable show attribute', function () {
-      controller.showAttribute(Mock.userCommentsAboutParticipant[0]);
-      expect(Mock.userCommentsAboutParticipant[0].expanded).toEqual(false);
-      expect(Mock.userCommentsAboutParticipant[0].showMoreIcon).toEqual(Mock.showMoreIcon2);
-    });
-
   });
 
   function mockInitialize($rootScope, $q) {
@@ -177,8 +161,6 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
     Mock.deferred = $q.defer();
     Mock.deferredResolve = $q.defer();
     Mock.color = { color: 'rgb(253, 204, 13)' };
-    Mock.showMoreIcon = { icon: 'visibility', tooltip: 'Ocultar Detalhes' };
-    Mock.showMoreIcon2 = { icon: 'visibility_off', tooltip: 'Mostrar Detalhes' };
     Mock.participant = { recruitmentNumber: '02' };
     Mock.starred = false;
     Mock.userCommentsAboutParticipant = Test.utils.data.userCommentsAboutParticipant;

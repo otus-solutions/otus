@@ -1673,7 +1673,7 @@ otus-dashboard-display .display-report-dashboard {
         grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-image . comment-date comment-status comment-button comment-button" "comment-image comment-name  comment-name  comment-name comment-name comment-show-more" "comment-text comment-text  comment-text  comment-text  comment-text comment-text";
+        grid-template-areas: "comment-image . comment-date comment-status comment-button comment-button" "comment-image comment-name  comment-name  comment-name comment-button comment-button" "comment-text comment-text  comment-text  comment-text  comment-text comment-text";
   }
   otus-user-comment-about-participant-list .md-body-2 {
     font-size: 14px;
@@ -1713,7 +1713,7 @@ otus-dashboard-display .display-report-dashboard {
         grid-template-columns: 0.1fr 2fr 0.8fr 0.6fr 0.6fr 0.4fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-image comment-name comment-date comment-status comment-show-more comment-button" "comment-image comment-text comment-text comment-text comment-text comment-button";
+        grid-template-areas: "comment-image comment-name comment-date comment-status comment-status comment-button" "comment-image comment-text comment-text comment-text comment-text comment-button";
   }
   otus-user-comment-about-participant-list .md-body-2 {
     font-size: 14px;
@@ -1759,6 +1759,7 @@ otus-user-comment-about-participant-list .comment-text {
   margin-left: 8px;
   margin-right: 8px;
   padding-left: 8px;
+  word-break: break-word;
 }
 
 otus-user-comment-about-participant-list .comment-button {
@@ -1771,10 +1772,6 @@ otus-user-comment-about-participant-list .comment-list-layout:hover {
           box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
   -webkit-transition: 0.3s;
   transition: 0.3s;
-}
-
-otus-user-comment-about-participant-list .comment-show-more {
-  grid-area: comment-show-more;
 }
 
 otus-user-comment-about-participant-list .comment-status {
@@ -1842,20 +1839,6 @@ otus-user-comment-about-participant-list .comment-box {
 otus-user-comment-about-participant-list .comment-box:focus {
   -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
           box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
-}
-
-otus-user-comment-about-participant-list .md-accordion .dataContent {
-  min-height: 4vh;
-  overflow: hidden;
-  -webkit-transition: 0.3s all ease-out;
-  transition: 0.3s all ease-out;
-}
-
-otus-user-comment-about-participant-list .md-accordion .activeContent {
-  height: auto;
-  display: block;
-  white-space: pre-wrap;
-  word-break: break-word;
 }
 
 .md-accordion .expandCollapse {
