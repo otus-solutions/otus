@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusUserCommentAboutParticipantDashboardList', {
       controller: 'otusUserCommentAboutParticipantDashboardListCtrl as $ctrl',
-      templateUrl: ' app/ux-component/user-comment/user-comment-about-participant-dashboard/user-comment-about-participant-dashboard-list-template.html',
+      templateUrl: 'app/ux-component/user-comment/user-comment-about-participant-dashboard/user-comment-about-participant-dashboard-list-template.html',
       bindings: {
         participant: '<'
       }
