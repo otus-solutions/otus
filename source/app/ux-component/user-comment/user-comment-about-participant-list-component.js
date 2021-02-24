@@ -33,8 +33,6 @@
     self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
     self.colorStar = colorStar;
     self.getFormattedDate = getFormattedDate;
-    self.showMore = showMore;
-    self.showAttribute = showAttribute;
     self.getAllItems = GenericListViewerService.getAllItems;
     self.callValidationItemsLimits = GenericListViewerService.callValidationItemsLimits;
     self.$onInit = onInit;
@@ -89,16 +87,6 @@
 
     function _genericParse(items) {
       return items;
-    }
-
-    function showMore(item) {
-      item.expanded = !item.expanded;
-      item.showMoreIcon = USER_COMMENT_MANAGER_LABELS.VISIBILITY_ICON[item.expanded.toString()];
-    }
-
-    function showAttribute(item) {
-      item.expanded = false;
-      item.showMoreIcon = USER_COMMENT_MANAGER_LABELS.VISIBILITY_ICON['false'];
     }
 
     function showStarSelectedUserCommentAboutParticipant(userCommentAboutParticipant) {
