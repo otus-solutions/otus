@@ -150,6 +150,7 @@
       const activePreviousPage = !(searchSettings.currentQuantity === 0);
       if (searchSettings.currentQuantity < 0 || items.length === 0) {
         deferred.reject({ msg: GENERIC_LIST_VIEWER_LABELS.NO_NEW_ITEMS, activePage: false });
+        searchSettings.currentQuantity = searchSettings.currentQuantity - searchSettings.quantityToGet;
         return deferred.promise;
       }
       return { items, activePreviousPage, activeNextPage };
