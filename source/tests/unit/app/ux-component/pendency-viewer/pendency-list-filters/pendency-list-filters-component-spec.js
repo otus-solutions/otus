@@ -16,6 +16,8 @@ describe('otusPendecyListFiltersComponent_UnitTest_Suite', () => {
         itemAttributes: [],
         paginatorActive: true
       });
+
+      Injections.PendencyViewerService.initialize();
     });
   });
 
