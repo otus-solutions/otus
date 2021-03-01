@@ -13,12 +13,21 @@
 
   function Controller(PendencyViewerService) {
     const self = this;
+
+    self.$onInit = onInit;
+
     self.items = [];
     self.paginatorActive = false;
-    self.viewerTitle = PendencyViewerService.LABELS.PAGE_TITLE;
-    self.viewerService = PendencyViewerService;
+
     self.itemComponentName = 'otusPendencyItem';
     self.filtersComponentName = 'otusPendecyListFilters';
+
+    function onInit() {
+      self.items = [];
+      PendencyViewerService.initialize();
+      self.viewerTitle = PendencyViewerService.LABELS.PAGE_TITLE;
+      self.viewerService = PendencyViewerService;
+    }
   }
 
 }());
