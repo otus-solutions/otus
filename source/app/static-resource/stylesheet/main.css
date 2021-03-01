@@ -1841,6 +1841,241 @@ otus-user-comment-about-participant-list .comment-box:focus {
           box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
 }
 
+@media screen and (min-width: 360px) {
+  otus-generic-list-paginator .paginationCard {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: .1fr .8fr .8fr .8fr .1fr;
+        grid-template-columns: .1fr .8fr .8fr .8fr .1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "inputLeft previousPage playPage nextPage inputRight";
+  }
+}
+
+@media screen and (min-width: 768px) {
+  otus-generic-list-paginator .paginationCard {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: .1fr 1fr 1fr 1fr .1fr;
+        grid-template-columns: .1fr 1fr 1fr 1fr .1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "inputLeft previousPage playPage nextPage inputRight";
+  }
+}
+
+otus-generic-list-paginator .input-left {
+  grid-area: inputLeft;
+}
+
+otus-generic-list-paginator .input-right {
+  grid-area: inputRight;
+}
+
+otus-generic-list-paginator .next-page {
+  grid-area: nextPage;
+}
+
+otus-generic-list-paginator .play-page {
+  grid-area: playPage;
+}
+
+otus-generic-list-paginator .previous-page {
+  grid-area: previousPage;
+}
+
+otus-generic-list-paginator .inputStuntmanSearchSettings {
+  width: 40px;
+  border: none;
+  margin-left: 2vw;
+}
+
+/*begin style for generic-viewer-component*/
+@media screen and (min-width: 360px) {
+  .generic-list-viewer-layout {
+    background: #0d3349;
+    display: -ms-grid;
+    display: grid;
+    height: 100vh;
+    /*width: 100vw;*/
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: .1fr .1fr 1fr;
+        grid-template-rows: .1fr .1fr 1fr;
+        grid-template-areas: "toolbar" "listHeader" "list";
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .generic-list-viewer-layout {
+    display: -ms-grid;
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: .03fr .1fr 1fr;
+        grid-template-rows: .03fr .1fr 1fr;
+        grid-template-areas: "toolbar" "listHeader" "list";
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .generic-list-viewer-layout {
+    display: -ms-grid;
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: .03fr .1fr 1fr;
+        grid-template-rows: .03fr .1fr 1fr;
+        grid-template-areas: "toolbar" "listHeader" "list";
+  }
+}
+
+.generic-list-viewer-layout otus-dashboard-toolbar {
+  grid-area: toolbar;
+}
+
+.generic-list-viewer-layout otus-generic-list {
+  grid-area: list;
+}
+
+.list-header {
+  grid-area: listHeader;
+}
+
+/*end style for generic-viewer-component*/
+/*this style for genericlistviewerstyles final position in the hierarchy in the css of the generic component*/
+/*begin style for generic-viewer-component*/
+@media screen and (min-width: 360px) {
+  .generic-list-viewer-layout {
+    background: #0d3349;
+    display: -ms-grid;
+    display: grid;
+    height: 100vh;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: 0.1fr 0.5fr 0.1fr 1fr 0.05fr;
+        grid-template-rows: 0.1fr 0.5fr 0.1fr 1fr 0.05fr;
+        grid-template-areas: "toolbar" "help" "control" "list" "paginator";
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .generic-list-viewer-layout {
+    display: -ms-grid;
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    -ms-grid-columns: (1fr)[4];
+        grid-template-columns: repeat(4, 1fr);
+    -ms-grid-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
+        grid-template-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
+        grid-template-areas: "toolbar toolbar   toolbar   toolbar" "help    help      help      help" "control control   control   control" "list    list      list      list" ".       .         .         paginator";
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .generic-list-viewer-layout {
+    display: -ms-grid;
+    display: grid;
+    width: 100vw;
+    height: 100vh;
+    -ms-grid-columns: (1fr)[4] 0.7fr;
+        grid-template-columns: repeat(4, 1fr) 0.7fr;
+    -ms-grid-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
+        grid-template-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
+        grid-template-areas: "toolbar toolbar toolbar toolbar  toolbar" "help    help    help    help     help" "control control control control  control" "list    list    list      list   list" ".       .       .         .      paginator";
+  }
+}
+
+.generic-list-viewer-layout otus-dashboard-toolbar {
+  grid-area: toolbar;
+}
+
+.list-control {
+  grid-area: control;
+}
+
+.list {
+  grid-area: list;
+}
+
+.paginator {
+  grid-area: paginator;
+  max-height: 36px;
+}
+
+.generic-list-help {
+  grid-area: help;
+  padding: 8px;
+}
+
+.generic-list-help-item {
+  padding: 0px;
+  margin-right: 16px;
+}
+
+/*end style for generic-viewer-component*/
+/*begin style for generic-list-control*/
+@media screen and (min-width: 360px) {
+  .generic-list-control-layout {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 0.2fr;
+        grid-template-columns: 1fr 0.2fr;
+    -ms-grid-rows: 0.1fr 0.2fr 0.1fr;
+        grid-template-rows: 0.1fr 0.2fr 0.1fr;
+        grid-template-areas: "title  ordination" "filter filter" "submit submit ";
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .generic-list-control-layout {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[2] 0.2fr;
+        grid-template-columns: repeat(2, 1fr) 0.2fr;
+    -ms-grid-rows: 0.1fr 0.2fr 0.1fr;
+        grid-template-rows: 0.1fr 0.2fr 0.1fr;
+        grid-template-areas: "title  .      ordination" "filter filter filter" "submit submit submit";
+  }
+}
+
+.title {
+  grid-area: title;
+}
+
+.ordination {
+  grid-area: ordination;
+}
+
+.filter {
+  grid-area: filter;
+}
+
+.submit {
+  grid-area: submit;
+}
+
+.generic-list-control-layout md-input-container {
+  padding: 0px;
+  margin: 0px;
+}
+
+.generic-list-control-layout otus-participant-search {
+  background-color: #ffffff;
+}
+
+.generic-list-control-layout md-chips.md-default-theme .md-chips {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+/*end style for generic-list-control*/
 .md-accordion .expandCollapse {
   width: 30px;
   height: 30px;

@@ -4,6 +4,10 @@
 @import "../../ux-component/user-comment/user-comment-about-participant-dashboard/user-comment-about-participant-dashboard-list";
 @import "../../ux-component/dashboard-display/dashboard-display";
 @import "../../ux-component/user-comment/user-comment-about-participant-list";
+@import "../../ux-component/generic-list-viewer/generic-list-paginator/generic-list-paginator";
+@import "../../ux-component/generic-list-viewer/no-filter-generic-list/no-filter-generic-list-viewer-styles";
+/*this style for genericlistviewerstyles final position in the hierarchy in the css of the generic component*/
+@import "../../ux-component/generic-list-viewer/generic-list-viewer-styles";
 
 .md-accordion .expandCollapse {
   width: 30px;
