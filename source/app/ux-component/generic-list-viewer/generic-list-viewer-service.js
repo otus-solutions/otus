@@ -131,6 +131,7 @@
           switch (mode) {
             case "next": {
               vm.activeNextPage = e.activePage;
+              vm.stuntmanSearchSettings.currentQuantity = vm.stuntmanSearchSettings.currentQuantity - vm.stuntmanSearchSettings.quantityToGet;
               break;
             }
             case "previous": {
@@ -150,7 +151,6 @@
       const activePreviousPage = !(searchSettings.currentQuantity === 0);
       if (searchSettings.currentQuantity < 0 || items.length === 0) {
         deferred.reject({ msg: GENERIC_LIST_VIEWER_LABELS.NO_NEW_ITEMS, activePage: false });
-        searchSettings.currentQuantity = searchSettings.currentQuantity - searchSettings.quantityToGet;
         return deferred.promise;
       }
       return { items, activePreviousPage, activeNextPage };
