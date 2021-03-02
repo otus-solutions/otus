@@ -276,7 +276,6 @@
       let contact = ParticipantContactService.participantContactFactoryCreate({ recruitmentNumber: self.participant.recruitmentNumber });
       ParticipantContactService.createParticipantContact(contact)
         .then(() => loadParticipantContact())
-        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound))
         .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail));
     }
 
