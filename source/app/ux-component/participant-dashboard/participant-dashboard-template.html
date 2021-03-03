@@ -1,3 +1,4 @@
+<link href="app/ux-component/participant-dashboard/participant-dashboard-styles.css" rel="stylesheet" type="text/css">
 <div layout="column" flex>
   <otus-dashboard-sidenav layout="row" participant="$ctrl.selectedParticipant"></otus-dashboard-sidenav>
   <otus-dashboard-toolbar layout="row" on-participant-select="$ctrl.selectParticipant(participant)">
@@ -24,5 +25,5 @@
     </div>
   </otus-dashboard-toolbar>
   <otus-participant-dashboard-toolbar layout="row" ng-show="$ctrl.find"></otus-participant-dashboard-toolbar>
-  <otus-dashboard-display layout="row" flex></otus-dashboard-display>
+  <otus-dashboard-display layout="row" flex class="participant-dashboard-display"></otus-dashboard-display>
 </div>
