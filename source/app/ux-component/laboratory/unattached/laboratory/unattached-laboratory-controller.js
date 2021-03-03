@@ -113,7 +113,6 @@
               LoadingScreenService.finish();
             })
             .catch(function (error) {
-              console.info(error)
               if (error.status && error.data && typeof error.data === "object") {
                 if (error.status === 404 || (error.status === 400 && error.data.MESSAGE === "Data Validation Fail: java.lang.Throwable: Laboratory not found")) {
                   _showToast("Laboratório não encontrado")
