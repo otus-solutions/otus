@@ -106,33 +106,34 @@
 
       DialogShowService.showConfirmationDialog('Confirmação de Vínculo', textDialog, 'Confirmação de vínculo')
         .then(function () {
-          LoadingScreenService.start();
           UnattachedLaboratoryService.attacheLaboratoryToParticipant(self.laboratoryData.identification, self.recruitmentNumber)
             .then(function () {
+              LoadingScreenService.start();
               self.reloadData();
               LoadingScreenService.finish();
             })
             .catch(function (error) {
-              LoadingScreenService.finish();
-              if (error.data && typeof error.data === "object") {
-                const ERROR_MESSAGES_DICT = {
-                  "Participant with recruitment number":    "Numero de recrutamento " + self.recruitmentNumber + " não encontrado",
-                  "Participant already have a laboratory":  "Participante já possui laboratório",
-                  "Laboratory is already attached":         "Laboratório já foi vinculado a um participante",
-                  "Participant not identified":             "Participante não identificado",
-                  "Invalid configuration":                  _getErrorMessageForInvalidConfiguration(error.data)
-                };
-                self.attacheError = ERROR_MESSAGES_DICT[error.data.MESSAGE];
-                if(!self.attacheError){
-                  self.attacheError = UNEXPECTED_ERROR_MESSAGE;
+              if (error.status && error.data && typeof error.data === "object") {
+                if (error.status === 404 || (error.status === 400 && error.data.MESSAGE === "Data Validation Fail: java.lang.Throwable: Laboratory not found")) {
+                  _showToast("Laboratório não encontrado")
+                } else if (error.status === 400 && error.data.MESSAGE === "Data Validation Fail: Laboratory is already attached") {
+                  _showToast(`O laboratório ${self.laboratoryData.identification} já foi vinculado a um participante`)
+                } else if (error.status === 400 && error.data.MESSAGE === "Data Validation Fail: Invalid configuration") {
+                  _showToast(_getErrorMessageForInvalidConfiguration(error.data))
+                } else if (error.status === 400 && error.data.MESSAGE === "Data Validation Fail: Participant already have a laboratory") {
+                  _showToast(`Participante já possui laboratório`)
+                } else if (error.status === 400 && error.data.MESSAGE === "Data Validation Fail: Participant with recruitment number") {
+                  _showToast(`Número de recrutamento ${self.recruitmentNumber} não encontrado`)
+                } else if (error.status === 400 && error.data.MESSAGE === "Data Validation Fail: Participant not identified") {
+                  _showToast("Participante não identificado")
+                } else {
+                  _showToast(UNEXPECTED_ERROR_MESSAGE);
                 }
+              } else {
+                _showToast(UNEXPECTED_ERROR_MESSAGE);
               }
-              else {
-                self.attacheError = UNEXPECTED_ERROR_MESSAGE;
-              }
-              _showToast(self.attacheError);
             });
-      });
+        });
     }
 
     function _getErrorMessageForInvalidConfiguration(errorData){
