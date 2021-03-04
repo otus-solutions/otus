@@ -4,7 +4,7 @@
   angular
     .module('otusjs.otus.uxComponent')
     .constant('GENERIC_LIST_VIEWER_LABELS', {
-      NO_NEW_ITEMS: 'Nenhum Item Novo',
+      NO_NEW_ITEMS: 'Nenhum Item',
       EMPTY_ITEM_INFO: 'Nenhum Item Encontrado',
       INVALID_CRITERION: 'Critério Inválido',
       STANDARD_DATE_FORMAT:'DD/MM/AAAA',
@@ -29,8 +29,17 @@
         PREVIOUS_PAGE_BUTTON:'Página Anterior',
         CUSTOM_PAGE_BUTTON:'Nova Consulta',
         NEXT_PAGE_BUTTON:'Próxima Página',
-        CONTEXT_INVALID_CRITERION: 'O número informado ultrapassou limite do paginador.',
-        RESTORE_BUTTON: 'Restaurar',
+        RESTORE_CONTEXT_INVALID_CRITERION: 'O paginador foi restaurado.',
+        RESTORE_BUTTON: 'Restaurar'
+      },
+      DIALOG: {
+        confirmRestore: {
+          dialogToTitle: 'Confirmação de restauração:',
+          titleToText: 'O número informado ultrapassou limite do paginador e \<br/\> poderá ser restaurado.',
+          textDialog: 'Gostaria de restaurar?',
+          ariaLabel: 'Confirmação de restaurar',
+          buttons: { typeDialogTrueAndFalse: true }
+        }
       }
     });
 }());

@@ -22,7 +22,7 @@ variable "otus-frontend-npminstall" {
 }
 
 variable "otus-frontend-npmtest" {
-  default = "echo 1"
+  default = "npm test"
 }
 
 variable "otus-frontend-npmbuild" {

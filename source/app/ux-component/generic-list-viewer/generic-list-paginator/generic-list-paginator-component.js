@@ -29,7 +29,6 @@
     self.getPreviousPage = getPreviousPage;
     self.runCustomPagination = runCustomPagination;
 
-
     function getNextPage(stuntmanSearchSettings) {
       stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet;
       _getPage(stuntmanSearchSettings, 'next');
@@ -47,7 +46,7 @@
       _getPage(stuntmanSearchSettings, 'refreshListByCurrentQuantity');
     }
 
-    function _getPage(stuntmanSearchSettings, mode){
+    function _getPage(stuntmanSearchSettings, mode) {
       if(self.searchSettingsParser){
         LoadingScreenService.start();
         self.searchSettingsParser(stuntmanSearchSettings)
@@ -64,6 +63,5 @@
         self.callValidationItemsLimits(self, stuntmanSearchSettings, mode);
       }
     }
-
   }
 }());

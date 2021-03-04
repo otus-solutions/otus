@@ -29,6 +29,7 @@ describe('BootstrapService_UnitTest_Suite', () => {
       Injections.PendencyModuleBootstrap = $injector.get('otus.deploy.PendencyModuleBootstrap');
       Injections.ProjectCommunicationModuleBootstrap = $injector.get('otus.deploy.ProjectCommunicationModuleBootstrap');
       Injections.StageModuleBootstrap = $injector.get('otusjs.deploy.StageModuleBootstrap');
+      Injections.UserCommentAboutParticipantModuleBootstrap = $injector.get('otusjs.deploy.UserCommentAboutParticipantModuleBootstrap');
 
       service = $injector.get('otusjs.deploy.BootstrapService', Injections);
     });
@@ -54,9 +55,10 @@ describe('BootstrapService_UnitTest_Suite', () => {
     spyOn(Injections.PendencyModuleBootstrap, 'bootstrap');
     spyOn(Injections.ProjectCommunicationModuleBootstrap, 'bootstrap');
     spyOn(Injections.StageModuleBootstrap, 'bootstrap');
+    spyOn(Injections.UserCommentAboutParticipantModuleBootstrap, 'bootstrap');
 
     service.run();
-    
+
     expect(Injections.AccessModuleBootstrap.bootstrap).toHaveBeenCalledTimes(1);
     expect(Injections.ActivityModuleBootstrap.bootstrap).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantModuleBootstrap.bootstrap).toHaveBeenCalledTimes(1);
@@ -68,6 +70,7 @@ describe('BootstrapService_UnitTest_Suite', () => {
     expect(Injections.PendencyModuleBootstrap.bootstrap).toHaveBeenCalledTimes(1);
     expect(Injections.ProjectCommunicationModuleBootstrap.bootstrap).toHaveBeenCalledTimes(1);
     expect(Injections.StageModuleBootstrap.bootstrap).toHaveBeenCalledTimes(1);
+    expect(Injections.UserCommentAboutParticipantModuleBootstrap.bootstrap).toHaveBeenCalledTimes(1);
   });
 
   it('run_method_should_evoke_AccessModule_ignore_and_DashboardModule_recover_in_case_SessionModule_hasContextActive_return_true', () => {

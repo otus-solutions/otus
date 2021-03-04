@@ -11,6 +11,8 @@ describe('otusPendencyItem_UnitTest_Suite', () => {
       Injections.PendencyViewerService = $injector.get('otusjs.pendencyViewer.PendencyViewerService');
       ctrl = $controller('pendencyItemCtrl', Injections, { item: Mock.item });
     });
+
+    Injections.PendencyViewerService.initialize();
   });
 
   function _mockInitialize(){

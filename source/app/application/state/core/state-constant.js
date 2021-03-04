@@ -29,7 +29,8 @@
       'LABELMAKER': 'labelMaker',
       'MATERIAL_LABEL': 'material-label',
       'RECOVERY': 'recovery',
-      'ACTIVITY_IMPORT': 'activity-import'
+      'ACTIVITY_IMPORT': 'activity-import',
+      'USER_COMMENT_ABOUT_PARTICIPANT': 'user-comment-about-participant'
     });
 
 }());

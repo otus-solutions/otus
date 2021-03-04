@@ -3,7 +3,7 @@ describe('Bar Chart Multi Factory Test', function() {
     var factory;
     var Injections = {};
     var BODY = "body";
-    var WHITE = "#ffffff";
+    var WHITE = "rgb(255, 255, 255)";
     var WIDTH = "260";
     var HEIGHT = "300";
 
@@ -79,7 +79,7 @@ describe('Bar Chart Multi Factory Test', function() {
 
     function mockData() {
       Mock.labels = {value: "Valor"}
-      Mock.colors = ['#b33040'];
+      Mock.colors = ['rgb(179, 48, 64)'];
       Mock.data = [
           {
             'title': 'Population',

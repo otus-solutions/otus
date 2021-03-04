@@ -48,7 +48,8 @@
       'PENDENCY_VIEWER': 'pendency-viewer',
       'ACTIVITY_SYNCHRONIZE': 'activity-synchronize',
       'ISSUE_VIEWER': 'issue-viewer',
-      'ISSUE_MESSAGES_VIEWER': 'issue-messages-viewer'
+      'ISSUE_MESSAGES_VIEWER': 'issue-messages-viewer',
+      'USER_COMMENT_ABOUT_PARTICIPANT': 'user-comment-about-participant'
     })
     .config(Configuration);
 
@@ -87,6 +88,7 @@
     'otusjs.deploy.ExamResultsVisualizerProvider',
     'otusjs.deploy.MonitoringStateProvider',
     'otusjs.deploy.UserAccessRecoveryProvider',
+    'otusjs.deploy.UserCommentAboutParticipantStateProvider',
     'otusjs.deploy.LaboratoryFlagReportStateProvider',
     'otusjs.deploy.LaboratoryMaterialManagerStateProvider',
     'otusjs.deploy.ActivityFlagReportStateProvider',
@@ -132,6 +134,7 @@
     ExamResultsVisualizer,
     MonitoringStateProvider,
     UserAccessRecoveryProvider,
+    UserCommentAboutParticipantStateProvider,
     LaboratoryFlagReportStateProvider,
     LaboratoryMaterialManagerStateProvider,
     ActivityFlagReportStateProvider,
@@ -175,6 +178,7 @@
     $stateProvider.state(ExamResultsVisualizer.state);
     $stateProvider.state(MonitoringStateProvider.state);
     $stateProvider.state(UserAccessRecoveryProvider.state);
+    $stateProvider.state(UserCommentAboutParticipantStateProvider.state);
     $stateProvider.state(LaboratoryFlagReportStateProvider.state);
     $stateProvider.state(LaboratoryMaterialManagerStateProvider.state);
     $stateProvider.state(ActivityFlagReportStateProvider.state);

@@ -19,8 +19,6 @@
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
 
-    initialize();
-
     self.initialize = initialize;
     self.calculateRemainingDays = calculateRemainingDays;
 
