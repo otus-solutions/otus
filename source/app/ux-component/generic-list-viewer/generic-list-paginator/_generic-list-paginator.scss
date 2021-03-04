@@ -1,0 +1,45 @@
+otus-generic-list-paginator {
+ @media screen and (min-width: 360px) {
+    .paginationCard {
+      display: grid;
+      grid-template-columns: .1fr .8fr .8fr .8fr .1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "inputLeft previousPage playPage nextPage inputRight"
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .paginationCard {
+      display: grid;
+      grid-template-columns: .1fr 1fr 1fr 1fr .1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "inputLeft previousPage playPage nextPage inputRight"
+    }
+  }
+
+  .input-left {
+    grid-area: inputLeft;
+  }
+
+  .input-right {
+    grid-area: inputRight;
+  }
+
+  .next-page {
+    grid-area: nextPage;
+  }
+
+  .play-page {
+    grid-area: playPage;
+  }
+
+  .previous-page {
+    grid-area: previousPage;
+  }
+
+  .inputStuntmanSearchSettings {
+    width: 40px;
+    border: none;
+    margin-left: 2vw;
+  }
+}
