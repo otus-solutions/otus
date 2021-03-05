@@ -99,11 +99,8 @@
 
     function updateContact(updatedContactItem, position, type) {
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
-      let updatedDialogData = {
-        ...self.dialogData,
-        position: position
-      }
       if(self.oldContact.main.value.census) {
+        let updatedDialogData = Object.assign({}, self.dialogData, {position: position});
         DialogShowService.showCustomizedDialog(
           updatedDialogData,
           DialogController,
@@ -116,7 +113,7 @@
           _saveContact(updateContactDto, position, type)
         })
       } else {
-        _saveContact(updateContactDto, position, type)
+        _saveContact(updateContactDto, position, type);
         self.oldContact = angular.copy(self.contact)
       }
     }

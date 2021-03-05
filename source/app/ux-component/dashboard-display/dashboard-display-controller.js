@@ -29,7 +29,7 @@
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
-    self.intializeLaboratory = intializeLaboratory;
+    self.initializeLaboratory = initializeLaboratory;
 
     function onInit() {
       self.selectedParticipant = undefined;
@@ -76,7 +76,7 @@
         });
     }
 
-    function intializeLaboratory() {
+    function initializeLaboratory() {
       LoadingScreenService.start();
       ParticipantLaboratoryService.initializeLaboratory()
         .then(function (laboratory) {

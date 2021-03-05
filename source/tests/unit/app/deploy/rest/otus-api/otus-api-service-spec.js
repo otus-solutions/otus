@@ -29,6 +29,7 @@ describe('OtusApiService_UnitTest_Suite', () => {
       Injections.ProjectCommunicationRestService = $injector.get('otusjs.deploy.ProjectCommunicationRestService');
       Injections.ActivitySharingRestService = $injector.get('otusjs.deploy.ActivitySharingRestService');
       Injections.StageRestService = $injector.get('otusjs.deploy.StageRestService');
+      Injections.UserCommentAboutParticipantRestService = $injector.get('otusjs.deploy.UserCommentAboutParticipantRestService');
 
       service = $injector.get('otusjs.deploy.OtusApiService', Injections);
     });
@@ -58,6 +59,7 @@ describe('OtusApiService_UnitTest_Suite', () => {
       spyOn(Injections.ProjectCommunicationRestService, 'initialize');
       spyOn(Injections.ActivitySharingRestService, 'initialize');
       spyOn(Injections.StageRestService, 'initialize');
+      spyOn(Injections.UserCommentAboutParticipantRestService, 'initialize');
 
       service.initializeRestrictResources();
     });
@@ -85,8 +87,10 @@ describe('OtusApiService_UnitTest_Suite', () => {
     it('should_evoke_initialize_by_StageRestService', () => {
       expect(Injections.StageRestService.initialize).toHaveBeenCalledTimes(1);
     });
+
+    it('should_evoke_initialize_by_UserCommentAboutParticipantRestService', () => {
+      expect(Injections.UserCommentAboutParticipantRestService.initialize).toHaveBeenCalledTimes(1);
+    });
   });
-
-
 
 });

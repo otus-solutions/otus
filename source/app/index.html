@@ -28,7 +28,7 @@
 </head>
 
 <body layout="row" md-theme="default">
-<div flex layout="row" class="md-body-2" ui-view></div>
+  <div flex layout="row" class="md-body-2" ui-view></div>
 </body>
 
 <!-- ************************************* Force Refresh Page ************************************* -->
@@ -210,6 +210,7 @@
 <script src="app/deploy/bootstrap/pendency-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/project-communication-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/stage-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/user-comment-about-participant-module-bootstrap.js"></script>
 
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
@@ -268,6 +269,7 @@
 <script src="app/deploy/rest/otus-api/project-communication/project-communication-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/stage/stage-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/contact/participant-contact-attempt-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/user-comment/user-comment-about-participant-rest-service.js"></script>
 
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
@@ -313,6 +315,7 @@
 <script src="app/deploy/state/pendency/pendency-viewer-state-provider.js"></script>
 <script src="app/deploy/state/project-communication/issue-viewer-state-provider.js"></script>
 <script src="app/deploy/state/project-communication/issue-messages-viewer-state-provider.js"></script>
+<script src="app/deploy/state/user-comment/user-comment-about-participant-state-provider.js"></script>
 
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/module.js"></script>
@@ -515,6 +518,26 @@
 <script src="app/module/user-access/service/signup-service.js"></script>
 <!-- # User Access Recovery > Service -->
 <script src="app/module/user-access/service/user-access-recovery-service.js"></script>
+
+<!------------------------------------------------------------------------------------------------>
+<!-- build:js scripts/user-comment-about-participant-module.min.js -->
+<!-- # Module > User Comment -->
+<script src="app/module/user-comment/module.js"></script>
+
+<!-- # User Comment > Business -->
+<script src="app/module/user-comment/business/module.js"></script>
+<script src="app/module/user-comment/business/user-comment-about-participant-service.js"></script>
+<script src="app/module/user-comment/business/user-comment-about-participant-values.js"></script>
+
+<!-- # User Comment > Repository -->
+<script src="app/module/user-comment/repository/module.js"></script>
+<script src="app/module/user-comment/repository/user-comment/user-comment-about-participant-collection-service.js"></script>
+<script src="app/module/user-comment/repository/user-comment/user-comment-about-participant-repository-service.js"></script>
+
+<!-- # User Comment > Core -->
+<script src="app/module/user-comment/core/module.js"></script>
+<script src="app/module/user-comment/core/context-service.js"></script>
+<script src="app/module/user-comment/core/module-service.js"></script>
 
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
@@ -867,7 +890,6 @@
 <script src="app/ux-component/flag-report/laboratory-flag-report/filter/laboratory-flag-report-filter-controller.js"></script>
 <script src="app/ux-component/flag-report/laboratory-flag-report/filter/laboratory-flag-report-filter-component.js"></script>
 
-
 <!--Paginator-->
 <script src="app/ux-component/commons/paginator/paginator-component.js"></script>
 
@@ -903,9 +925,15 @@
 <!-- shared components -->
 <script src="app/ux-component/shared/express-activity-creator/express-activity-creator-component.js"></script>
 
+<!--user-comment-about-participant-->
+<script src="app/ux-component/user-comment/user-comment-about-participant-dashboard/user-comment-about-participant-dashboard-list-component.js"></script>
+<script src="app/ux-component/user-comment/user-comment-about-participant-constant.js"></script>
+<script src="app/ux-component/user-comment/user-comment-about-participant-list-component.js"></script>
+
 <!--utils-->
 <script src="app/ux-component/utils/html-builder-service.js"></script>
 
 <!-- endbuild -->
 <!-- enduncache -->
+
 </html>

@@ -3,7 +3,7 @@ describe('Bar Charts Horizontal Factory Test', function() {
   var factory;
   var Injections = {};
   var BODY = "body";
-  var WHITE = "#ffffff";
+  var WHITE = "rgb(255, 255, 255)";
 
   beforeEach(function() {
     angular.mock.module('otusjs.otus.uxComponent', function($provide) {
@@ -72,7 +72,7 @@ describe('Bar Charts Horizontal Factory Test', function() {
   }
 
   function mockData() {
-    Mock.color = '#b33040';
+    Mock.color = 'rgb(179, 48, 64)';
     Mock.data = [
         {
           'title': 'Population',

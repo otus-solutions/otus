@@ -14,11 +14,12 @@
     'otusjs.application.state.ApplicationStateService',
     'SurveyFormFactory',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.activity.business.ActivityValues'
+    'otusjs.activity.business.ActivityValues',
+    'STATE'
   ];
 
   function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
-                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues) {
+    PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues, STATE) {
     var self = this;
     var _paperActivityCheckerData = null;
     const FAIL_ACTIVITY_CREATION = true;
@@ -79,14 +80,24 @@
       LoadingScreenService.start();
       _prepareActivities(preActivities)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
-        .then(() => ApplicationStateService.activateParticipantActivities())
+        .then(() => _loadStateActivity())
         .then(() => self.activities = [])
         .then(() => LoadingScreenService.finish)
         .catch(() => {
-          ApplicationStateService.activateParticipantActivities();
+          _loadStateActivity();
           _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
           LoadingScreenService.finish();
         });
+    }
+
+    function _loadStateActivity() {
+      let toStage = ApplicationStateService.getCurrentStateStorage()
+
+      if (toStage == STATE.PARTICIPANT_ACTIVITY_STAGE) {
+        ApplicationStateService.activateParticipantActivityStage()
+      } else {
+        ApplicationStateService.activateParticipantActivities()
+      }
     }
 
     function _prepareActivities(preActivities) {
@@ -242,7 +253,7 @@
       return _prepareActivities(preActivity)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
         .then(() => {
-          _callToast('sucessActivityCreation');
+          _callToast('successActivityCreation');
           LoadingScreenService.finish();
         })
         .then(() => self.activities = [])

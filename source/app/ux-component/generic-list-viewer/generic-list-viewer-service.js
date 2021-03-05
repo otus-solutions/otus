@@ -9,11 +9,11 @@
     'GENERIC_LIST_VIEWER_LABELS',
     '$window',
     '$q',
-    '$mdDialog',
+    'otusjs.application.dialog.DialogShowService',
     '$mdToast'
   ];
 
-  function Service(GENERIC_LIST_VIEWER_LABELS, $window, $q, $mdDialog, $mdToast) {
+  function Service(GENERIC_LIST_VIEWER_LABELS, $window, $q, DialogShowService, $mdToast) {
     const CURR_SEARCH_SETTINGS_STORAGE_KEY = 'genericLisSearchSettings';
 
     const self = this;
@@ -41,8 +41,8 @@
     const deferred = $q.defer();
 
     function init(CHILD_VIEWER_LABELS, initialCurrentQuantity, initialQuantityToGet,
-                  getAllItemsFromRepositoryService, GenericListFactory,
-                  childParseItemsMethod=null){
+      getAllItemsFromRepositoryService, GenericListFactory,
+      childParseItemsMethod = null) {
       angular.extend(self.LABELS, GENERIC_LIST_VIEWER_LABELS, CHILD_VIEWER_LABELS);
       self.initialCurrentQuantity = initialCurrentQuantity;
       self.initialQuantityToGet = initialQuantityToGet;
@@ -88,9 +88,9 @@
       return parsedItems;
     }
 
-    function checkStorageAndUpdateCurrSearchSettings(searchSettings){
+    function checkStorageAndUpdateCurrSearchSettings(searchSettings) {
       const storageSearchSettings = JSON.parse($window.sessionStorage.getItem(CURR_SEARCH_SETTINGS_STORAGE_KEY));
-      if(storageSearchSettings){
+      if (storageSearchSettings) {
         self.currSearchSettings = angular.copy(storageSearchSettings);
         $window.sessionStorage.removeItem(CURR_SEARCH_SETTINGS_STORAGE_KEY);
         return storageSearchSettings;
@@ -100,7 +100,7 @@
       return searchSettings;
     }
 
-    function storageCurrentSearchSettings(){
+    function storageCurrentSearchSettings() {
       $window.sessionStorage.setItem(CURR_SEARCH_SETTINGS_STORAGE_KEY, JSON.stringify(self.currSearchSettings));
     }
 
@@ -111,7 +111,7 @@
     }
 
     function capitalizeName(name) {
-      return name.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+      return name.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     }
 
     function getSelectedParticipantRN(participant, genericListFilterItem, searchSettings) {
@@ -131,6 +131,7 @@
           switch (mode) {
             case "next": {
               vm.activeNextPage = e.activePage;
+              vm.stuntmanSearchSettings.currentQuantity = vm.stuntmanSearchSettings.currentQuantity - vm.stuntmanSearchSettings.quantityToGet;
               break;
             }
             case "previous": {
@@ -147,12 +148,12 @@
 
     function _checkPaginatorLimit(items, searchSettings) {
       const activeNextPage = true;
-      const activePreviousPage = true;
+      const activePreviousPage = !(searchSettings.currentQuantity === 0);
       if (searchSettings.currentQuantity < 0 || items.length === 0) {
-        deferred.reject({msg: GENERIC_LIST_VIEWER_LABELS.NO_NEW_ITEMS, activePage: false});
+        deferred.reject({ msg: GENERIC_LIST_VIEWER_LABELS.NO_NEW_ITEMS, activePage: false });
         return deferred.promise;
       }
-      return {items, activePreviousPage, activeNextPage};
+      return { items, activePreviousPage, activeNextPage };
     }
 
     function _updatesScreenArtifacts(vm, checkedData) {
@@ -162,16 +163,12 @@
     }
 
     function _restorePaginator(vm) {
-      let confirm = $mdDialog.confirm()
-        .title(GENERIC_LIST_VIEWER_LABELS.INVALID_CRITERION)
-        .textContent(GENERIC_LIST_VIEWER_LABELS.PAGINATOR.CONTEXT_INVALID_CRITERION)
-        .ariaLabel(GENERIC_LIST_VIEWER_LABELS.INVALID_CRITERION)
-        .ok(GENERIC_LIST_VIEWER_LABELS.PAGINATOR.RESTORE_BUTTON);
 
-      $mdDialog.show(confirm).then(function () {
+      DialogShowService.showDialog(GENERIC_LIST_VIEWER_LABELS.DIALOG.confirmRestore).then(function () {
         vm.stuntmanSearchSettings.currentQuantity = 0;
-        vm.activePreviousPage = true;
+        vm.activePreviousPage = false;
         vm.activeNextPage = true;
+        _callMessage(GENERIC_LIST_VIEWER_LABELS.PAGINATOR.RESTORE_CONTEXT_INVALID_CRITERION)
       });
     }
 
