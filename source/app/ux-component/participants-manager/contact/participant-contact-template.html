@@ -24,13 +24,13 @@
           <div layout-gt-xs="row">
             <md-input-container flex layout-fill="">
               <label>Nome Completo</label>
-              <input ng-model="$ctrl.participant.name" id="name" required="" ng-change="$ctrl.onFilter()">
+              <input ng-model="$ctrl.participant.name" id="name" required="" ng-change="[$ctrl.onFilter(), $ctrl.changed()]">
             </md-input-container>
           </div>
           <div layout-gt-xs="row" layout-xs="column" layout-align="center center">
             <md-input-container flex="40" layout-fill="" flex-xs="100">
               <label>Sexo</label>
-              <md-select ng-model="$ctrl.participant.sex" id="sex" required="" ng-change="$ctrl.onFilter()">
+              <md-select ng-model="$ctrl.participant.sex" id="sex" required="" ng-change="[$ctrl.onFilter(), $ctrl.changed()]">
                 <md-option value="M">Masculino</md-option>
                 <md-option value="F">Feminino</md-option>
               </md-select>
@@ -42,7 +42,7 @@
                      aria-label="Data de Nascimento" type="text" id="datetime"
                      placeholder="{{$ctrl.birthdate ? '': 'Data de Nascimento'}}"
                      min-date="$ctrl.minDate" max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
-                     format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
+                     format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="[$ctrl.onFilter(), $ctrl.changed()]">
             </md-input-container>
           </div>
           <div layout-gt-xs="row">
@@ -67,7 +67,7 @@
 
             </md-button>
             <md-button class="md-accent md-icon-button md-raised md-button" ng-click="$ctrl.saveParticipant()"
-                       ng-disabled="!$ctrl.isValid">
+                       ng-disabled="!$ctrl.isValid || !$ctrl.isChanged">
               <md-icon aria-label="Adicionar">save</md-icon>
               <md-tooltip md-direction="down">Salvar</md-tooltip>
             </md-button>
