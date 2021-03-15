@@ -54,17 +54,6 @@ describe('ParticipantComponent_UnitTest_Suite', () => {
     expect(ctrl.contact).toBeNull();
   });
 
-
-  it('createParticipantContactMethod_should_evoke_functions_in_pipeline', () => {
-    spyOn(Injections.ParticipantContactService, "createParticipantContact").and.returnValue(Mock.deferred.promise);
-    expect(ctrl.contact).toBeUndefined();
-    ctrl.createParticipantContact();
-    Mock.scope.$digest();
-    expect(Injections.ParticipantContactService.participantContactFactoryCreate).toHaveBeenCalledTimes(1);
-    expect(Injections.ParticipantContactService.createParticipantContact).toHaveBeenCalledTimes(1);
-    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith(Injections.ParticipantContactValues.msg.contactFound);
-  });
-
   it('createParticipantContactMethod_should_handle_rejectionPromise', () => {
     spyOn(Injections.ParticipantContactService, "createParticipantContact").and.returnValue(Mock.deferredFail.promise);
     ctrl.createParticipantContact();
