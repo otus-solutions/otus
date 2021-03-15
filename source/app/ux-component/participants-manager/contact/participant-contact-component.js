@@ -52,6 +52,7 @@
     });
 
     self.isValid = false;
+    self.isChanged = false;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -65,12 +66,14 @@
     self.createParticipantContact = createParticipantContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.validFields = validFields;
+    self.contactFieldChanged = contactFieldChanged;
 
     $scope.$watch('$ctrl.birthdate', function (newValue) {
       if (newValue) {
         self.onFilter();
       }
     });
+
 
     function onInit() {
       try {
@@ -90,6 +93,18 @@
         _loadAllCenters();
       } catch (e) {
         console.error(e);
+      }
+    }
+
+    function contactFieldChanged() {
+
+      if (self.oldParticipant.name != self.participant.name ||
+        self.oldParticipant.sex != self.participant.sex ||
+        self.oldParticipant.birthdate.value != self.participant.birthdate.value ||
+        self.oldCenterFilter != self.centerFilter){
+        self.isChanged = true;
+      }else{
+        self.isChanged = false;
       }
     }
 
@@ -129,6 +144,7 @@
       if (self.loadParticipantData) {
         self.loadParticipantData(angular.copy(self.participant));
       }
+      self.oldParticipant = angular.copy(self.participant);
     }
 
     function _getCenterCode(acronym) {
@@ -152,6 +168,7 @@
             self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
             self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
             self.centerFilter = angular.copy(self.centerFilter.acronym);
+
           }
         });
     }
@@ -181,11 +198,15 @@
         self.participant.recruitmentNumber = parseInt(self.centerCode + self.recruitmentNumber);
       }
       if (self.centerFilter) {
+        if(!self.oldCenterFilter){
+          self.oldCenterFilter = angular.copy(self.centerFilter);
+        }
         self.centerCode = _getCenterCode(self.centerFilter);
         self.participant.fieldCenter = {
           "acronym": self.centerFilter,
           "code": self.centerCode
         };
+        self.contactFieldChanged();
       }
       if (!self.participant.late) {
         self.participant.late = false;
@@ -234,7 +255,6 @@
         }
         _valid = false;
       }
-
       return _valid;
     }
 
