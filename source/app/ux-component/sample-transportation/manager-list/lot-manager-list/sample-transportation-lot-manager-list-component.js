@@ -64,6 +64,20 @@
     self.onFilter = onFilter;
 
     function onInit() {
+      self.originLocationPoints = [];
+      self.destinationLocationPoints = [];
+      LocationPointRestService.getLocationPoints().then(function (response) {
+        if (response.data) {
+          var result = response.data;
+          if (result.transportLocationPoints) {
+            self.destinationLocationPoints = angular.copy(LocationPointFactory.fromArray(response.data.transportLocationPoints));
+          }
+        }
+      });
+
+      LocationPointRestService.getUserLocationPoint().then(function (response) {
+        self.originLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+      });
 
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationsPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
