@@ -52,6 +52,8 @@
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getLotsByOrigin = getLotsByOrigin;
+    self.getLotsByDestination = getLotsByDestination;
     self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -311,11 +313,45 @@
      * @returns {Promise} promise
      * @memberof LaboratoryRemoteStorageService
      */
-    function getLots(locationPointId) {
+    function getLots(originLocationPointId, destinationLocationPointId) {
       var deferred = $q.defer();
 
       SampleTransportRestService
-        .getLots(locationPointId)
+        .getLots(originLocationPointId, destinationLocationPointId)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
+    /**
+     * Transport Lot
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function getLotsByOrigin(originLocationPointId) {
+      var deferred = $q.defer();
+
+      SampleTransportRestService
+        .getLotsByOrigin(originLocationPointId)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
+    /**
+     * Transport Lot
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function getLotsByDestination(destinationLocationPointId) {
+      var deferred = $q.defer();
+
+      SampleTransportRestService
+        .getLotsByDestination(destinationLocationPointId)
         .then(function (response) {
           deferred.resolve(response.data);
         });

@@ -16,11 +16,27 @@
       </md-input-container>
       <md-input-container class="remove-errors-spacer" flex="" flex-gt-sm="25" flex-gt-md="15" style="margin-left:15px">
         <label>Ponto de origem</label>
-        <md-select ng-model="$ctrl.locationFilter" ng-change="$ctrl.onFilter()"
+        <md-select ng-model="$ctrl.locationFilters.origin" ng-change="$ctrl.onFilter()"
                    ng-disabled="$ctrl.centerFilterDisabled">
-          <md-option ng-repeat="locationPoint in $ctrl.userLocationsPoints track by $index"
-                     value="{{locationPoint._id}}" ng-selected="$index == 0">
-            {{locationPoint.name}}
+          <md-option value="{{null}}">
+            Nenhum
+          </md-option>
+          <md-option ng-repeat="originLocationPoint in $ctrl.userLocationsPoints track by $index"
+                     value="{{originLocationPoint._id}}" ng-selected="$index == 0">
+            {{originLocationPoint.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container class="remove-errors-spacer" flex="" flex-gt-sm="25" flex-gt-md="15" style="margin-left:15px">
+        <label>Ponto de destino</label>
+        <md-select ng-model="$ctrl.locationFilters.destination" ng-change="$ctrl.onFilter()"
+                   ng-disabled="$ctrl.centerFilterDisabled">
+          <md-option value="{{null}}">
+            Nenhum
+          </md-option>
+          <md-option ng-repeat="destinationLocationPoint in $ctrl.userLocationsPoints track by $index"
+                     value="{{destinationLocationPoint._id}}" ng-selected="$index == 0">
+            {{destinationLocationPoint.name}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -55,12 +71,28 @@
                          aria-label="Período Final"></md-datepicker>
         </md-input-container>
         <md-input-container class="remove-errors-spacer" style="margin-left:15px">
-          <label>Ponto de localização</label>
-          <md-select ng-model="$ctrl.locationFilter" ng-change="$ctrl.onFilter()"
+          <label>Ponto de origem</label>
+          <md-select ng-model="$ctrl.locationFilters.origin" ng-change="$ctrl.onFilter()"
                      ng-disabled="$ctrl.centerFilterDisabled">
-            <md-option ng-repeat="locationPoint in $ctrl.userLocationsPoints track by $index"
-                       value="{{locationPoint._id}}" ng-selected="$index == 0">
-              {{locationPoint.name}}
+            <md-option value="{{null}}">
+              Nenhum
+            </md-option>
+            <md-option ng-repeat="originLocationPoint in $ctrl.userLocationsPoints track by $index"
+                       value="{{originLocationPoint._id}}" ng-selected="$index == 0">
+              {{originLocationPoint.name}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+        <md-input-container class="remove-errors-spacer" style="margin-left:15px">
+          <label>Ponto de destino</label>
+          <md-select ng-model="$ctrl.locationFilters.destination" ng-change="$ctrl.onFilter()"
+                     ng-disabled="$ctrl.centerFilterDisabled">
+            <md-option value="{{null}}">
+              Nenhum
+            </md-option>
+            <md-option ng-repeat="destinationLocationPoint in $ctrl.userLocationsPoints track by $index"
+                       value="{{destinationLocationPoint._id}}" ng-selected="$index == 0">
+              {{destinationLocationPoint.name}}
             </md-option>
           </md-select>
         </md-input-container>

@@ -50,7 +50,10 @@
     self.centers = [];
     self.lotsList = [];
     self.lotsListImutable = [];
-    self.locationFilter = '';
+    self.locationFilters = {
+      origin: '',
+      destination: ''
+    };
 
     self.showMore = showMore;
 
@@ -81,7 +84,7 @@
 
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationsPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-        self.userLocationsPoints = self.userLocationsPoints.filter(userLocation => userLocation._id != null)
+        self.userLocationsPoints = self.userLocationsPoints.filter(userLocation => userLocation._id != null);
       });
 
       self.otusSampleTransportationManagerList.listComponent = self;
@@ -89,7 +92,7 @@
 
     self.getLots = function () {
 
-      if (self.locationFilter){
+      if (self.locationFilters.origin || self.locationFilters.destination){
         _LoadLotsList();
       } else {
         var msgPontoInvalido = "Ponto de localização invalido";
@@ -119,15 +122,22 @@
     function _LoadLotsList() {
       LoadingScreenService.changeMessage('Aguarde o carregamento dos lotes de transporte.');
       LoadingScreenService.start();
-      MaterialTransportationService.getLots(self.locationFilter).then(function(response) {
+      _chooseLotsEndpoint(self.locationFilters).then(function(response) {
         self.lotsList = response;
-        self.lotsListImutable = response;
+        self.lotsListImutable = response || [];
         self.onFilter();
         _setChartData();
         LoadingScreenService.finish();
       }).catch(function () {
         LoadingScreenService.finish();
       });
+    }
+
+    async function _chooseLotsEndpoint({ origin, destination }) {
+      if(origin) {
+        if (destination) return MaterialTransportationService.getLots(origin, destination)
+        else return MaterialTransportationService.getLotsByOrigin(origin)
+      } else return MaterialTransportationService.getLotsByDestination(destination)
     }
 
     function onFilter() {

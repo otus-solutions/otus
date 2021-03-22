@@ -33,6 +33,8 @@
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getLotsByOrigin = getLotsByOrigin;
+    self.getLotsByDestination = getLotsByDestination;
     self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -122,8 +124,16 @@
       return LaboratoryCollectionService.getTube(locationPointId, tubeCode);
     }
 
-    function getLots(locationPointId) {
-      return LaboratoryCollectionService.getLots(locationPointId);
+    function getLotsByOrigin(originPointId) {
+      return LaboratoryCollectionService.getLotsByOrigin(originPointId);
+    }
+
+    function getLotsByDestination(destinationPointId) {
+      return LaboratoryCollectionService.getLotsByDestination(destinationPointId);
+    }
+
+    function getLots(originPointId, destinationPointId) {
+      return LaboratoryCollectionService.getLots(originPointId, destinationPointId);
     }
 
     function createLot(lotStructure) {
