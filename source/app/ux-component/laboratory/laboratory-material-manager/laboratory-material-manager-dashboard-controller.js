@@ -43,6 +43,7 @@
     self.updateTubeCustomMetadata = updateTubeCustomMetadata;
     self.isEnterKey = isEnterKey;
     self.saveDynamicMetadata = saveDynamicMetadata;
+    self.updateAliquots = function (){};
 
     function onInit() {
       self.laboratoryExists = false;
@@ -102,6 +103,7 @@
                 else{
                   self.originalTube.tubeCollectionData.customMetadata = [];
                 }
+                self.updateAliquots(foundTube,participantLaboratory);
               })
               .catch(e => _showToastMsg('Tipo de tubo não encontrado'));
           })
