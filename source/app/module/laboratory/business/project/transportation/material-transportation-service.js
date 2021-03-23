@@ -21,6 +21,8 @@
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getLotsByOrigin = getLotsByOrigin;
+    self.getLotsByDestination = getLotsByDestination;
     self.getTube = getTube;
     self.fetchConfiguration = fetchConfiguration;
     self.createLot = createLot;
@@ -67,12 +69,12 @@
       return deferred.promise;
     }
 
-    function getLots(locationPointId) {
+    function getLots(originLocationPoint, destinationLocationPoint) {
       var deferred = $q.defer();
 
       LaboratoryConfigurationService.fetchAliquotsDescriptors()
         .then(function() {
-          LaboratoryRepositoryService.getLots(locationPointId)
+          LaboratoryRepositoryService.getLots(originLocationPoint, destinationLocationPoint)
             .then(function(response) {
               var lots = JSON.parse(response).map(function(lotJson) {
                 return TransportationService.buildAliquotLotFromJson(lotJson);
@@ -80,6 +82,46 @@
               deferred.resolve(lots);
             })
             .catch(function(err) {
+              deferred.reject(err);
+            });
+        });
+
+      return deferred.promise;
+    }
+
+    function getLotsByOrigin(originLocationPoint) {
+      var deferred = $q.defer();
+
+      LaboratoryConfigurationService.fetchAliquotsDescriptors()
+        .then(function () {
+          LaboratoryRepositoryService.getLotsByOrigin(originLocationPoint)
+            .then(function (response) {
+              var lots = JSON.parse(response).map(function (lotJson) {
+                return TransportationService.buildAliquotLotFromJson(lotJson);
+              });
+              deferred.resolve(lots);
+            })
+            .catch(function (err) {
+              deferred.reject(err);
+            });
+        });
+
+      return deferred.promise;
+    }
+
+    function getLotsByDestination(destinationLocationPoint) {
+      var deferred = $q.defer();
+
+      LaboratoryConfigurationService.fetchAliquotsDescriptors()
+        .then(function () {
+          LaboratoryRepositoryService.getLotsByDestination(destinationLocationPoint)
+            .then(function (response) {
+              var lots = JSON.parse(response).map(function (lotJson) {
+                return TransportationService.buildAliquotLotFromJson(lotJson);
+              });
+              deferred.resolve(lots);
+            })
+            .catch(function (err) {
               deferred.reject(err);
             });
         });

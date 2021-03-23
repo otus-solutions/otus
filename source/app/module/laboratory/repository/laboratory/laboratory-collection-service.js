@@ -53,6 +53,8 @@
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getLotsByOrigin = getLotsByOrigin;
+    self.getLotsByDestination = getLotsByDestination;
     self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -450,14 +452,46 @@
       return request.promise;
     }
 
-    function getLots(locationPointId) {
+    function getLots(originPointId, destinationPointId) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getLots(locationPointId)
+            .getLots(originPointId, destinationPointId)
+            .then(function (lots) {
+              request.resolve(lots);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getLotsByOrigin(originPointId) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getLotsByOrigin(originPointId)
+            .then(function (lots) {
+              request.resolve(lots);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getLotsByDestination(destinationPointId) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getLotsByDestination(destinationPointId)
             .then(function (lots) {
               request.resolve(lots);
             });

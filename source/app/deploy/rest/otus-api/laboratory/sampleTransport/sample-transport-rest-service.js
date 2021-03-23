@@ -18,6 +18,8 @@
     self.create = create;
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getLotsByOrigin = getLotsByOrigin;
+    self.getLotsByDestination = getLotsByDestination;
     self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -41,11 +43,25 @@
       return _rest.getAliquotsByPeriod({locationPointId: lotAliquot.locationPoint}, lotAliquot).$promise;
     }
 
-    function getLots(locationPointId) {
+    function getLots(originLocationPointId, destinationLocationPointId) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getLots({locationPointId}).$promise;
+      return _rest.getLots({ originLocationPointId, destinationLocationPointId }).$promise;
+    }
+
+    function getLotsByOrigin(originLocationPointId) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getLotsByOrigin({ originLocationPointId }).$promise;
+    }
+
+    function getLotsByDestination(destinationLocationPointId) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getLotsByDestination({ destinationLocationPointId }).$promise;
     }
 
     function getTube(locationPointId, tubeCode) {
