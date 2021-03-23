@@ -110,12 +110,13 @@
     }
 
     function _update(toUpdate) {
+      var work = _setupWorkProgress();
       if (!toUpdate || !toUpdate.length) {
         throw new Error('No activity to update.', 'activity-repository-service.js', 50);
       }
       return ActivityCollectionService.update(toUpdate)
-        .then(_setupWorkProgress().finish)
-        .catch(_setupWorkProgress().finish);
+        .then(work.finish)
+        .catch(work.finish);
     }
 
     function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration) {
