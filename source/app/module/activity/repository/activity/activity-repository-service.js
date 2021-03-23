@@ -242,8 +242,9 @@
       if (!participant) {
         throw new Error('No participant selected to list stage.', 'activity-repository-service.js', 239);
       }
+      _setupWorkProgress().finish();
 
-      ActivityCollectionService.discardActivity(activityId, participant);
+     return ActivityCollectionService.discardActivity(activityId, participant);
     }
 
   }
