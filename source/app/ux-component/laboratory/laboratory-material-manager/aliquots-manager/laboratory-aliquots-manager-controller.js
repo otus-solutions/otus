@@ -241,6 +241,7 @@
         $element.find('#' + aliquot.aliquotId).blur();
       });
     }
+
     function tubeInputOnChange(aliquot) {
       var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
       $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
@@ -520,6 +521,7 @@
         aliquot.code = aliquot.aliquotCode;
         aliquot.name = examNameFound;
         aliquot.role = "EXAM";
+        aliquot.locationPoint = aliquot.locationPoint._id
 
         ParticipantLaboratoryService.convertStorageAliquot(aliquot)
           .then(function () {
@@ -528,7 +530,7 @@
             _fillConvertedStoragesContainerLabels()
           })
           .catch(function (err) {
-            AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
+            AliquotMessagesService.showNotConvertedDialog(err.data);
           });
       })
     }
