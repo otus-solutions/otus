@@ -24,6 +24,7 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.updateLotReceipt = updateLotReceipt;
 
     function initialize() {
       _rest = OtusRestResourceService.getSampleTransport();
@@ -92,6 +93,15 @@
       return _rest.deleteLot({
         id: lotCode
       }).$promise;
+    }
+
+    function updateLotReceipt(lotCode, lotReceipt) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.updateLotReceipt({
+        code: lotCode
+      }, lotReceipt).$promise;
     }
   }
 }());

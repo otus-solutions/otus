@@ -5,7 +5,10 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationManagerList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html'
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html',
+      bindings: {
+        onReceiptUpdated: "&"
+      }
     }).controller('otusSampleTransportationManagerListCtrl', Controller);
 
   Controller.$inject = [
@@ -34,6 +37,7 @@
     self.handleViewInfoAction = handleViewInfoAction;
     self.handleDeleteAction = handleDeleteAction;
     self.handleChangeAction = handleChangeAction;
+    self.handleReceiptAction = handleReceiptAction;
     self.updateSelectedLots = updateSelectedLots;
     self.newLot = newLot;
 
@@ -99,6 +103,18 @@
     function newLot() {
       self.action = laboratoryContextService.setLotInfoManagerAction('create');
       ApplicationStateService.activateSampleTransportationLotInfoManager();
+    }
+
+    function handleReceiptAction() {
+      DialogService.showCustomizedDialog(
+        {
+          code: self.selectedLots[0].code,
+          receiptData: self.selectedLots[0].transportationReceipt
+        },
+        "lotReceiptDialogController",
+        "app/ux-component/sample-transportation/manager-list/lot-receipt-dialog/lot-receipt-dialog-template.html",
+        true, '$ctrl', {}, false
+      );
     }
 
   }

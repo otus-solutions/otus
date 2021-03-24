@@ -10,6 +10,10 @@
       <md-tooltip md-direction="down">Alterar Lote</md-tooltip>
       <md-icon aria-label="Alterar Lote">edit</md-icon>
     </md-button>
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Recebimento do lote" ng-if="$ctrl.selectedLots.length == 1" ng-click="$ctrl.onReceipt()">
+      <md-tooltip md-direction="down">Recebimento</md-tooltip>
+      <md-icon md-font-set="material-icons" aria-label="Recebimento do lote">fact_check</md-icon>
+    </md-button>
     <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-if="$ctrl.selectedLots.length >= 1" ng-click="$ctrl.onDelete()">
       <md-tooltip md-direction="down">Excluir</md-tooltip>
       <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
