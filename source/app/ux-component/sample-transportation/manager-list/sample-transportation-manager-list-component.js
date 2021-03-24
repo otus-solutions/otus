@@ -109,7 +109,8 @@
       DialogService.showCustomizedDialog(
         {
           code: self.selectedLots[0].code,
-          receiptData: self.selectedLots[0].transportationReceipt
+          receiptData: self.selectedLots[0].transportationReceipt,
+          updateReceipt: updatedReceipt => self.selectedLots[0].transportationReceipt = updatedReceipt
         },
         "lotReceiptDialogController",
         "app/ux-component/sample-transportation/manager-list/lot-receipt-dialog/lot-receipt-dialog-template.html",
