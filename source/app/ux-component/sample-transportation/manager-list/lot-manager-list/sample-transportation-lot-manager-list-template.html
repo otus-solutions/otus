@@ -127,12 +127,10 @@
                   <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
                   <span class="md-subhead">Responsável:</span>
                   <span class="md-subhead">{{lot.operator}}</span>
-                  <span class="md-subhead">Origem:</span>
                   <span class="md-subhead" ng-repeat="origin in $ctrl.originLocationPoints | filter: { _id: lot.originLocationPoint} track by $index"
-                        value="{{origin._id}}">{{origin.name}}</span>
-                  <span class="md-subhead">Destino:</span>
+                        value="{{origin._id}}">Origem: {{origin.name}}</span>
                   <span class="md-subhead" ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: lot.destinationLocationPoint} track by $index"
-                        value="{{destination._id}}">{{destination.name}}</span>
+                        value="{{destination._id}}">Destino: {{destination.name}}</span>
                 </md-card-title-text>
                 <md-card-actions layout="row" layout-align="end center"></md-card-actions>
               </div>
