@@ -1,47 +1,46 @@
-
-<md-content layout="column" flex="" flex-offset="5">
+<md-card-content layout="column" flex="">
   <h1 ng-if="!$ctrl.tube.tubeCollectionData.isCollected" ng-style="{
                       'text-align': 'center',
                       'margin-top': '30px'}">Aliquotagem habilitada somente para tubos coletados</h1>
-  <md-subheader class="md-no-sticky moment-type-title">
-    Aliquotagem: {{$ctrl.tube.label}} - {{$ctrl.tube.momentLabel}}
-  </md-subheader>
-  <div layout="row" layout-align="space-between" layout-xs="column">
-    <div layout="row" layout-align="start" layout-xs="column">
-      <div layout="column">
-
-        <md-subheader>Processamento:</md-subheader>
-        <md-input-container class="md-input-has-placeholder md-input-has-value"
-                            style="position: relative; top: 20px;margin-left: 5px;"
-                            ng-style="{'margin':'0 auto'}">
-          <input ng-disabled="!$ctrl.tube.tubeCollectionData.isCollected" mdc-datetime-picker=""
-                 ng-change="$ctrl.updateExamsProcessingDate()"
-                 show-icon="true" date="true" time="true" aria-label="Data de Processamento"
-                 type="text" id="datetime" show-todays-date=""
-                 max-date="$ctrl.now" ng-model="$ctrl.processingDate"
-                 class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
-                 disable-parent-scroll="true">
-        </md-input-container>
+  <md-card>
+    <md-card-title layout="">
+      <md-subheader class="md-no-sticky moment-type-title">
+        Aliquotagem: {{$ctrl.tube.label}} - {{$ctrl.tube.momentLabel}}
+      </md-subheader>
+    </md-card-title>
+    <md-card-content flex-offset="5">
+      <div layout="column" layout-xs="column">
+        <div layout="row" layout-sm="column" layout-xs="column">
+          <md-input-container flex="50" flex-xs="100" flex-sm="100" class="md-input-has-placeholder md-input-has-value">
+            <label>Processamento</label>
+            <input ng-disabled="!$ctrl.tube.tubeCollectionData.isCollected" mdc-datetime-picker=""
+                   ng-change="$ctrl.updateExamsProcessingDate()"
+                   show-icon="true" date="true" time="true" aria-label="Data de Processamento"
+                   type="text" id="datetime" show-todays-date=""
+                   max-date="$ctrl.now" ng-model="$ctrl.processingDate"
+                   class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
+                   disable-parent-scroll="true">
+          </md-input-container>
+          <md-input-container flex="50" flex-xs="100" flex-sm="100">
+            <label>Ponto de localização</label>
+            <md-select ng-disabled="!$ctrl.tube.tubeCollectionData.isCollected"
+                       ng-change="ctrl.updateExamsLocationPoint()" ng-model="$ctrl.selectedLocationPoint" aria-label="Ponto Localizacao">
+              <md-option ng-selected="userLocationPoints.name == $ctrl.participantLocationPoint[0].name" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPoints">
+                {{userLocationPoints.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
       </div>
-      <div layout="column" style="margin-top: 2px">
-        <md-subheader>Ponto de localização:</md-subheader>
-        <md-input-container>
-          <md-select ng-disabled="!$ctrl.tube.tubeCollectionData.isCollected"
-                     ng-change="ctrl.updateExamsLocationPoint()" ng-model="$ctrl.selectedLocationPoint" aria-label="Ponto Localizacao">
-            <md-option ng-selected="userLocationPoints.name == $ctrl.participantLocationPoint[0].name" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPoints">
-              {{userLocationPoints.name}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-      </div>
-    </div>
-    <div layout="column" layout-align="space-between">
-      <div></div>
+    </md-card-content>
+    <md-card-actions align="end">
       <md-button class="md-raised md-primary"
                  ng-disabled="!$ctrl.haveAliquotsChanged() || !$ctrl.tube.tubeCollectionData.isCollected"
-                 ng-click="$ctrl.saveAliquots()">SALVAR ALIQUOTAS</md-button>
-    </div>
-  </div>
+                 ng-click="$ctrl.saveAliquots()">
+        SALVAR ALIQUOTAS
+      </md-button>
+    </md-card-actions>
+  </md-card>
   <form name="formAliquot" layout-align="start stretch">
     <md-list flex>
       <div flex>
@@ -338,4 +337,4 @@
       </div>
     </md-list>
   </form>
-</md-content>
+</md-card>

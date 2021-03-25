@@ -1,0 +1,22 @@
+<md-content>
+  <md-card>
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-title"><md-icon>fact_check</md-icon> Recebimento de material biológico</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content flex-offset="5">
+      <!--metadatas-->
+      <div layout="row" layout-align="start start" layout-align-xs="start center" layout-wrap flex>
+        <div flex-gt-sm="30" flex-xs="100" flex-gt-xs="100" ng-repeat="metadata in $ctrl.metadataList track by $index">
+          <md-checkbox ng-click="$ctrl.selectMetadata(metadata._id)">
+            {{ metadata.value }}
+          </md-checkbox>
+        </div>
+      </div>
+    </md-card-content>
+    <md-card-actions align="end">
+      <md-button class="md-raised md-primary">Receber</md-button>
+    </md-card-actions>
+  </md-card>
+</md-content>

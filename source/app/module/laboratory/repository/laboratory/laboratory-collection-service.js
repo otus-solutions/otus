@@ -61,6 +61,9 @@
     self.updateLot = updateLot;
     self.updateLotReceipt = updateLotReceipt;
     self.deleteLot = deleteLot;
+    self.receiveMaterial = receiveMaterial;
+    self.getMaterialMetadataOptions = getMaterialMetadataOptions;
+    self.getMaterialTrackingList = getMaterialTrackingList;
 
     /* Unattached Laboratory Methods */
     self.attacheLaboratory = attacheLaboratory;
@@ -626,6 +629,66 @@
             })
             .catch(function (e) {
               request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Update lot receipt.
+     * @body (object) receiveMaterialStruct - structure of receivedMaterial
+     * @memberof LaboratoryCollectionService
+     */
+    function receiveMaterial(receiveMaterialStruct) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .receiveMaterial(receiveMaterialStruct)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getMaterialMetadataOptions() {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getMaterialMetadataOptions()
+            .then(function (data) {
+              request.resolve(data);
+            }).catch(function (err) {
+              request.reject(err);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getMaterialTrackingList(materialCode) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getMaterialTrackingList(materialCode)
+            .then(function (data) {
+              request.resolve(data);
+            }).catch(function (err) {
+              request.reject(err);
             });
         });
 
