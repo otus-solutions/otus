@@ -1,0 +1,101 @@
+<style>
+    .lot-receipt-dialog md-checkbox {
+        max-width: 100%;
+    }
+
+    .lot-receipt-dialog md-checkbox .md-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 30px);
+    }
+</style>
+
+<md-dialog class="dialog-show-template lot-receipt-dialog" aria-label="Diálogo para recebimento de lotes">
+    <form name="dialogForm" ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Recebimento de lote</h2>
+                <span flex></span>
+
+                <md-button class="md-icon-button" ng-click="$ctrl.closeDialog()" style="margin-left: auto">
+                    <md-icon>close</md-icon>
+                    <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content md-padding" layout="column">
+                
+                <md-input-container>
+                    <label>Data/hora de recebimento</label>
+
+                    <input
+                        ng-model="$ctrl.receiptData.receiptDate"
+                        max-date="$ctrl.now"
+                        aria-label="Data/hora de recebimento"
+                        name="date"
+                        required
+                        cancel-text="Cancelar" today-text="Hoje"
+                        mdc-datetime-picker="" show-icon="true" date="true" time="true" type="text"
+                        show-todays-date="" id="datetime" class="md-input" readonly="readonly"
+                        format="DD/MM/YYYY HH:mm" disable-parent-scroll="true"
+                    ></input>
+                </md-input-container>
+
+                <md-input-container style="margin-top: auto;">
+                    <label>Temperatura (ºC)</label>
+                    <input
+                        ng-model="$ctrl.receiptData.temperature"
+                        required
+                        name="temperature"
+                        type="number"
+                    ></input>
+                    <div ng-messages="dialogForm.temperature.$error" md-auto-hide="true">
+                        <div ng-message="required">Campo obrigatório</div>
+                    </div>
+                    <div ng-messages="dialogForm.temperature.$error" md-auto-hide="true">
+                        <div ng-message="number">Valor deve ser numérico</div>
+                    </div>
+                </md-input-container>
+
+                <div layout="column" ng-if="$ctrl.metadataArray.length > 0" style="max-width: 500px;">
+                    <p>Metadados</p>
+
+                    <div layout="row" layout-wrap layout-fill>
+                        <div flex="33" flex-xs="50" ng-repeat="metadata in $ctrl.metadataArray">
+                            <md-checkbox
+                                name="metadata"
+                                ng-model="$ctrl.metadataOptions[metadata]"
+                                aria-label="Checkbox para metadado"
+                            >
+                                {{ metadata }}
+                            </md-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <div>
+                <md-button 
+                    class="md-raised md-primary"
+                    ng-click="$ctrl.updateLotReceipt()"
+                    ng-disabled="!dialogForm.$valid"
+                    aria-label="Confirmar recebimento"
+                >Ok</md-button>
+                <span flex></span>
+            </div>
+
+            <div>
+                <md-button 
+                    class="md-raised md-no-focus"
+                    ng-click="$ctrl.closeDialog()"
+                    aria-label="Cancelar"
+                >Voltar</md-button>
+                <span flex></span>
+            </div>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

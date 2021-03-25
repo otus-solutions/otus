@@ -10,6 +10,7 @@
         onViewInfo: '&',
         onDelete: '&',
         onChangeLot: '&',
+        onReceipt: '&',
         selectedLots: '<'
       }
     });
