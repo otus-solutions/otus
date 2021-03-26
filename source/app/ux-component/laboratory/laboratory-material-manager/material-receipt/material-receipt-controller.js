@@ -91,6 +91,22 @@
           "receiptDate": "20/05/2020"
         }
       )
+      self.materialTrackingList.push(
+        {
+          "_id": "1122554488",
+          "lotId": "12345",
+          "origin": "Bahia",
+          "destination": "São Paulo",
+          "receipted": false,
+          "receiveResponsible": "",
+          "receiptMetadata": [
+          ],
+          "otherMetadata": "",
+          "sendingDate": "",
+          "receiptDate": ""
+        }
+      )
+
       _detachCurrLotFromMaterialList();
       //TODO remove comments
       // self.transportationService.getMaterialTrackingList(self.material.code)
