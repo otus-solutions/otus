@@ -48,6 +48,7 @@
     self.checkLaboratoryConfiguration = checkLaboratoryConfiguration;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
+    self.getLotReceiptMetadata = getLotReceiptMetadata;
     self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     /* Laboratory Project Methods */
@@ -58,6 +59,7 @@
     self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
+    self.updateLotReceipt = updateLotReceipt;
     self.deleteLot = deleteLot;
 
     /* Unattached Laboratory Methods */
@@ -264,6 +266,22 @@
       _remoteStorage.whenReady()
         .then(function (remoteStorage) {
           remoteStorage.getTubeMedataDataByType(tubeType)
+            .then(function (data) {
+              request.resolve(data);
+            }, function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getLotReceiptMetadata() {
+      var request = $q.defer();
+
+      _remoteStorage.whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage.getLotReceiptMetadata()
             .then(function (data) {
               request.resolve(data);
             }, function (e) {
@@ -579,6 +597,30 @@
         .then(function (remoteStorage) {
           remoteStorage
             .deleteLot(lotCode)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Update lot receipt.
+     * @param {(object)} lotReceipt - structure of transport lot
+     * @memberof LaboratoryCollectionService
+     */
+    function updateLotReceipt(lotCode, lotReceipt) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .updateLotReceipt(lotCode, lotReceipt)
             .then(function (data) {
               request.resolve(data);
             })

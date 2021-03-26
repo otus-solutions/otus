@@ -29,6 +29,7 @@
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
+    self.getLotReceiptMetadata = getLotReceiptMetadata;
 
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
@@ -38,6 +39,7 @@
     self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
+    self.updateLotReceipt = updateLotReceipt;
     self.deleteLot = deleteLot;
     self.deleteAliquot = deleteAliquot;
 
@@ -116,6 +118,10 @@
       return LaboratoryCollectionService.getTubeMedataDataByType(tubeType);
     }
 
+    function getLotReceiptMetadata() {
+      return LaboratoryCollectionService.getLotReceiptMetadata();
+    }
+
     function getAliquots(lotAliquot, unique) {
       return LaboratoryCollectionService.getAliquots(lotAliquot, unique);
     }
@@ -142,6 +148,10 @@
 
     function updateLot(lotStructure) {
       return LaboratoryCollectionService.updateLot(lotStructure);
+    }
+
+    function updateLotReceipt(lotCode, lotReceipt) {
+      return LaboratoryCollectionService.updateLotReceipt(lotCode, lotReceipt);
     }
 
     function deleteAliquot(aliquotCode) {

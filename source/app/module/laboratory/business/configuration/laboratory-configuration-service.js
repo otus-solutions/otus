@@ -19,6 +19,7 @@
     self.fetchAliquotsDescriptors = fetchAliquotsDescriptors;
     self.getQualityControlGroupNames = getQualityControlGroupNames;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
+    self.getLotReceiptMetadata = getLotReceiptMetadata;
 
     /* Laboratory Configuration */
 
@@ -118,6 +119,10 @@
 
     function getTubeMedataDataByType(tubeType) {
       return LaboratoryRepositoryService.getTubeMedataDataByType(tubeType);
+    }
+
+    function getLotReceiptMetadata() {
+      return LaboratoryRepositoryService.getLotReceiptMetadata();
     }
 
   }

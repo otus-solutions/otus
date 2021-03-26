@@ -54,9 +54,11 @@
     self.getLots = getLots;
     self.getLotsByOrigin = getLotsByOrigin;
     self.getLotsByDestination = getLotsByDestination;
+    self.getLotReceiptMetadata = getLotReceiptMetadata;
     self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
+    self.updateLotReceipt = updateLotReceipt;
     self.deleteLot = deleteLot;
 
     /* Unattached Laboratory Methods */
@@ -359,6 +361,23 @@
       return deferred.promise;
     }
 
+    /**
+     * Transport Lot receipt metadata
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function getLotReceiptMetadata() {
+      var deferred = $q.defer();
+
+      LaboratoryRestService
+        .getLotReceiptMetadata()
+        .then(function (response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
 
     /**
      * Transport Lot
@@ -428,6 +447,26 @@
       var deferred = $q.defer();
       SampleTransportRestService
         .deleteLot(lotCode)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    /**
+     * Transport lot receipt
+     * @param {(object)} lotCode - the code of lot
+     * @param {(object)} lotReceipt - the code of lot
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function updateLotReceipt(lotCode, lotReceipt) {
+      var deferred = $q.defer();
+      SampleTransportRestService
+        .updateLotReceipt(lotCode, lotReceipt)
         .then(function (response) {
           deferred.resolve(response.data);
         })

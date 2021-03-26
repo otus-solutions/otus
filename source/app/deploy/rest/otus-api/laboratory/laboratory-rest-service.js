@@ -27,6 +27,7 @@
     self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.updateTubeCustomMetadata = updateTubeCustomMetadata;
+    self.getLotReceiptMetadata = getLotReceiptMetadata;
 
     /* Laboratory Configuration Methods*/
     self.getDescriptors = getDescriptors;
@@ -164,6 +165,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _configurationRest.getTubeMedataDataByType({type: tubeType}).$promise;
+    }
+
+    function getLotReceiptMetadata() {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getLotReceiptMetadata().$promise;
     }
 
 
