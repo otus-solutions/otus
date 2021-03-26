@@ -60,8 +60,6 @@
     function _goToParticipantHome(participant) {
       if (self.goToParticipantHome){
         var _participant = angular.copy(participant);
-        delete _participant["birthday"];
-        delete _participant["obito"];
         ParticipantManagerService.selectParticipant(_participant);
         ApplicationStateService.activateParticipantDashboard();
       }
@@ -237,7 +235,6 @@
                       _setClear();
                       ParticipantMessagesService.showToast("Participante salvo com sucesso!");
                       _goToParticipantHome(response);
-                      self.listParticipants();
                     }
                   } else {
                     ParticipantMessagesService.showRecruitmentNumberGenerated(ParticipantFactory.fromJson(response).toJSON()).then(function () {
