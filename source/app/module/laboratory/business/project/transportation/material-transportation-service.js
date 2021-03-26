@@ -28,8 +28,8 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.updateLotReceipt = updateLotReceipt;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
-
 
     function getContainerLabelToAliquot(aliquot) {
       return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
@@ -162,6 +162,20 @@
           deferred.resolve(JSON.parse(response));
         })
         .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function updateLotReceipt(lotCode, lotReceipt) {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.updateLotReceipt(lotCode, lotReceipt)
+        .then(function (response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function (err) {
           deferred.reject(err);
         });
 
