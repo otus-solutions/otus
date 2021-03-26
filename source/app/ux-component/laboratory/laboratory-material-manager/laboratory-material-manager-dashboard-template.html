@@ -116,8 +116,8 @@
             </div>
           </div>
           <div layout="row" flex-offset-xs="0">
-            <md-input-container flex-sm="100" flex-xs="100" flex="80" style="margin: 0 0 0 8px; padding: 0" layout="row" layout-align="start center">
-              <p>Outro: </p>
+            <md-input-container flex-sm="100" flex-xs="100" flex="100" style="margin: 0 0 0 8px; padding: 0" layout="row" layout-align="start center">
+              <label>Outro</label>
               <input ng-model="$ctrl.newTube.tubeCollectionData.dynamicMetadata"/>
             </md-input-container>
 
@@ -140,6 +140,6 @@
       </div>
     </div>
     <!-- material receipt -->
-    <material-receipt ng-if="$ctrl.originalTubeHasCode()" flex="50" flex-xs="100" material-code="$ctrl.originalTube.code"></material-receipt>
+    <material-receipt ng-if="$ctrl.originalTubeHasCode()" flex="50" flex-xs="100" material-code="$ctrl.originalTube"></material-receipt>
   </md-content>
 </md-content>

@@ -199,10 +199,10 @@
       return deferred.promise;
     }
 
-    function getMaterialMetadataOptions() {
+    function getMaterialMetadataOptions(materialType) {
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.getMaterialMetadataOptions()
+      LaboratoryRepositoryService.getMaterialMetadataOptions(materialType)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
         })

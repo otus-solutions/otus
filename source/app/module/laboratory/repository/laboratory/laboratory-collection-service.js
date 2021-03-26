@@ -659,14 +659,14 @@
       return request.promise;
     }
 
-    function getMaterialMetadataOptions() {
+    function getMaterialMetadataOptions(materialType) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getMaterialMetadataOptions()
+            .getMaterialMetadataOptions(materialType)
             .then(function (data) {
               request.resolve(data);
             }).catch(function (err) {

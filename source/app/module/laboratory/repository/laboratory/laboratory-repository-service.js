@@ -161,8 +161,8 @@
       return LaboratoryCollectionService.receiveMaterial(receiveMetadataStruct);
     }
 
-    function getMaterialMetadataOptions() {
-      return LaboratoryCollectionService.getMaterialMetadataOptions();
+    function getMaterialMetadataOptions(materialType) {
+      return LaboratoryCollectionService.getMaterialMetadataOptions(materialType);
     }
 
     function getMaterialTrackingList(materialCode) {

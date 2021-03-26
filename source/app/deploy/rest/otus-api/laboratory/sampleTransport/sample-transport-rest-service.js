@@ -116,11 +116,11 @@
       return _rest.receiveMaterial(receiveMaterialStruct).$promise;
     }
 
-    function getMaterialMetadataOptions() {
+    function getMaterialMetadataOptions(materialType) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getMetadataOptions().$promise;
+      return _rest.getMetadataOptions({materialType}).$promise;
     }
 
     /*material code*/
