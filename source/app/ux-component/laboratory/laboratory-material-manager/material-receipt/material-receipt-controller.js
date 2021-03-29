@@ -63,66 +63,31 @@
         self.CONFIRM_RECEIPT,
         self.CONFIRM_RECEIPT_BODY,
         self.CONFIRM_RECEIPT_OBS).then(res => {
-            //TODO remover comentários
-        //   self.transportationService.receiveMaterial(receiveMaterialStruct)
-        //   .then(value => {
-          _showToastMsg("Material recebido com sucesso");
-        //   }).catch(err => {
-        //   _showToastMsg("Ocorreu algum erro, tente novamente");
-        // });
+          self.transportationService.receiveMaterial(self.currLot.lotId, receiveMaterialStruct)
+          .then(value => {
+            _findMaterialTrackingList();
+            _showToastMsg("Material recebido com sucesso");
+          }).catch(err => {
+            _showToastMsg("Ocorreu algum erro, tente novamente");
+        });
       })
     }
 
     function _findMaterialTrackingList() {
-      self.materialTrackingList.push(
-        {
-          "_id": "1122554488",
-          "lotId": "12345",
-          "origin": "Bahia",
-          "destination": "São Paulo",
-          "receipted": true,
-          "receiveResponsible": "erick@otus-solutions.com.br",
-          "receiptMetadata": [
-            "123456",
-            "1245"
-          ],
-          "otherMetadata": "isso",
-          "sendingDate": "12/05/2020",
-          "receiptDate": "20/05/2020"
-        }
-      )
-      self.materialTrackingList.push(
-        {
-          "_id": "1122554488",
-          "lotId": "12345",
-          "origin": "Bahia",
-          "destination": "São Paulo",
-          "receipted": false,
-          "receiveResponsible": "",
-          "receiptMetadata": [
-          ],
-          "otherMetadata": "",
-          "sendingDate": "",
-          "receiptDate": ""
-        }
-      )
 
-      _detachCurrLotFromMaterialList();
-      //TODO remove comments
-      // self.transportationService.getMaterialTrackingList(self.material.code)
-      //   .then(res => {
-      //     self.materialTrackingList = res;
-      //     if(self.materialTrackingList.length > 0){
-      //       _selectCurrLot(self.materialTrackingList);
-      //       _removeCurrMatFromList(self.currLot);
-      //     }
-      //   })
+      self.transportationService.getMaterialTrackingList(self.material.code)
+        .then(res => {
+          console.info(res);
+          self.materialTrackingList = res;
+          _detachCurrLotFromMaterialList();
+        })
     }
 
     function _detachCurrLotFromMaterialList() {
       if (hasMaterialTrackingList()) {
         _selectCurrLot(self.materialTrackingList);
         if ( hasCurrLot() ) {
+          console.info(self.currLot)
           _removeCurrMatFromList(self.currLot.lotId);
         }
       }
@@ -140,29 +105,10 @@
     }
 
     function _findMetadataOptions() {
-      self.metadataList = [
-        {
-          "_id": "123456",
-          "objectType" : "MaterialReceiptCustomMetadata",
-          "type" : "DBS",
-          "value" : "Adequada",
-          "extractionValue" : "Adequada"
-        },
-        {
-          "_id": "1245",
-          "objectType" : "MaterialReceiptCustomMetadata",
-          "type" : "DBS",
-          "value" : "Inadequada",
-          "extractionValue" : "Inadequada"
-        }
-      ];
-
-      //TODO remove comments
-
-      // self.transportationService.getMaterialMetadataOptions(self.material.type)
-      //   .then((metadataList) => {
-      //     self.metadataList = metadataList;
-      //   })
+      self.transportationService.getMaterialMetadataOptions(self.material.type)
+        .then((metadataList) => {
+          self.metadataList = metadataList;
+        })
     }
 
     function isMetadataChecked(material, metadata) {

@@ -10,7 +10,7 @@
   <laboratory-navigation-access></laboratory-navigation-access>
 
   <md-content flex="100" layout="row" layout-align="center center">
-    <md-card flex-gt-xs="100" flex-gt-sm="50">
+    <md-card flex="100" style="max-width: 1500px">
       <md-card-title>
         <md-card-title-text>
           <span class="md-title"><md-icon>colorize</md-icon>  Seleção de material biológico</span>
@@ -24,7 +24,7 @@
       </md-card-content>
     </md-card>
   </md-content>
-  <md-content layout="row" layout-xs="column" layout-align="none start">
+  <md-content layout="row" layout-xs="column" layout-align="none start" style="max-width: 1520px; margin: 0 auto;">
   <!-- tubelist -->
     <div flex-order-xs="2" flex="50" flex-xs="100" class="aliquots-container" layout="column" layout-align="center">
       <div layout="column" layout-align="center" flex="25" flex-md="30" ng-show="$ctrl.originalTubeHasCode()">
@@ -35,10 +35,10 @@
                 <span class="md-title"><md-icon>colorize</md-icon> Coleta de material biológico</span>
               </md-card-title-text>
             </md-card-title>
-            <md-card-content flex-offset="5">
+            <md-card-content>
               <md-card layout-padding="5">
                 <div layout="row">
-                  <div layout="column" flex="10">
+                  <div layout="column">
                     <div class="tube-design" ng-style="{'background-color': $ctrl.newTube.boxColor,
                                                             'height':'100px', 'width':'10px',
                                                             'border': 'solid 1px #ccc',
@@ -76,7 +76,7 @@
             </md-card-content>
             <md-card-actions layout="row" layout-wrap>
               <generate-custom-label-dialog
-                primary-button="true"
+                basic-button="true"
                 participant-button="false"
                 bio-material-button="true"
                 labels="$ctrl.tubeLabelsData"
@@ -107,7 +107,7 @@
         </md-card-title>
         <md-card-content flex-offset="5">
           <div layout="row" layout-align="start start" layout-align-xs="start center" layout-wrap flex >
-            <div flex-gt-sm="20" flex-xs="100" flex-gt-xs="100" ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index">
+            <div flex-gt-sm="30" flex-xs="100" flex-gt-xs="100" ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index">
               <md-checkbox class="md-primary md-align-top-left"
                            ng-model="option.selected"
                            ng-change="$ctrl.updateTubeCustomMetadata(option)">
@@ -140,6 +140,6 @@
       </div>
     </div>
     <!-- material receipt -->
-    <material-receipt ng-if="$ctrl.originalTubeHasCode()" flex="50" flex-xs="100" material-code="$ctrl.originalTube"></material-receipt>
+    <material-receipt ng-if="$ctrl.originalTubeHasCode()" flex="50" flex-xs="100" material="$ctrl.originalTube"></material-receipt>
   </md-content>
 </md-content>

@@ -157,8 +157,8 @@
       return LaboratoryCollectionService.updateLotReceipt(lotCode, lotReceipt);
     }
 
-    function receiveMaterial(receiveMetadataStruct) {
-      return LaboratoryCollectionService.receiveMaterial(receiveMetadataStruct);
+    function receiveMaterial(lotId, receiveMetadataStruct) {
+      return LaboratoryCollectionService.receiveMaterial(lotId, receiveMetadataStruct);
     }
 
     function getMaterialMetadataOptions(materialType) {

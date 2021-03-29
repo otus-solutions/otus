@@ -26,7 +26,6 @@
     self.deleteLot = deleteLot;
     self.updateLotReceipt = updateLotReceipt;
     self.receiveMaterial = receiveMaterial;
-    self.getMaterialMetadataOptions = getMaterialMetadataOptions;
     self.getMaterialTrackingList = getMaterialTrackingList;
 
     function initialize() {
@@ -109,18 +108,11 @@
 
     /*material data*/
     /*{materialCode: String, receiptMetadata: OID}*/
-    function receiveMaterial(receiveMaterialStruct) {
+    function receiveMaterial(lotId, receiveMaterialStruct) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.receiveMaterial(receiveMaterialStruct).$promise;
-    }
-
-    function getMaterialMetadataOptions(materialType) {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.getMetadataOptions({materialType}).$promise;
+      return _rest.receiveMaterial({id: lotId},receiveMaterialStruct).$promise;
     }
 
     /*material code*/

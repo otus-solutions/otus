@@ -640,14 +640,14 @@
      * @body (object) receiveMaterialStruct - structure of receivedMaterial
      * @memberof LaboratoryCollectionService
      */
-    function receiveMaterial(receiveMaterialStruct) {
+    function receiveMaterial(lotId, receiveMaterialStruct) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           remoteStorage
-            .receiveMaterial(receiveMaterialStruct)
+            .receiveMaterial(lotId, receiveMaterialStruct)
             .then(function (data) {
               request.resolve(data);
             })

@@ -185,10 +185,10 @@
       return deferred.promise;
     }
 
-    function receiveMaterial(receiveMaterialStruct) {
+    function receiveMaterial(lotId, receiveMaterialStruct) {
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.receiveMaterial(receiveMaterialStruct)
+      LaboratoryRepositoryService.receiveMaterial(lotId, receiveMaterialStruct)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
         })
@@ -218,7 +218,7 @@
 
       LaboratoryRepositoryService.getMaterialTrackingList(materialCode)
         .then(function (response) {
-          deferred.resolve(JSON.parse(response));
+          deferred.resolve(response);
         })
         .catch(function (err) {
           deferred.reject(err);
