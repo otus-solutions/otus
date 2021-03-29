@@ -34,6 +34,7 @@
     });
 
     self.userAccessToParticipant;
+    self.goToParticipantHome = true;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -52,7 +53,16 @@
       self.minDate = new Date('01/01/1930')
       self.maxDate = new Date();
       self.centers = {};
+
       _loadAllCenters();
+    }
+
+    function _goToParticipantHome(participant) {
+      if (self.goToParticipantHome){
+        var _participant = angular.copy(participant);
+        ParticipantManagerService.selectParticipant(_participant);
+        ApplicationStateService.activateParticipantDashboard();
+      }
     }
 
     function _restoreFields() {
@@ -219,16 +229,17 @@
               var _participant = _getParticipantData();
               if (self.permissions.autoGenerateRecruitmentNumber) delete _participant.recruitmentNumber;
               ParticipantManagerService.create(_participant)
-                .then(function (response) {''
+                .then(function (response) {
                   if (!self.permissions.autoGenerateRecruitmentNumber) {
                     if (response.recruitmentNumber === self.participant.recruitmentNumber) {
                       _setClear();
                       ParticipantMessagesService.showToast("Participante salvo com sucesso!");
-                      self.listParticipants();
+                      _goToParticipantHome(response);
                     }
                   } else {
                     ParticipantMessagesService.showRecruitmentNumberGenerated(ParticipantFactory.fromJson(response).toJSON()).then(function () {
                       _setClear();
+                      _goToParticipantHome(response);
                     })
                   }
                 })

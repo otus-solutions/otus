@@ -133,7 +133,7 @@
       });
     }
 
-    async function _chooseLotsEndpoint({ origin, destination }) {
+    function _chooseLotsEndpoint({ origin, destination }) {
       if(origin) {
         if (destination) return MaterialTransportationService.getLots(origin, destination)
         else return MaterialTransportationService.getLotsByOrigin(origin)

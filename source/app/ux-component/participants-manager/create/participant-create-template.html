@@ -23,7 +23,7 @@
                         recrutamento
                       </md-tooltip>
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                     <md-input-container flex="100" layout-fill="">
                       <label ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (máx.
                         {{14-$ctrl.centerCode.toString().length}} dígitos)</label>
@@ -39,18 +39,18 @@
                         automaticamente pelo sistema.
                       </md-tooltip>
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                   </div>
                   <div layout-gt-xs="row">
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                     <md-input-container flex layout-fill="">
                       <label>Nome Completo</label>
                       <input ng-model="$ctrl.participant.name" id="name" ng-change="$ctrl.onFilter()">
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                   </div>
                   <div layout-gt-xs="row" layout-align="center center">
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                     <md-input-container flex="30" layout-fill="">
                       <label>Sexo</label>
                       <md-select ng-model="$ctrl.participant.sex" id="sex" ng-change="$ctrl.onFilter()">
@@ -58,7 +58,7 @@
                         <md-option value="F">Feminino</md-option>
                       </md-select>
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                     <md-input-container flex="65" style="margin-top: 25px" id="date" layout-fill="">
                       <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
                       <input mdc-datetime-picker="" show-icon="true" date="true" time="false"
@@ -66,10 +66,10 @@
                              min-date="$ctrl.minDate" max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
                              format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                   </div>
                   <div layout-gt-xs="row">
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                     <md-input-container flex="50" layout-fill="">
                       <label>Centro</label>
                       <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="centerIdentified"
@@ -80,18 +80,26 @@
                         </md-option>
                       </md-select>
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                   </div>
-                  <div layout="row" layout-align="end" layout-margin="">
-                    <span flex></span>
-                    <md-button class="md-raised md-raised md-icon-button" ng-click="$ctrl.clearParticipant()">
-                      <md-icon aria-label="Limpar">clear</md-icon>
-                      <md-tooltip md-direction="down">Cancelar</md-tooltip>
-                    </md-button>
-                    <md-button class="md-accent md-raised md-icon-button" ng-click="$ctrl.saveParticipant()">
-                      <md-icon aria-label="Salvar">save</md-icon>
-                      <md-tooltip md-direction="down">Salvar</md-tooltip>
-                    </md-button>
+                  <div style="margin-top: 15px;" layout-xs="column" layout-align-xs="center center" layout-fill="" layout="row" layout-align="none center">
+                    <span flex="5"></span>
+                    <div flex="100" layout="row">
+                      <md-switch md-invert ng-model="$ctrl.goToParticipantHome" aria-label="">
+                        Ir para Home do participante
+                      </md-switch>
+                    </div>
+                    <div flex="50" layout="row" layout-margin="">
+                      <span flex></span>
+                      <md-button class="md-raised md-raised md-icon-button" ng-click="$ctrl.clearParticipant()">
+                        <md-icon aria-label="Limpar">clear</md-icon>
+                        <md-tooltip md-direction="down">Cancelar</md-tooltip>
+                      </md-button>
+                      <md-button class="md-accent md-raised md-icon-button" ng-click="$ctrl.saveParticipant()">
+                        <md-icon aria-label="Salvar">save</md-icon>
+                        <md-tooltip md-direction="down">Salvar</md-tooltip>
+                      </md-button>
+                    </div>
                   </div>
                 </form>
               </md-card-content>
@@ -116,7 +124,7 @@
                         recrutamento
                       </md-tooltip>
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                     <md-input-container flex="100" layout-fill="">
                       <label ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (máx.
                         {{14-$ctrl.centerCode.toString().length}} dígitos)</label>
@@ -132,10 +140,10 @@
                         automaticamente pelo sistema.
                       </md-tooltip>
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                   </div>
                   <div layout-gt-xs="row">
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                     <md-input-container flex="50" layout-fill="">
                       <label>Centro</label>
                       <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="center"
@@ -146,18 +154,26 @@
                         </md-option>
                       </md-select>
                     </md-input-container>
-                    <span flex="10"></span>
+                    <span flex="5"></span>
                   </div>
-                  <div layout="row" layout-align="end">
-                    <span flex></span>
-                    <md-button class="md-raised md-icon-button" ng-click="$ctrl.clearParticipant()">
-                      <md-icon aria-label="Limpar">clear</md-icon>
-                      <md-tooltip md-direction="down">Limpar</md-tooltip>
-                    </md-button>
-                    <md-button class="md-accent md-raised md-icon-button" ng-click="$ctrl.saveParticipant()">
-                      <md-icon aria-label="Adicionar">save</md-icon>
-                      <md-tooltip md-direction="down">Salvar</md-tooltip>
-                    </md-button>
+                  <div style="margin-top: 15px;" layout-xs="column" layout-align-xs="center center" layout-fill="" layout="row" layout-align="none center">
+                    <span flex="5"></span>
+                    <div flex="100" layout="row">
+                      <md-switch md-invert ng-model="$ctrl.goToParticipantHome" aria-label="">
+                        Ir para Home do participante
+                      </md-switch>
+                    </div>
+                    <div flex="50" layout="row" layout-margin="">
+                      <span flex></span>
+                      <md-button class="md-raised md-raised md-icon-button" ng-click="$ctrl.clearParticipant()">
+                        <md-icon aria-label="Limpar">clear</md-icon>
+                        <md-tooltip md-direction="down">Cancelar</md-tooltip>
+                      </md-button>
+                      <md-button class="md-accent md-raised md-icon-button" ng-click="$ctrl.saveParticipant()">
+                        <md-icon aria-label="Salvar">save</md-icon>
+                        <md-tooltip md-direction="down">Salvar</md-tooltip>
+                      </md-button>
+                    </div>
                   </div>
                 </form>
                 <span flex="80"></span>

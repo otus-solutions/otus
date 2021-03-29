@@ -64,8 +64,6 @@
 
     function selectParticipant(participant) {
       var _participant = angular.copy(participant);
-      delete _participant["birthday"];
-      delete _participant["obito"];
       ParticipantManagerService.selectParticipant(_participant);
       ApplicationStateService.activateParticipantDashboard();
     }

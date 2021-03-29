@@ -82,8 +82,11 @@
                 self.lotReceiptMetadata = lotReceiptMetadata;
                 self.metadataArray = lotReceiptMetadata.map(o => o.value);
                 _getInitialReceiptData();
-                self.metadataOptions = self.metadataArray.reduce((o, key) => ({ ...o, [key]: self.receiptData.transportationMetadata.includes(key) }), {});
-            
+                self.metadataOptions = new Object()
+                self.metadataArray.forEach(
+                    key => self.metadataOptions[key] = self.receiptData.transportationMetadata.includes(key)
+                )
+
                 console.log("_getLotReceiptMetadata")
                 console.log(self.metadataArray)
                 console.log(self.metadataOptions)
