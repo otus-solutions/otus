@@ -61,7 +61,7 @@
     "lokijs": "1.4.2",
     "moment": "2.12.0",
     "ng-material-datetimepicker": "1.13.0",
-    "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#feature-OCJ-18",
+    "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#otus-dev",
     "otus-domain-client": "1.1.0",
     "otus-model-js": "1.42.0",
     "otus-preview-js": "1.15.3",
