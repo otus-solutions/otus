@@ -7,11 +7,13 @@
 
   Controller.$inject = [
     '$mdToast',
+    '$scope',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.application.dialog.DialogShowService',
   ];
 
   function Controller($mdToast,
+                      $scope,
                       MaterialTransportationService,
                       DialogShowService) {
     var self = this;
@@ -29,8 +31,9 @@
     self.materialTrackingList = [];
     self.currLot = {};
 
-    /*expand action var*/
+    /*var*/
     self.expanded = false;
+    self.changedTimes = 0;
 
     /*D.I objects*/
     self.transportationService = MaterialTransportationService;
@@ -46,6 +49,13 @@
     self.isMetadataChecked = isMetadataChecked;
     self.hasCurrLot = hasCurrLot;
     self.hasMaterialTrackingList = hasMaterialTrackingList;
+
+    $scope.$watch("$ctrl.material", function(value) {
+      self.changedTimes++;
+      if(self.changedTimes > 0) {
+        _findMaterialTrackingList();
+      }
+    })
 
     function onInit() {
       _findMaterialTrackingList();
@@ -74,10 +84,8 @@
     }
 
     function _findMaterialTrackingList() {
-
       self.transportationService.getMaterialTrackingList(self.material.code)
         .then(res => {
-          console.info(res);
           self.materialTrackingList = res;
           _detachCurrLotFromMaterialList();
         })
@@ -87,7 +95,6 @@
       if (hasMaterialTrackingList()) {
         _selectCurrLot(self.materialTrackingList);
         if ( hasCurrLot() ) {
-          console.info(self.currLot)
           _removeCurrMatFromList(self.currLot.lotId);
         }
       }
@@ -118,7 +125,7 @@
     function selectMetadata(id) {
       if(self.selectedMetadatas.indexOf(id) === -1) {
         self.selectedMetadatas.push(id);
-      }else {
+      } else {
         const index = self.selectedMetadatas.indexOf(id);
         self.selectedMetadatas.splice(index, 1);
       }

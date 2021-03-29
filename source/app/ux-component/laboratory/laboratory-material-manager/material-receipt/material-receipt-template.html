@@ -65,7 +65,13 @@
               <label>Outro</label>
               <input ng-model="material.otherMetadata"  disabled=""/>
             </md-input-container>
-            <span class="md-subhead">Enviado: {{material.sendingDate}} - Recebido: {{material.receiptDate}}</span>
+            <span class="md-subhead">
+              Responsável: {{material.receiveResponsible}}
+            </span>
+            <span class="md-subheader">
+              Enviado: {{material.sendingDate | date:'dd/MM/yyyy - h:mm'}} -
+              Recebido: {{material.receiptDate | date:'dd/MM/yyyy - h:mm'}}
+            </span>
           </div>
         </md-card-content>
       </md-card>
