@@ -50,7 +50,9 @@
 
         function updateLotReceipt() {
             const receiptData = angular.copy(self.receiptData);
-            receiptData.transportationMetadata = _replaceReceiptMetadataLabelWithId(receiptData.transportationMetadata)
+            receiptData.transportationMetadata = _replaceReceiptMetadataLabelWithId(
+                Object.keys(self.metadataOptions).filter(key => self.metadataOptions[key])
+            )
 
             MaterialTransportationService
                 .updateLotReceipt(self.code, receiptData)
@@ -63,9 +65,6 @@
 
                     receiptData.transportationMetadata = receiptData.transportationMetadata.map(val => ({$oid: val}))
                     data.updateReceipt(receiptData)
-
-                    // TODO: Atualizar dados do lote selecionado, pra ter os dados corretos quando abrir o diálogo novamente
-                    //LaboratoryContextService.selectLot(self.code);
                 })
                 .catch(e => $mdToast.show(
                     $mdToast.simple()
@@ -82,20 +81,21 @@
                 self.lotReceiptMetadata = lotReceiptMetadata;
                 self.metadataArray = lotReceiptMetadata.map(o => o.value);
                 _getInitialReceiptData();
-                self.metadataOptions = self.metadataArray.reduce((o, key) => ({ ...o, [key]: self.receiptData.transportationMetadata.includes(key) }), {});
-            
-                console.log("_getLotReceiptMetadata")
-                console.log(self.metadataArray)
-                console.log(self.metadataOptions)
+                self.metadataOptions = new Object()
+                self.metadataArray.forEach(
+                    key => self.metadataOptions[key] = self.receiptData.transportationMetadata.includes(key)
+                )
             });
         }
 
         function _getInitialReceiptData() {
+            const receipt = data.receiptData
+
             self.receiptData = {
-                temperature: data.receiptData ? data.receiptData.temperature : undefined,
-                transportationMetadata: data.receiptData ? _replaceReceiptMetadataIdWithLabel(data.receiptData.transportationMetadata) : [],
-                receiptDate: data.receiptData ? new Date(data.receiptData.receiptDate) : self.now,
-                lastUpdateDate: data.receiptData ? new Date(data.receiptData.lastUpdateDate) : self.now
+                temperature: receipt && receipt.temperature ? receipt.temperature : undefined,
+                transportationMetadata: receipt && receipt.transportationMetadata ? _replaceReceiptMetadataIdWithLabel(receipt.transportationMetadata) : [],
+                receiptDate: receipt && receipt.date ? new Date(receipt.receiptDate) : self.now,
+                lastUpdateDate: receipt && receipt.lastUpdateDate ? new Date(receipt.lastUpdateDate) : self.now
             }
         }
     }
