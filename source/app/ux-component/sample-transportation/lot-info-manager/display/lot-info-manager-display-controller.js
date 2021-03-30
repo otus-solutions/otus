@@ -143,16 +143,18 @@
     }
 
     function _receivedMaterialInfo() {
-      if(self.lot.receivedMaterials.length){
-        const receivedTube = self.lot.receivedMaterials.map((material) => {
-          return self.lot.tubeList.find(tube => tube.code === material.materialCode)
-        })
-        const receivedAliquots = self.lot.receivedMaterials.map((material) => {
-          return self.lot.aliquotList.find(aliquot => aliquot.code === material.materialCode)
-        })
-        self.receivedTubes = self.receivedList.concat(receivedTube[0] ? receivedTube : []);
-        self.receivedAliquots = self.receivedList.concat(receivedAliquots[0] ? receivedAliquots : []);
-        console.info(self.receivedTubes);
+      if(self.lot.receivedMaterials){
+        if(self.lot.receivedMaterials.length){
+          const receivedTube = self.lot.receivedMaterials.map((material) => {
+            return self.lot.tubeList.find(tube => tube.code === material.materialCode)
+          })
+          const receivedAliquots = self.lot.receivedMaterials.map((material) => {
+            return self.lot.aliquotList.find(aliquot => aliquot.code === material.materialCode)
+          })
+          self.receivedTubes = self.receivedList.concat(receivedTube[0] ? receivedTube : []);
+          self.receivedAliquots = self.receivedList.concat(receivedAliquots[0] ? receivedAliquots : []);
+          console.info(self.receivedTubes);
+        }
       }
     }
 
