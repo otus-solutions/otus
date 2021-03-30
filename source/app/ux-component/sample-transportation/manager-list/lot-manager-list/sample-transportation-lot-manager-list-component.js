@@ -90,6 +90,13 @@
       self.otusSampleTransportationManagerList.listComponent = self;
     }
 
+    self.percentOfReceived = function (received, total) {
+      if(received === 0) {
+        return 0;
+      }
+      return Math.trunc((received / total) * 100);
+    }
+
     self.getLots = function () {
 
       if (self.locationFilters.origin || self.locationFilters.destination){

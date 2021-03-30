@@ -56,7 +56,7 @@
   </div>
   <md-divider></md-divider>
 </div>
-<md-content class="md-padding" layout="column">
+<div class="md-padding" layout="column">
   <div class="mobile-filter">
     <div layout="row">
       <div layout="row" layout-xs="column" layout-align="center " flex>
@@ -119,40 +119,40 @@
                  class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
                  ng-class="{ 'selectedState': lot.isSelected, 'regularState': !lot.isSelected }">
           <md-card-title flex>
-            <md-card-title-text flex="100" layout-wrap>
-              <span class="md-headline">{{lot.code}}</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content layout="row" style="height:180px;">
-            <div flex="50" layout="column">
-              <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
-              <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
-              <span class="md-subhead">Responsável:</span>
-              <span class="md-subhead">{{lot.operator}}</span>
-              <span class="md-subhead" ng-repeat="origin in $ctrl.originLocationPoints | filter: { _id: lot.originLocationPoint} track by $index"
-                    value="{{origin._id}}">Origem: {{origin.name}}</span>
-              <span class="md-subhead" ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: lot.destinationLocationPoint} track by $index"
-                    value="{{destination._id}}">Destino: {{destination.name}}</span>
+            <div layout="row" flex>
+              <div layout="column" flex="60">
+                <md-card-title-text flex="100" layout-wrap>
+                  <span class="md-headline">{{lot.code}}</span>
+                  <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                  <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                  <span class="md-subhead">Responsável:</span>
+                  <span class="md-subhead">{{lot.operator}}</span>
+                  <span class="md-subhead" ng-repeat="origin in $ctrl.originLocationPoints | filter: { _id: lot.originLocationPoint} track by $index"
+                        value="{{origin._id}}">Origem: {{origin.name}}</span>
+                  <span class="md-subhead" ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: lot.destinationLocationPoint} track by $index"
+                        value="{{destination._id}}">Destino: {{destination.name}}</span>
+                </md-card-title-text>
+                <md-card-actions layout="row" layout-align="end center"></md-card-actions>
+              </div>
+              <div layout="row" flex="">
+                <otus-sample-transportation-lot-aliquots-chart
+                  lot-data-set="lot.chartAliquotDataSet"></otus-sample-transportation-lot-aliquots-chart>
+                <otus-sample-transportation-lot-tubes-chart
+                  lot-data-set="lot.chartTubeDataSet"></otus-sample-transportation-lot-tubes-chart>
+              </div>
             </div>
-            <div layout="row" flex="50">
-              <otus-sample-transportation-lot-aliquots-chart
-                lot-data-set="lot.chartAliquotDataSet" ng-show="lot.chartAliquotDataSet"></otus-sample-transportation-lot-aliquots-chart>
-              <otus-sample-transportation-lot-tubes-chart
-                lot-data-set="lot.chartTubeDataSet"  ng-show="lot.chartTubeDataSet"></otus-sample-transportation-lot-tubes-chart>
+          </md-card-title>
+          <md-card-content layout="column" style="height:180px;">
+            <md-content md-content class="no-background-color">
+              <otus-sample-transportation-lot-chart-subtitle-table ng-if="lot.chartAliquotDataSet.labels.length"
+                lot-data-set="lot.chartAliquotDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
+              <otus-sample-transportation-lot-chart-subtitle-table ng-if="lot.chartTubeDataSet.labels.length"
+                lot-data-set="lot.chartTubeDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
+            </md-content>
+            <div layout-align="center center" layout="column" ng-if="!lot.chartAliquotDataSet.labels.length && !lot.chartTubeDataSet.labels.length">
+              <span class="md-title" >Não há Alíquotas no lote</span>
             </div>
           </md-card-content>
-          <md-card-footer>
-              <md-content md-content class="no-background-color">
-                <otus-sample-transportation-lot-chart-subtitle-table ng-if="lot.chartAliquotDataSet.labels.length"
-                  lot-data-set="lot.chartAliquotDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
-                <otus-sample-transportation-lot-chart-subtitle-table ng-if="lot.chartTubeDataSet.labels.length"
-                  lot-data-set="lot.chartTubeDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
-              </md-content>
-              <div layout-align="center center" layout="column" ng-if="!lot.chartAliquotDataSet.labels.length && !lot.chartTubeDataSet.labels.length">
-                <span class="md-title" >Não há Alíquotas no lote</span>
-              </div>
-            </md-card-content>
-          </md-card-footer>
         </md-card>
       </div>
     </div>
