@@ -7,6 +7,7 @@
 
   Controller.$inject = [
     '$filter',
+    '$mdToast',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationMessagesService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory',
@@ -20,6 +21,7 @@
 
   function Controller(
     $filter,
+    $mdToast,
     MaterialTransportationService,
     MaterialTransportationMessagesService,
     AliquotTransportationQueryFactory,
@@ -118,7 +120,7 @@
         //icon, tooltip, classButton, successMsg,
         //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
         .addColumnIconButton(
-          'delete_forever', 'Remover Material', '', 'O material foi removido',
+          'delete_forever', 'Remover Material', '', '',
           self.removeElement, false, false, true, false, false
         )
 
@@ -223,6 +225,13 @@
         self.lot.removeAliquotByIndex(aliquotIndex);
       }
       _updateDynamicTable();
+
+
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent("O material foi removido")
+          .hideDelay(3000)
+      );
     }
 
     function clearLot(oldValue) {
