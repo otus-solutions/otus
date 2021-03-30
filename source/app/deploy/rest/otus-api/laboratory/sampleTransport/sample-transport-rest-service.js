@@ -25,6 +25,8 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.updateLotReceipt = updateLotReceipt;
+    self.receiveMaterial = receiveMaterial;
+    self.getMaterialTrackingList = getMaterialTrackingList;
 
     function initialize() {
       _rest = OtusRestResourceService.getSampleTransport();
@@ -102,6 +104,24 @@
       return _rest.updateLotReceipt({
         code: lotCode
       }, lotReceipt).$promise;
+    }
+
+    /*material data*/
+    /*{materialCode: String, receiptMetadata: OID}*/
+    function receiveMaterial(lotId, receiveMaterialStruct) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.receiveMaterial({id: lotId},receiveMaterialStruct).$promise;
+    }
+
+    /*material code*/
+    //aliquot or tube
+    function getMaterialTrackingList(materialCode) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getMaterialTrackingList({materialCode}).$promise;
     }
   }
 }());

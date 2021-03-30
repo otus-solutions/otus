@@ -30,6 +30,9 @@
     self.deleteLot = deleteLot;
     self.updateLotReceipt = updateLotReceipt;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
+    self.receiveMaterial = receiveMaterial;
+    self.getMaterialMetadataOptions = getMaterialMetadataOptions;
+    self.getMaterialTrackingList = getMaterialTrackingList;
 
     function getContainerLabelToAliquot(aliquot) {
       return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
@@ -181,6 +184,49 @@
 
       return deferred.promise;
     }
+
+    function receiveMaterial(lotId, receiveMaterialStruct) {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.receiveMaterial(lotId, receiveMaterialStruct)
+        .then(function (response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function getMaterialMetadataOptions(materialType) {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.getMaterialMetadataOptions(materialType)
+        .then(function (response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function getMaterialTrackingList(materialCode) {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.getMaterialTrackingList(materialCode)
+        .then(function (response) {
+          deferred.resolve(response);
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
 
     function deleteLot(lotCode) {
       var deferred = $q.defer();

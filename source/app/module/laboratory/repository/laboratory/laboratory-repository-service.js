@@ -42,6 +42,9 @@
     self.updateLotReceipt = updateLotReceipt;
     self.deleteLot = deleteLot;
     self.deleteAliquot = deleteAliquot;
+    self.receiveMaterial = receiveMaterial;
+    self.getMaterialMetadataOptions = getMaterialMetadataOptions;
+    self.getMaterialTrackingList = getMaterialTrackingList;
 
     /* Unattached Laboratory Methods */
     self.attacheLaboratory = attacheLaboratory;
@@ -152,6 +155,18 @@
 
     function updateLotReceipt(lotCode, lotReceipt) {
       return LaboratoryCollectionService.updateLotReceipt(lotCode, lotReceipt);
+    }
+
+    function receiveMaterial(lotId, receiveMetadataStruct) {
+      return LaboratoryCollectionService.receiveMaterial(lotId, receiveMetadataStruct);
+    }
+
+    function getMaterialMetadataOptions(materialType) {
+      return LaboratoryCollectionService.getMaterialMetadataOptions(materialType);
+    }
+
+    function getMaterialTrackingList(materialCode) {
+      return LaboratoryCollectionService.getMaterialTrackingList(materialCode);
     }
 
     function deleteAliquot(aliquotCode) {

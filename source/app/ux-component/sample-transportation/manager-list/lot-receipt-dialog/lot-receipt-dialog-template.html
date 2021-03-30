@@ -1,20 +1,4 @@
-<style>
-    .lot-receipt-checkbox {
-        width: 100%;
-    }
-
-    .lot-receipt-checkbox .md-label {
-        display: flex;
-        width: calc(100% - 30px);
-    }
-
-    .lot-receipt-checkbox .md-label span {
-        width: 100%;
-        overflow-wrap: break-word;
-    }
-</style>
-
-<md-dialog class="dialog-show-template" flex="" style="min-height: 75%;" aria-label="Diálogo para recebimento de lotes">
+<md-dialog class="dialog-show-template" flex="" aria-label="Diálogo para recebimento de lotes" style="max-width: 900px;">
     <form name="dialogForm" ng-cloak flex="">
         <md-toolbar>
             <div class="md-toolbar-tools">
@@ -44,7 +28,7 @@
                         mdc-datetime-picker="" show-icon="true" date="true" time="true" type="text"
                         show-todays-date="" id="datetime" class="md-input" readonly="readonly"
                         format="DD/MM/YYYY HH:mm" disable-parent-scroll="true"
-                    ></input>
+                    />
                 </md-input-container>
 
                 <md-input-container style="margin-top: auto;">
@@ -54,7 +38,7 @@
                         required
                         name="temperature"
                         type="number"
-                    ></input>
+                    />
                     <div ng-messages="dialogForm.temperature.$error" md-auto-hide="true">
                         <div ng-message="required">Campo obrigatório</div>
                     </div>
@@ -72,7 +56,6 @@
                                 name="metadata"
                                 ng-model="$ctrl.metadataOptions[metadata]"
                                 aria-label="Checkbox para metadado"
-                                class="lot-receipt-checkbox"
                             >
                                 {{ metadata }}
                             </md-checkbox>
@@ -94,7 +77,7 @@
             </div>
 
             <div>
-                <md-button 
+                <md-button
                     class="md-raised md-no-focus"
                     ng-click="$ctrl.closeDialog()"
                     aria-label="Cancelar"

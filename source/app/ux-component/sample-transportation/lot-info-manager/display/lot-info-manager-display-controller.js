@@ -153,7 +153,6 @@
           })
           self.receivedTubes = self.receivedList.concat(receivedTube[0] ? receivedTube : []);
           self.receivedAliquots = self.receivedList.concat(receivedAliquots[0] ? receivedAliquots : []);
-          console.info(self.receivedTubes);
         }
       }
     }

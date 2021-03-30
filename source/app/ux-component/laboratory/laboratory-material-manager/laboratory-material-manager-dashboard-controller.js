@@ -44,6 +44,7 @@
     self.isEnterKey = isEnterKey;
     self.saveDynamicMetadata = saveDynamicMetadata;
     self.updateAliquots = function (){};
+    self.updateMaterialReceipt = function (){};
 
     function onInit() {
       self.laboratoryExists = false;
@@ -94,7 +95,6 @@
             ParticipantLaboratoryService.getTubeMedataDataByType(self.originalTube.type)
               .then(data => {
                 self.tubeCustomMetadataOptions = data.map(obj => angular.extend(obj, obj, {selected: false}));
-
                 if(self.originalTube.tubeCollectionData.customMetadata){
                   self.tubeCustomMetadataOptions
                     .filter(obj => self.originalTube.tubeCollectionData.customMetadata.includes(obj._id))
@@ -103,7 +103,7 @@
                 else{
                   self.originalTube.tubeCollectionData.customMetadata = [];
                 }
-                self.updateAliquots(foundTube,participantLaboratory);
+                self.updateAliquots(foundTube, participantLaboratory);
               })
               .catch(e => _showToastMsg('Tipo de tubo não encontrado'));
           })

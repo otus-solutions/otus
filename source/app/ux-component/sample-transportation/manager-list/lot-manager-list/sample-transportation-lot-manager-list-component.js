@@ -134,7 +134,6 @@
         self.lotsListImutable = response || [];
         self.onFilter();
         _setChartData();
-        console.info(self.lotsList);
         LoadingScreenService.finish();
       }).catch(function () {
         LoadingScreenService.finish();

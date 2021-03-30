@@ -197,6 +197,7 @@ describe('participants-manager-list-controller Test', function () {
     });
   });
 
+
   function mockParticipantList() {
     return [
       {
