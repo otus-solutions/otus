@@ -23,7 +23,6 @@
     self.CONFIRM_RECEIPT_BODY = "Deseja confirmar o recebimento?";
     self.CONFIRM_RECEIPT_OBS = "Ao confirmar, não poderá fazer alterações";
 
-
     /*public variables*/
     self.metadataList = [];
     self.selectedMetadatas = [];
@@ -33,7 +32,6 @@
 
     /*var*/
     self.expanded = false;
-    self.changedTimes = 0;
 
     /*D.I objects*/
     self.transportationService = MaterialTransportationService;
@@ -51,9 +49,7 @@
     self.hasMaterialTrackingList = hasMaterialTrackingList;
 
     $scope.$watch("$ctrl.material", function(value) {
-      if(self.changedTimes > 0) {
-        _findMaterialTrackingList();
-      }
+      _findMaterialTrackingList();
     })
 
     function onInit() {

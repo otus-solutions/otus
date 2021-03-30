@@ -1,17 +1,5 @@
-<style>
-    .lot-receipt-dialog md-checkbox {
-        max-width: 100%;
-    }
-
-    .lot-receipt-dialog md-checkbox .md-label {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: calc(100% - 30px);
-    }
-</style>
-
-<md-dialog class="dialog-show-template lot-receipt-dialog" aria-label="Diálogo para recebimento de lotes">
-    <form name="dialogForm" ng-cloak>
+<md-dialog class="dialog-show-template" flex="" aria-label="Diálogo para recebimento de lotes" style="max-width: 900px;">
+    <form name="dialogForm" ng-cloak flex="">
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <h2>Recebimento de lote</h2>
@@ -40,7 +28,7 @@
                         mdc-datetime-picker="" show-icon="true" date="true" time="true" type="text"
                         show-todays-date="" id="datetime" class="md-input" readonly="readonly"
                         format="DD/MM/YYYY HH:mm" disable-parent-scroll="true"
-                    ></input>
+                    />
                 </md-input-container>
 
                 <md-input-container style="margin-top: auto;">
@@ -50,7 +38,7 @@
                         required
                         name="temperature"
                         type="number"
-                    ></input>
+                    />
                     <div ng-messages="dialogForm.temperature.$error" md-auto-hide="true">
                         <div ng-message="required">Campo obrigatório</div>
                     </div>
@@ -59,11 +47,11 @@
                     </div>
                 </md-input-container>
 
-                <div layout="column" ng-if="$ctrl.metadataArray.length > 0" style="max-width: 500px;">
+                <div layout="column" ng-if="$ctrl.metadataArray.length > 0">
                     <p>Metadados</p>
 
-                    <div layout="row" layout-wrap layout-fill>
-                        <div flex="33" flex-xs="50" ng-repeat="metadata in $ctrl.metadataArray">
+                    <div layout="row" layout-wrap layout-fill layout-align="start center">
+                        <div flex="33" flex-xs="100" ng-repeat="metadata in $ctrl.metadataArray" style="padding: 4px">
                             <md-checkbox
                                 name="metadata"
                                 ng-model="$ctrl.metadataOptions[metadata]"
@@ -77,9 +65,9 @@
             </div>
         </md-dialog-content>
 
-        <md-dialog-actions layout="row">
+        <md-dialog-actions layout="row" style="margin-top: auto;">
             <div>
-                <md-button 
+                <md-button
                     class="md-raised md-primary"
                     ng-click="$ctrl.updateLotReceipt()"
                     ng-disabled="!dialogForm.$valid"
@@ -89,7 +77,7 @@
             </div>
 
             <div>
-                <md-button 
+                <md-button
                     class="md-raised md-no-focus"
                     ng-click="$ctrl.closeDialog()"
                     aria-label="Cancelar"
