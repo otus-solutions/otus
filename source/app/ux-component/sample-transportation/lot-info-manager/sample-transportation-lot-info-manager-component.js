@@ -66,7 +66,7 @@
       }
       self.updateLotStateData(self.lot);
       self.selectedAliquots = [];
-      MaterialTransportationService.dynamicDataTableFunction.updateDataTable();
+      MaterialTransportationService.dynamicDataTableFunction.updateDataTable(self.lot.aliquotList.concat(self.lot.getTubeForDynamicTable()));
       self.setChartData();
       _toastAliquotsRemoved(aliquotsCount);
     }
