@@ -112,8 +112,8 @@
         })
     }
 
-    function isMetadataChecked(material, metadata) {
-      return material.receiptMetadata.includes(metadata._id)
+    function isMetadataChecked({ receiptMetadata }, metadata) {
+      return receiptMetadata && receiptMetadata.includes(metadata._id)
     }
 
     function selectMetadata(id) {
