@@ -51,14 +51,12 @@
     self.hasMaterialTrackingList = hasMaterialTrackingList;
 
     $scope.$watch("$ctrl.material", function(value) {
-      self.changedTimes++;
       if(self.changedTimes > 0) {
         _findMaterialTrackingList();
       }
     })
 
     function onInit() {
-      _findMaterialTrackingList();
       _findMetadataOptions();
     }
 

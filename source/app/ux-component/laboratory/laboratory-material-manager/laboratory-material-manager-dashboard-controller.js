@@ -95,7 +95,6 @@
             ParticipantLaboratoryService.getTubeMedataDataByType(self.originalTube.type)
               .then(data => {
                 self.tubeCustomMetadataOptions = data.map(obj => angular.extend(obj, obj, {selected: false}));
-
                 if(self.originalTube.tubeCollectionData.customMetadata){
                   self.tubeCustomMetadataOptions
                     .filter(obj => self.originalTube.tubeCollectionData.customMetadata.includes(obj._id))
