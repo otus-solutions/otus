@@ -60,6 +60,10 @@
     self.updateLot = updateLot;
     self.updateLotReceipt = updateLotReceipt;
     self.deleteLot = deleteLot;
+    self.receiveMaterial = receiveMaterial;
+    self.getMaterialMetadataOptions = getMaterialMetadataOptions;
+    self.getMaterialTrackingList = getMaterialTrackingList;
+
 
     /* Unattached Laboratory Methods */
     self.attacheLaboratory = attacheLaboratory;
@@ -467,6 +471,50 @@
       var deferred = $q.defer();
       SampleTransportRestService
         .updateLotReceipt(lotCode, lotReceipt)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    /**
+     * Update lot receipt.
+     * @body (object) receiveMaterialStruct - structure of receivedMaterial
+     * @memberof LaboratoryCollectionService
+     */
+    function receiveMaterial(lotId, receiveMaterialStruct) {
+      var deferred = $q.defer();
+      SampleTransportRestService
+          .receiveMaterial(lotId, receiveMaterialStruct)
+          .then(function (response) {
+            deferred.resolve(response.data);
+          })
+          .catch(function (e) {
+            deferred.reject(e);
+          });
+      return deferred.promise;
+    }
+
+    function getMaterialMetadataOptions(materialType) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .getMaterialMetadataOptions(materialType)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function getMaterialTrackingList(materialCode) {
+      var deferred = $q.defer();
+      SampleTransportRestService
+        .getMaterialTrackingList(materialCode)
         .then(function (response) {
           deferred.resolve(response.data);
         })

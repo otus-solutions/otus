@@ -35,6 +35,7 @@
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getAliquotConfiguration = getAliquotConfiguration;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
+    self.getMaterialMetadataOptions = getMaterialMetadataOptions;
 
     /* Unattached Laboratory Methods */
     self.initializeUnattached = initializeUnattached;
@@ -217,6 +218,14 @@
         throw new Error('REST resource is no initialized.');
       }
       return _unattachedRest.getByIdentification({laboratoryIdentification:laboratoryIdentification}).$promise;
+    }
+
+
+    function getMaterialMetadataOptions(materialType) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getMaterialMetadataOptions({materialType}).$promise;
     }
 
   }
