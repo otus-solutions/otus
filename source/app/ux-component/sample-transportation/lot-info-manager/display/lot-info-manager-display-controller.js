@@ -7,6 +7,7 @@
 
   Controller.$inject = [
     '$filter',
+    '$mdToast',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationMessagesService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory',
@@ -20,6 +21,7 @@
 
   function Controller(
     $filter,
+    $mdToast,
     MaterialTransportationService,
     MaterialTransportationMessagesService,
     AliquotTransportationQueryFactory,
@@ -51,7 +53,6 @@
     self.periodInputkeydown = periodInputkeydown;
     self.dynamicDataTableChange = dynamicDataTableChange;
     self.removeElement = removeElement;
-
 
     $scope.$watch('$ctrl.lot.originLocationPoint', function (newValue, oldValue) {
       if (oldValue && newValue != oldValue) {
@@ -119,7 +120,7 @@
         //icon, tooltip, classButton, successMsg,
         //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
         .addColumnIconButton(
-          'delete_forever', 'Remover Material', '', 'O material foi removido',
+          'delete_forever', 'Remover Material', '', '',
           self.removeElement, false, false, true, false, false
         )
 
@@ -196,6 +197,20 @@
     }
 
     function removeElement(element) {
+      const tubeCodes = self.receivedTubes.map(tube => tube.code);
+      const aliquotCodes = self.receivedAliquots.map(aliquot => aliquot.code);
+
+      if (tubeCodes.concat(aliquotCodes).includes(element.code)) {
+        DialogService.showWarningDialog(
+          "Remoção de material do lote",
+          "Operação não autorizada",
+          "Não foi possível o remover material " + element.code + " pois seu recebimento já foi registrado.",
+          "Aviso: remoção de material do lote não foi autorizada"
+        );
+
+        return;
+      }
+
       _unselectedAllAliquot();
       var aliquotIndex = self.lot.aliquotList.indexOf(element);
       if (aliquotIndex < 0) {
@@ -210,6 +225,13 @@
         self.lot.removeAliquotByIndex(aliquotIndex);
       }
       _updateDynamicTable();
+
+
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent("O material foi removido")
+          .hideDelay(3000)
+      );
     }
 
     function clearLot(oldValue) {
