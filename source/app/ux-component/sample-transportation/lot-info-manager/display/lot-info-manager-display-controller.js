@@ -52,7 +52,6 @@
     self.dynamicDataTableChange = dynamicDataTableChange;
     self.removeElement = removeElement;
 
-
     $scope.$watch('$ctrl.lot.originLocationPoint', function (newValue, oldValue) {
       if (oldValue && newValue != oldValue) {
         if ((self.lot.aliquotList.length || self.lot.tubeList.length) && !self.lot.code) {
@@ -196,6 +195,20 @@
     }
 
     function removeElement(element) {
+      const tubeCodes = self.receivedTubes.map(tube => tube.code);
+      const aliquotCodes = self.receivedAliquots.map(aliquot => aliquot.code);
+
+      if (tubeCodes.concat(aliquotCodes).includes(element.code)) {
+        DialogService.showWarningDialog(
+          "Remoção de material do lote",
+          "Operação não autorizada",
+          "Não foi possível o remover material " + element.code + " pois seu recebimento já foi registrado.",
+          "Aviso: remoção de material do lote não foi autorizada"
+        );
+
+        return;
+      }
+
       _unselectedAllAliquot();
       var aliquotIndex = self.lot.aliquotList.indexOf(element);
       if (aliquotIndex < 0) {
