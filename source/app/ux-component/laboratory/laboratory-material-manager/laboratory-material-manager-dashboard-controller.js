@@ -92,7 +92,6 @@
             self.originalTube = angular.copy(foundTube);
             self.newTube = foundTube;
             self.tubeCode = "";
-            console.info(self.newTube);
             ParticipantLaboratoryService.getTubeMedataDataByType(self.originalTube.type)
               .then(data => {
                 self.tubeCustomMetadataOptions = data.map(obj => angular.extend(obj, obj, {selected: false}));
