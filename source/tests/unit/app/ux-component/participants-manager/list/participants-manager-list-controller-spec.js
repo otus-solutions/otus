@@ -197,30 +197,6 @@ describe('participants-manager-list-controller Test', function () {
     });
   });
 
-  describe('select participant button icon click', function () {
-    beforeEach(function () {
-      var oldDate = new Date();
-      spyOn(controller, '$onInit').and.callThrough();
-      spyOn(Mock.ApplicationStateService, 'activateParticipantDashboard').and.callThrough();
-      spyOn(Mock.ParticipantManagerService, 'selectParticipant').and.callThrough();
-      spyOn(window, "Date").and.callFake(function () {
-        return oldDate;
-      });
-      controller.participantsList = mockParticipantList();
-      controller.$onInit();
-      controller.selectParticipant(controller.participants[0]);
-
-    });
-
-    it('should call state of participant create', function () {
-      var participant = mockParticipantList();
-      expect(Mock.ParticipantManagerService.selectParticipant).toHaveBeenCalledWith(participant[0]);
-      expect(Mock.ParticipantManagerService.selectParticipant).toHaveBeenCalledTimes(1);
-      expect(Mock.ApplicationStateService.activateParticipantDashboard).toHaveBeenCalled();
-      expect(Mock.ApplicationStateService.activateParticipantDashboard).toHaveBeenCalledTimes(1);
-    });
-  });
-
   function mockParticipantList() {
     return [
       {
