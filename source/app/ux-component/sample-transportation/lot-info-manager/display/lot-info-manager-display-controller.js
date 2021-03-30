@@ -150,7 +150,6 @@
         const receivedAliquots = self.lot.receivedMaterials.map((material) => {
           return self.lot.aliquotList.find(aliquot => aliquot.code === material.materialCode)
         })
-        console.info(self.lot.aliquotList);
         self.receivedTubes = self.receivedList.concat(receivedTube[0] ? receivedTube : []);
         self.receivedAliquots = self.receivedList.concat(receivedAliquots[0] ? receivedAliquots : []);
         console.info(self.receivedTubes);
