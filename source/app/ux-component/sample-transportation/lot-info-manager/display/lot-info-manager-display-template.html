@@ -68,10 +68,15 @@
 
           <md-input-container flex="100" flex-gt-xs="80">
             <label>Destino:</label>
-            <md-select ng-model="$ctrl.lot.destinationLocationPoint" ng-disabled="$ctrl.lot.code">
+            <md-select ng-model="$ctrl.lot.destinationLocationPoint" ng-disabled="$ctrl.lot.code"
+                       ng-model-options="{trackBy: $ctrl.lot.destinationLocationPoint}"
+            >
               <md-option
-                ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: '!'+$ctrl.lot.originLocationPoint} track by $index"
-                value="{{destination._id}}">{{destination.name}}
+                ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: '!'+$ctrl.lot.originLocationPoint}"
+                ng-selected="destination._id === $ctrl.lot.destinationLocationPoint"
+                value="{{destination._id}}"
+              >
+                  {{destination.name}}
               </md-option>
             </md-select>
           </md-input-container>
