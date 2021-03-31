@@ -259,8 +259,10 @@
         });
     }
     function discardActivity(activityId, participant) {
-      _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.discardActivity(activityId, participant));
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => {
+          return remoteStorage.discardActivity(activityId, participant)
+        });
     }
   }
 }());

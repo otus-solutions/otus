@@ -169,12 +169,13 @@
           return ContextService.getSelectedActivities();
         },
         discard: function discard() {
-          var toDiscard = ContextService.getSelectedActivities().map(function (activity) {
-            activity.isDiscarded = true;
-            return activity;
-          });
-          ActivityRepositoryService.discard(toDiscard);
-          ContextService.clearSelectedActivities();
+          getSelectedParticipant()
+            .then(function (selectedParticipant) {
+              ContextService.getSelectedActivities().map(function (activity) {
+                ActivityRepositoryService.discardActivity(activity.getID(), selectedParticipant);
+              });
+              ContextService.clearSelectedActivities();
+            })
         }
       };
     }
@@ -244,7 +245,13 @@
     function discardActivity(activityId) {
       getSelectedParticipant()
         .then(function (selectedParticipant) {
-          ActivityRepositoryService.discardActivity(activityId, selectedParticipant);
+          ActivityRepositoryService.discardActivity(activityId, selectedParticipant)
+            .then(() => {
+              _callToast('deleteSuccessMessage');
+            })
+            .catch(() => {
+              _callToast('failureMessage');
+            });
         });
     }
 
