@@ -155,7 +155,7 @@
         throw new Error('REST resource is not initialized.');
       }
 
-      _rest.discard({ id: activityId, rn: recruitmentNumber });
+       return _rest.discard({ id: activityId, rn: recruitmentNumber }).$promise;
     }
 
   }
