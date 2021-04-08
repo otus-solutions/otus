@@ -1,0 +1,151 @@
+.otus-user-comment-about-participant-dialog {
+  width: 50vw;
+  min-height: 60vh;
+  background-color: #fff;
+
+  @media screen and (min-width: 360px) {
+    .comment-list-layout {
+      display: grid;
+      height: auto;
+      padding-top: 0;
+      grid-template-columns: repeat(4, 0.8fr) repeat(2, 0.1fr);
+      grid-template-rows: auto;
+      grid-template-areas:
+        "comment-name  comment-name  comment-name comment-status comment-button comment-date";
+    }
+
+    .layout-uc {
+      height: auto;
+    }
+
+    .icon-size {
+      font-size: 2em;
+      height: auto;
+      width: auto;
+    }
+  }
+
+  @media screen and (min-width: 410px) {
+    .comment-box {
+      line-height: 6em;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .comment-list-layout {
+      display: grid;
+      height: auto;
+      padding-top: 0;
+      grid-template-columns: repeat(2, 1fr) repeat(3, 0.09fr);
+      grid-template-rows: auto;
+      grid-template-areas:
+        "comment-name  comment-name   comment-status  comment-button    comment-date";
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .comment-list-layout {
+      display: grid;
+      max-height: 15vh;
+      padding-top: 0;
+      grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
+      grid-template-rows: auto;
+      grid-template-areas:
+        "comment-name  comment-name  comment-status  comment-button   comment-date";
+    }
+
+    .layout-uc {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .icon-size {
+      font-size: 1.5em;
+      height: auto;
+      width: auto;
+    }
+
+    .comment-box {
+      line-height: 2em;
+    }
+  }
+
+  .margin-line {
+    margin: 1px;
+  }
+
+  .comment-name {
+    grid-area: comment-name;
+    align-items: center;
+  }
+
+  .comment-status {
+    grid-area: comment-status;
+  }
+
+  .comment-date {
+    grid-area: comment-date;
+  }
+
+  md-list {
+    padding: 0;
+  }
+
+  .comment-button {
+    grid-area: comment-button;
+  }
+
+  .md-body-1 {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .md-button {
+    min-width: auto;
+  }
+
+  @mixin trim($numLines: null) {
+    @if $numLines != null {
+      display: -webkit-box;
+      -webkit-line-clamp: $numLines;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    } @else {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+    }
+  }
+
+  .ellipsis {
+    @include trim(3);
+  }
+
+  .comment-status {
+    grid-area: comment-status;
+  }
+
+  .comment-date {
+    grid-area: comment-date;
+    padding-left: 4px;
+  }
+
+  md-list {
+    padding: 0;
+  }
+
+  .comment-box {
+    height: 100vh;
+    color: #999 !important;
+    font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+    width: 46vw;
+    background: #fff;
+    border-radius: 5px;
+    line-height: 2em;
+    border: 2px;
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
+    padding: 4px;
+    transition: height 2s ease;
+    resize: vertical;
+  }
+}

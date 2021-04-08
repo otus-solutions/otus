@@ -2003,6 +2003,152 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
 }
 
 /*end style for generic-list-control*/
+.otus-user-comment-about-participant-dialog {
+  width: 50vw;
+  min-height: 60vh;
+  background-color: #fff;
+}
+
+@media screen and (min-width: 360px) {
+  .otus-user-comment-about-participant-dialog .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    height: auto;
+    padding-top: 0;
+    -ms-grid-columns: (0.8fr)[4] (0.1fr)[2];
+        grid-template-columns: repeat(4, 0.8fr) repeat(2, 0.1fr);
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-button comment-date";
+  }
+  .otus-user-comment-about-participant-dialog .layout-uc {
+    height: auto;
+  }
+  .otus-user-comment-about-participant-dialog .icon-size {
+    font-size: 2em;
+    height: auto;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 410px) {
+  .otus-user-comment-about-participant-dialog .comment-box {
+    line-height: 6em;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .otus-user-comment-about-participant-dialog .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    height: auto;
+    padding-top: 0;
+    -ms-grid-columns: (1fr)[2] (0.09fr)[3];
+        grid-template-columns: repeat(2, 1fr) repeat(3, 0.09fr);
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-name  comment-name   comment-status  comment-button    comment-date";
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .otus-user-comment-about-participant-dialog .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    max-height: 15vh;
+    padding-top: 0;
+    -ms-grid-columns: 1fr 0.8fr (0.09fr)[3];
+        grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-name  comment-name  comment-status  comment-button   comment-date";
+  }
+  .otus-user-comment-about-participant-dialog .layout-uc {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .otus-user-comment-about-participant-dialog .icon-size {
+    font-size: 1.5em;
+    height: auto;
+    width: auto;
+  }
+  .otus-user-comment-about-participant-dialog .comment-box {
+    line-height: 2em;
+  }
+}
+
+.otus-user-comment-about-participant-dialog .margin-line {
+  margin: 1px;
+}
+
+.otus-user-comment-about-participant-dialog .comment-name {
+  grid-area: comment-name;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.otus-user-comment-about-participant-dialog .comment-status {
+  grid-area: comment-status;
+}
+
+.otus-user-comment-about-participant-dialog .comment-date {
+  grid-area: comment-date;
+}
+
+.otus-user-comment-about-participant-dialog md-list {
+  padding: 0;
+}
+
+.otus-user-comment-about-participant-dialog .comment-button {
+  grid-area: comment-button;
+}
+
+.otus-user-comment-about-participant-dialog .md-body-1 {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.otus-user-comment-about-participant-dialog .md-button {
+  min-width: auto;
+}
+
+.otus-user-comment-about-participant-dialog .ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.otus-user-comment-about-participant-dialog .comment-status {
+  grid-area: comment-status;
+}
+
+.otus-user-comment-about-participant-dialog .comment-date {
+  grid-area: comment-date;
+  padding-left: 4px;
+}
+
+.otus-user-comment-about-participant-dialog md-list {
+  padding: 0;
+}
+
+.otus-user-comment-about-participant-dialog .comment-box {
+  height: 100vh;
+  color: #999 !important;
+  font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+  width: 46vw;
+  background: #fff;
+  border-radius: 5px;
+  line-height: 2em;
+  border: 2px;
+  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
+          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
+  padding: 4px;
+  -webkit-transition: height 2s ease;
+  transition: height 2s ease;
+  resize: vertical;
+}
+
 .md-accordion .expandCollapse {
   width: 30px;
   height: 30px;
