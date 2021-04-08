@@ -30,7 +30,7 @@
     UserCommentAboutParticipantService,
     USER_COMMENT_MANAGER_LABELS) {
     const STAR_COLOR = 'rgb(253, 204, 13)';
-    const LIMIT = 5;
+    const LIMIT = 3;
     const SKIP = 0;
 
     var self = this;
@@ -42,6 +42,7 @@
     self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
     self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
     self.colorStar = colorStar;
+    self.iconStar = iconStar;
     self.getFormattedDate = getFormattedDate;
     self.viewPlusUserCommentAboutParticipant = viewPlusUserCommentAboutParticipant;
 
@@ -114,6 +115,10 @@
 
     function colorStar(starSelected) {
       return starSelected ? { color: STAR_COLOR } : null;
+    }
+
+    function iconStar(starSelected) {
+      return starSelected ? "star_rate" : "star_outline";
     }
 
     function getFormattedDate(date) {
