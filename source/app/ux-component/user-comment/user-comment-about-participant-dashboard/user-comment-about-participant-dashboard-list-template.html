@@ -1,87 +1,39 @@
-<md-card class="layout-uc">
-  <div layout="row" layout-align="center center">
-    <h2 class="md-display-1 label-light-gray" layout-padding ng-show="$ctrl.items.length == 0">
-      Área destinado para comentários
-    </h2>
-  </div>
-  <div class="layout-box">
-    <md-list class="comment-list-layout" ng-repeat="item in $ctrl.items track by $id(item)"
-      ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
-      <div class="comment-image">
-        <md-button ng-click="$ctrl.showStarSelectedUserCommentAboutParticipant(item)">
-          <md-tooltip md-direction="top">Favorito</md-tooltip>
-          <md-icon layout="row" layout-align="center center" ng-style="$ctrl.colorStar(item.starred)"
-            class="md-default-theme material-icons icon-size" aria-label="star_rate">star_rate</md-icon>
-        </md-button>
-      </div>
-      <div class="comment-name" layout="row" layout-align="start center">
-        <p class="ng-binding md-body-2 margin-line" md-truncate>{{item.userName}}</p>
-      </div>
-      <div class="comment-status" layout="row" ng-show="item.edited" layout-align="center center">
-        <p class="md-caption margin-line" ng-style="{ color: '#797985' }">Editado</p>
-        <md-tooltip md-direction="top">
-          Comentário foi editado
-        </md-tooltip>
-      </div>
-      <div class="comment-date" layout="row" layout-align-gt-sm="center center">
-        <p class="md-body-2 ng-binding margin-line" ng-bind-html="$ctrl.getFormattedDate(item.creationDate)"></p>
-        <md-tooltip md-direction="top">
-          Data de realização
-        </md-tooltip>
-      </div>
-      <div class="comment-text" layout="row" layout-align="start center">
-        <p class="md-body-3 margin-line ellipsis">{{item.comment}}</p>
-      </div>
-      <div class="comment-button">
-        <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
-          <md-button class="md-icon-button md-warn" ng-show="item.isCreator" aria-label="Excluir"
-            ng-click="$ctrl.deleteSelectedComment(item._id)">
-            <md-tooltip md-direction="top">Excluir</md-tooltip>
-            <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
-          </md-button>
-          <md-button class="md-accent md-icon-button" ng-show="item.isCreator" aria-label="Editar"
-            ng-click="$ctrl.fillSelectedComment(item)">
-            <md-tooltip md-direction="top">Editar</md-tooltip>
-            <md-icon md-font-set="material-icons" aria-label="Editar">edited</md-icon>
-          </md-button>
-        </div>
-        <div layout="row" layout-align="center center" ng-show="item.isCreator" hide-lg hide-xl>
-          <md-button class="md-icon-button md-warn" aria-label="Excluir"
-            ng-click="$ctrl.deleteSelectedComment(item._id)">
-            <md-tooltip md-direction="top">Excluir</md-tooltip>
-            <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
-          </md-button>
-          <md-button class="md-accent md-icon-button" aria-label="Editar Comentário"
-            ng-click="$ctrl.fillSelectedComment(item)">
-            <md-tooltip md-direction="top">Editar Comentário</md-tooltip>
-            <md-icon md-font-set="material-icons" aria-label="Editar Comentário">edited</md-icon>
-          </md-button>
-        </div>
-      </div>
-    </md-list>
-  </div>
-  <div layout="row" layout-align="end center">
-    <md-button class="md-accent" ng-click="$ctrl.viewPlusUserCommentAboutParticipant()" aria-label="view comment">
-      Ver mais
-      <md-icon md-font-set="material-icons">comment</md-icon>
-    </md-button>
-  </div>
-  <form name="userCommentAboutParticipant">
-    <md-input-container layout="column" class="comment-textarea">
-      <label>Comentar</label>
-      <textarea name="comment" id="focus-textarea" md-no-resize rows="5" max-rows="10" class="comment-box"
-        ng-model="$ctrl.comment" aria-label="comentar" placeholder="Digite o texto aqui"></textarea>
-    </md-input-container>
-  </form>
-  <div layout="row" layout-align="end center">
-    <md-button class="md-raised" ng-show="$ctrl.comment" aria-label="cancel edited"
-      ng-click="$ctrl.cancelFillSelectedComment()">
-      Cancelar
-    </md-button>
-    <md-button class="md-primary md-raised" ng-disabled="!$ctrl.comment" aria-label="save"
-      ng-click="$ctrl.saveUserCommentAboutParticipant()">
-      Salvar
-      <md-icon md-font-set="material-icons">save</md-icon>
-    </md-button>
-  </div>
-</md-card>
+<div class="layout-uc">
+  <md-list class="comment-list-layout" ng-repeat="item in $ctrl.items track by $id(item)">
+    <div class="comment-name" layout="row" layout-align="start center">
+      <p class="ng-binding md-body-2 margin-line" md-truncate>{{item.userName}}</p>
+    </div>
+    <div class="comment-status" layout="row" ng-show="item.edited" layout-align="center center">
+      <p class="md-caption margin-line" ng-style="{ color: '#797985' }">Editado</p>
+      <md-tooltip md-direction="top">
+        Comentário foi editado
+      </md-tooltip>
+    </div>
+    <div class="comment-date" layout="row" layout-align-gt-sm="center center">
+      <p class="md-caption ng-binding margin-line" ng-bind-html="$ctrl.getFormattedDate(item.creationDate)"></p>
+      <md-tooltip md-direction="top">
+        Data de realização
+      </md-tooltip>
+    </div>
+    <div class="comment-text" layout="row" layout-align="start center">
+      <p class="md-body-1 margin-line ellipsis">{{item.comment}}</p>
+    </div>
+    <div class="comment-button" layout="row" layout-align="center center">
+      <md-button ng-click="$ctrl.showStarSelectedUserCommentAboutParticipant(item)">
+        <md-tooltip md-direction="top">Favorito</md-tooltip>
+        <md-icon layout="row" layout-align="center center" ng-style="$ctrl.colorStar(item.starred)"
+          class="md-default-theme material-icons icon-size" aria-label="star"
+          ng-bind-html="$ctrl.iconStar(item.starred)"></md-icon>
+      </md-button>
+    </div>
+    <div class="comment-button-menu" layout="row" layout-align="center center">
+      <md-button class="md-icon-button" ng-show="item.isCreator" aria-label="Menu"
+        ng-click="$ctrl.viewPlusUserCommentAboutParticipant()">
+        <md-tooltip md-direction="top">Menu</md-tooltip>
+        <md-icon layout="row" layout-align="center center" md-font-set="material-icons" aria-label="Menu">more_vert
+        </md-icon>
+      </md-button>
+    </div>
+  </md-list>
+</div>
+</div>

@@ -8,7 +8,6 @@ otus-dashboard-display {
       grid-template-areas:
         "display-participant-info"
         "display-participant-attempt"
-        "display-user-comment-about-participant-list"
         "display-participant-heatmap"
         "display-participant-exam-heatmap"
         "display-report-dashboard";
@@ -32,15 +31,14 @@ otus-dashboard-display {
       align-items: center;
       height: auto;
       width: auto;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       grid-template-rows: auto;
       grid-template-areas:
-        "display-participant-info    display-user-comment-about-participant-list"
-        "display-participant-attempt    display-user-comment-about-participant-list"
-        ". display-user-comment-about-participant-list"
-        "display-participant-heatmap    display-participant-heatmap"
-        "display-participant-exam-heatmap    display-participant-exam-heatmap"
-        "display-report-dashboard     display-report-dashboard";
+        "display-participant-info"
+        "display-participant-attempt"
+        "display-participant-heatmap"
+        "display-participant-exam-heatmap"
+        "display-report-dashboard";
     }
 
     .mobile-width {
@@ -66,10 +64,6 @@ otus-dashboard-display {
 
   .display-participant-attempt {
     grid-area: display-participant-attempt;
-  }
-
-  .display-user-comment-about-participant-list {
-    grid-area: display-user-comment-about-participant-list;
   }
 
   .display-participant-heatmap {
