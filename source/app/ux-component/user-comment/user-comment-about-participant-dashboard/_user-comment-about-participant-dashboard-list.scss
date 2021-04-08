@@ -73,12 +73,23 @@ otus-user-comment-about-participant-dashboard-list {
     }
   }
 
+  .comment-list-null {
+    display: grid;
+    max-height: 15vh;
+    align-items: center;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: ". comment-null .";
+  }
   .margin-line {
     margin: 1px;
   }
 
-  .comment-image {
-    grid-area: comment-image;
+  .comment-null {
+    grid-area: comment-null;
+    margin-bottom: 16px;
   }
 
   .comment-name {
@@ -135,6 +146,11 @@ otus-user-comment-about-participant-dashboard-list {
       overflow: hidden;
       display: block;
     }
+  }
+
+  .viewAll {
+    font-size: 10px;
+    line-height: 16px;
   }
 
   .ellipsis {

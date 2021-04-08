@@ -34,6 +34,7 @@
     const SKIP = 0;
 
     var self = this;
+    var originatorEv;
 
     /* Public methods */
     self.fillSelectedComment = fillSelectedComment;
@@ -45,6 +46,7 @@
     self.iconStar = iconStar;
     self.getFormattedDate = getFormattedDate;
     self.viewPlusUserCommentAboutParticipant = viewPlusUserCommentAboutParticipant;
+    self.openMenu = openMenu;
 
     self.$onInit = onInit;
 
@@ -59,6 +61,11 @@
       DashboardEventService.onParticipantSelected(_loadSelectedParticipant);
     }
 
+    function openMenu($mdMenu, ev) {
+      originatorEv = ev;
+      $mdMenu.open(ev);
+    };
+    
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = participantData;

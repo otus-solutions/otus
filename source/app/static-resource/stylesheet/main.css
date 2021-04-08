@@ -1453,12 +1453,31 @@ otus-activity-stage-list .new-chip-white {
   }
 }
 
+otus-user-comment-about-participant-dashboard-list .comment-list-null {
+  display: -ms-grid;
+  display: grid;
+  max-height: 15vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-top: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -ms-grid-rows: auto;
+      grid-template-rows: auto;
+      grid-template-areas: ". comment-null .";
+}
+
 otus-user-comment-about-participant-dashboard-list .margin-line {
   margin: 1px;
 }
 
-otus-user-comment-about-participant-dashboard-list .comment-image {
-  grid-area: comment-image;
+otus-user-comment-about-participant-dashboard-list .comment-null {
+  -ms-grid-row: 1;
+  -ms-grid-column: 2;
+  grid-area: comment-null;
+  margin-bottom: 16px;
 }
 
 otus-user-comment-about-participant-dashboard-list .comment-name {
@@ -1505,6 +1524,11 @@ otus-user-comment-about-participant-dashboard-list .md-body-1 {
 
 otus-user-comment-about-participant-dashboard-list .md-button {
   min-width: auto;
+}
+
+otus-user-comment-about-participant-dashboard-list .viewAll {
+  font-size: 10px;
+  line-height: 16px;
 }
 
 otus-user-comment-about-participant-dashboard-list .ellipsis {
