@@ -29,7 +29,6 @@
     DialogService,
     UserCommentAboutParticipantService,
     USER_COMMENT_MANAGER_LABELS) {
-    const STAR_COLOR = 'rgb(253, 204, 13)';
     const LIMIT = 3;
     const SKIP = 0;
 
@@ -114,11 +113,11 @@
     }
 
     function colorStar(starSelected) {
-      return starSelected ? { color: STAR_COLOR } : null;
+      return UserCommentAboutParticipantService.colorStar(starSelected);
     }
 
     function iconStar(starSelected) {
-      return starSelected ? "star_rate" : "star_outline";
+      return UserCommentAboutParticipantService.iconStar(starSelected);
     }
 
     function getFormattedDate(date) {

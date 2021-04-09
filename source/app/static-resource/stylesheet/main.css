@@ -2005,7 +2005,7 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
 /*end style for generic-list-control*/
 .otus-user-comment-about-participant-dialog {
   width: 50vw;
-  min-height: 60vh;
+  min-height: 10vh;
   background-color: #fff;
 }
 
@@ -2021,8 +2021,9 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
         grid-template-rows: auto;
         grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-button comment-date";
   }
-  .otus-user-comment-about-participant-dialog .layout-uc {
-    height: auto;
+  .otus-user-comment-about-participant-dialog .comment-textarea {
+    width: 100%;
+    min-height: 15vh;
   }
   .otus-user-comment-about-participant-dialog .icon-size {
     font-size: 2em;
@@ -2055,17 +2056,18 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
   .otus-user-comment-about-participant-dialog .comment-list-layout {
     display: -ms-grid;
     display: grid;
-    max-height: 15vh;
+    height: 7vh;
     padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 1fr 0.8fr (0.09fr)[3];
         grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
     -ms-grid-rows: auto;
         grid-template-rows: auto;
         grid-template-areas: "comment-name  comment-name  comment-status  comment-button   comment-date";
   }
-  .otus-user-comment-about-participant-dialog .layout-uc {
-    padding-left: 16px;
-    padding-right: 16px;
+  .otus-user-comment-about-participant-dialog .comment-textarea {
+    width: 46.5vw;
+    min-height: 5vh;
   }
   .otus-user-comment-about-participant-dialog .icon-size {
     font-size: 1.5em;
@@ -2077,8 +2079,9 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
   }
 }
 
-.otus-user-comment-about-participant-dialog .margin-line {
-  margin: 1px;
+.otus-user-comment-about-participant-dialog .layout-uc {
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .otus-user-comment-about-participant-dialog .comment-name {
@@ -2132,21 +2135,29 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
   padding: 0;
 }
 
-.otus-user-comment-about-participant-dialog .comment-box {
-  height: 100vh;
+.otus-user-comment-about-participant-dialog .comment-textarea {
+  margin-top: 0;
+  padding: 0;
   color: #999 !important;
   font-family: "Ubuntu", Helvetica, Arial, sans-serif;
-  width: 46vw;
   background: #fff;
   border-radius: 5px;
   line-height: 2em;
   border: 2px;
   -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
           box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
-  padding: 4px;
   -webkit-transition: height 2s ease;
   transition: height 2s ease;
-  resize: vertical;
+  resize: none;
+}
+
+.otus-user-comment-about-participant-dialog md-input-container {
+  padding: 4px 0;
+  margin: 0 0 30px;
+}
+
+.otus-user-comment-about-participant-dialog md-input-container .md-errors-spacer {
+  min-height: 0;
 }
 
 .md-accordion .expandCollapse {

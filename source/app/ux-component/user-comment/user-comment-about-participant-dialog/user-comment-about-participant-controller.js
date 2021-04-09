@@ -13,33 +13,39 @@
   function Controller(UserCommentAboutParticipantService, data) {
     const self = this;
 
-    self.item = data;
-    self.cancel = data.cancel;
-    self.comment = data.comment;
-    self.verify = data.verify;
-
-    console.log(self)
     self.cancelFillSelectedComment = cancelFillSelectedComment;
-    self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
+    self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
     self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
     self.getFormattedDate = getFormattedDate;
     self.colorStar = colorStar;
     self.iconStar = iconStar;
 
+//------------------------------ Data for dialog --------------------------------
+    self.item = data;
+    self.cancel = data.cancel;
+    self.comment = data.comment;
+    self.verify = data.verify;
+    self.loadNoteAboutParticipantDashboard = data._loadNoteAboutParticipantDashboard;
+
+
     function cancelFillSelectedComment() {
       self.comment = "";
       self.selectedComment = null;
+      self.cancel();
     }
 
-    function saveUserCommentAboutParticipant(selectedParticipant) {
-
-      UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: selectedParticipant.recruitmentNumber })
+    function updateUserCommentAboutParticipant(selectedParticipant) {
+      console.log(selectedParticipant)
+      selectedParticipant.comment = self.comment;
+      UserCommentAboutParticipantService.updateUserCommentAboutParticipant(selectedParticipant)
         .then(() => {
-          UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
+          self.cancel();
+          UserCommentAboutParticipantService.showMsg('updateSuccessMessage');
           self.comment = "";
-          // _loadNoteAboutParticipantDashboard(); // TODO implement loading on list
+          self.loadNoteAboutParticipantDashboard();
         })
         .catch(() => {
+          self.cancel();
           UserCommentAboutParticipantService.showMsg('failUserCommentAboutParticipantCreation');
         })
     }
