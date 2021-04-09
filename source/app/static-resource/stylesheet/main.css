@@ -2095,14 +2095,6 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
   grid-area: comment-status;
 }
 
-.otus-user-comment-about-participant-dialog .comment-date {
-  grid-area: comment-date;
-}
-
-.otus-user-comment-about-participant-dialog md-list {
-  padding: 0;
-}
-
 .otus-user-comment-about-participant-dialog .comment-button {
   grid-area: comment-button;
 }
@@ -2115,24 +2107,9 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
   min-width: auto;
 }
 
-.otus-user-comment-about-participant-dialog .ellipsis {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.otus-user-comment-about-participant-dialog .comment-status {
-  grid-area: comment-status;
-}
-
 .otus-user-comment-about-participant-dialog .comment-date {
   grid-area: comment-date;
   padding-left: 4px;
-}
-
-.otus-user-comment-about-participant-dialog md-list {
-  padding: 0;
 }
 
 .otus-user-comment-about-participant-dialog .comment-textarea {
