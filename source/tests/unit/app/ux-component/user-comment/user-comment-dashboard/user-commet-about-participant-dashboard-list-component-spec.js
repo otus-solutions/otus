@@ -33,6 +33,7 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
     expect(controller.deleteSelectedComment).toBeDefined();
     expect(controller.showStarSelectedUserCommentAboutParticipant).toBeDefined();
     expect(controller.saveUserCommentAboutParticipant).toBeDefined();
+    expect(controller.iconStar).toBeDefined();
     expect(controller.colorStar).toBeDefined();
     expect(controller.getFormattedDate).toBeDefined();
     expect(controller.viewPlusUserCommentAboutParticipant).toBeDefined();
@@ -142,6 +143,10 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
       expect(Injections.UserCommentAboutParticipantService.updateUserCommentAboutParticipant).toHaveBeenCalledWith(Mock.userCommentsAboutParticipant[0]);
     });
 
+    it('iconStarMethod should initialized the controller variable for color', function () {
+      expect(controller.iconStar(Mock.userCommentsAboutParticipant[2].starred)).toEqual(Mock.icon);
+    });
+
     it('colorStarMethod should initialized the controller variable for color', function () {
       expect(controller.colorStar(Mock.userCommentsAboutParticipant[2].starred)).toEqual(Mock.color);
     });
@@ -169,6 +174,7 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
     Mock.scope = $rootScope.$new();
     Mock.deferred = $q.defer();
     Mock.deferredResolve = $q.defer();
+    Mock.icon = 'star_rate';
     Mock.color = { color: 'rgb(253, 204, 13)' };
     Mock.showMoreIcon = { icon: 'visibility', tooltip: 'Ocultar Detalhes' };
     Mock.showMoreIcon2 = { icon: 'visibility_off', tooltip: 'Mostrar Detalhes' };

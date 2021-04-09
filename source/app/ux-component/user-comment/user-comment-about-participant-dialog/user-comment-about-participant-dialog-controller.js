@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('userCommentAboutParticipantController', Controller);
+    .controller('otusUserCommentAboutParticipantDialogCtrl', Controller);
 
   Controller.$inject = [
     'otusjs.user.comment.business.UserCommentAboutParticipantService',

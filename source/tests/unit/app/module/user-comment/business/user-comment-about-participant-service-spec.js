@@ -28,6 +28,8 @@ describe('UserCommentAboutParticipantService_UnitTest_Suite', () => {
     expect(service.deleteSelectedComment).toBeDefined();
     expect(service.showStarSelectedUserCommentAboutParticipant).toBeDefined();
     expect(service.saveUserCommentAboutParticipant).toBeDefined();
+    expect(service.colorStar).toBeDefined();
+    expect(service.iconStar).toBeDefined();
     expect(service.getFormattedDate).toBeDefined();
   });
 
@@ -80,6 +82,14 @@ describe('UserCommentAboutParticipantService_UnitTest_Suite', () => {
     expect(Injections.UserCommentAboutParticipantRepositoryService.saveUserCommentAboutParticipant).toHaveBeenCalledWith(userComment);
   });
 
+  it('iconStarMethod should initialized the service variable for color', function () {
+    expect(service.iconStar(Mock.userCommentsAboutParticipant[2].starred)).toEqual(Mock.icon);
+  });
+
+  it('colorStarMethod should initialized the service variable for color', function () {
+    expect(service.colorStar(Mock.userCommentsAboutParticipant[2].starred)).toEqual(Mock.color);
+  });
+
   it('getFormattedDateMethod should evoke the service repositoryService', function () {
     expect(service.getFormattedDate(Mock.userCommentsAboutParticipant[0].creationDate)).toEqual('18/12/2020');
   });
@@ -94,6 +104,8 @@ describe('UserCommentAboutParticipantService_UnitTest_Suite', () => {
   function mockInitialize() {
     Mock.participant = { recruitmentNumber: '02' };
     Mock.starred = false;
+    Mock.icon = 'star_rate';
+    Mock.color = { color: 'rgb(253, 204, 13)' };
     Mock.userCommentsAboutParticipant = Test.utils.data.userCommentsAboutParticipant;
   }
 
