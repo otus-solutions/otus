@@ -13,6 +13,7 @@
 
   function Service($mdToast, UserCommentAboutParticipantRepositoryService, UserCommentAboutParticipantValues, CommentContextService) {
     const self = this;
+    const STAR_COLOR = 'rgb(253, 204, 13)';
 
     self.showMsg = showMsg;
     self.getNoteAboutParticipant = getNoteAboutParticipant;
@@ -21,6 +22,8 @@
     self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
     self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
     self.getFormattedDate = getFormattedDate;
+    self.colorStar = colorStar;
+    self.iconStar = iconStar;
 
     function getNoteAboutParticipant(stuntmanSearchSettings) {
       return UserCommentAboutParticipantRepositoryService.getNoteAboutParticipant(stuntmanSearchSettings);
@@ -57,6 +60,14 @@
           .textContent(UserCommentAboutParticipantValues.toast[msg])
           .hideDelay(4000)
       );
+    }
+
+    function colorStar(starSelected) {
+      return starSelected ? { color: STAR_COLOR } : null;
+    }
+
+    function iconStar(starSelected) {
+      return starSelected ? "star_rate" : "star_outline";
     }
   }
 }());
