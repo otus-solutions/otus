@@ -14,19 +14,17 @@
     const self = this;
 
     self.cancelFillSelectedComment = cancelFillSelectedComment;
-    self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
     self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
+    self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
     self.getFormattedDate = getFormattedDate;
     self.colorStar = colorStar;
     self.iconStar = iconStar;
 
-//------------------------------ Data for dialog --------------------------------
-    self.item = data;
+    //------------------------------ Data for dialog --------------------------------
+    self.selectedComment = data;
     self.cancel = data.cancel;
     self.comment = data.comment;
     self.verify = data.verify;
-    self.loadNoteAboutParticipantDashboard = data._loadNoteAboutParticipantDashboard;
-
 
     function cancelFillSelectedComment() {
       self.comment = "";
@@ -34,20 +32,33 @@
       self.cancel();
     }
 
-    function updateUserCommentAboutParticipant(selectedParticipant) {
-      console.log(selectedParticipant)
-      selectedParticipant.comment = self.comment;
-      UserCommentAboutParticipantService.updateUserCommentAboutParticipant(selectedParticipant)
+    function _updateUserCommentAboutParticipant() {
+      self.selectedComment.comment = self.comment;
+      UserCommentAboutParticipantService.updateUserCommentAboutParticipant(self.selectedComment)
         .then(() => {
-          self.cancel();
+          cancelFillSelectedComment();
           UserCommentAboutParticipantService.showMsg('updateSuccessMessage');
-          self.comment = "";
-          self.loadNoteAboutParticipantDashboard();
         })
         .catch(() => {
-          self.cancel();
+          cancelFillSelectedComment();
           UserCommentAboutParticipantService.showMsg('failUserCommentAboutParticipantCreation');
         })
+    }
+
+    function saveUserCommentAboutParticipant() {
+      if (self.selectedComment.comment) {
+        _updateUserCommentAboutParticipant();
+      } else {
+        UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.selectedComment.recruitmentNumber })
+          .then(() => {
+            cancelFillSelectedComment();
+            UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
+          })
+          .catch(() => {
+            cancelFillSelectedComment();
+            UserCommentAboutParticipantService.showMsg('failUserCommentAboutParticipantCreation');
+          })
+      }
     }
 
     function showStarSelectedUserCommentAboutParticipant(userCommentAboutParticipant) {

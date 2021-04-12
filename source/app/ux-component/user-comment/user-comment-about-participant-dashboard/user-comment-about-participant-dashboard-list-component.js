@@ -31,24 +31,27 @@
     USER_COMMENT_MANAGER_LABELS) {
     const LIMIT = 3;
     const SKIP = 0;
+    const DIALOG_CONTROLLER = 'otusUserCommentAboutParticipantDialogCtrl';
+    const DIRECTORY_DIALOG_CONTROLLER = 'app/ux-component/user-comment/user-comment-about-participant-dialog/user-comment-about-participant-dialog-template.html';
 
     var self = this;
+    var originatorEv;
 
     /* Public methods */
-    self.fillSelectedComment = fillSelectedComment;
-    self.cancelFillSelectedComment = cancelFillSelectedComment;
+    self.viewUserCommentAboutParticipant = viewUserCommentAboutParticipant;
     self.deleteSelectedComment = deleteSelectedComment;
     self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
-    self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
+    self.addUserCommentAboutParticipant = addUserCommentAboutParticipant;
+    self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
     self.colorStar = colorStar;
     self.iconStar = iconStar;
     self.getFormattedDate = getFormattedDate;
     self.viewPlusUserCommentAboutParticipant = viewPlusUserCommentAboutParticipant;
+    self.openMenu = openMenu;
 
     self.$onInit = onInit;
 
     self.items = [];
-    self.selectedComment = null;
     self.stuntmanSearchSettings = {};
     self.selectedParticipant = null;
 
@@ -57,6 +60,11 @@
       _loadSelectedParticipant();
       DashboardEventService.onParticipantSelected(_loadSelectedParticipant);
     }
+
+    function openMenu($mdMenu, ev) {
+      originatorEv = ev;
+      $mdMenu.open(ev);
+    };
 
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
@@ -124,58 +132,34 @@
       return UserCommentAboutParticipantService.getFormattedDate(date);
     }
 
-    function _updateUserCommentAboutParticipant() {
-      self.selectedComment.comment = self.comment;
-      UserCommentAboutParticipantService.updateUserCommentAboutParticipant(self.selectedComment)
-        .then(() => {
-          UserCommentAboutParticipantService.showMsg('updateSuccessMessage');
-          _loadNoteAboutParticipantDashboard();
-          self.selectedComment = null;
-          self.comment = "";
-        })
-        .catch(() => {
-          UserCommentAboutParticipantService.showMsg('failureMessage');
-        })
+    function updateUserCommentAboutParticipant(selectedComment) {
+      selectedComment.verify = false;
+      selectedComment.dialog = USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.editComment;
+      DialogService.showCustomizedDialog(selectedComment, DIALOG_CONTROLLER, DIRECTORY_DIALOG_CONTROLLER, true)
+        .then(() => _loadNoteAboutParticipantDashboard())
+        .catch(() => _loadNoteAboutParticipantDashboard());
     }
 
-    function saveUserCommentAboutParticipant() {
-      if (self.selectedComment) {
-        _updateUserCommentAboutParticipant();
+    function addUserCommentAboutParticipant() {
+      let selectedComment = {};
+      selectedComment.verify = false;
+      selectedComment.dialog = USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.createComment;
+      selectedComment.recruitmentNumber = self.selectedParticipant.recruitmentNumber;
+      DialogService.showCustomizedDialog(selectedComment, DIALOG_CONTROLLER, DIRECTORY_DIALOG_CONTROLLER, true)
+        .then(() => _loadNoteAboutParticipantDashboard())
+        .catch(() => _loadNoteAboutParticipantDashboard());
+    }
+
+    function viewUserCommentAboutParticipant(selectedComment) {
+      if (selectedComment.isCreator) {
+        updateUserCommentAboutParticipant(selectedComment);
       } else {
-        UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.selectedParticipant.recruitmentNumber })
-          .then(() => {
-            UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
-            self.comment = "";
-            _loadNoteAboutParticipantDashboard();
-          })
-          .catch(() => {
-            UserCommentAboutParticipantService.showMsg('failUserCommentAboutParticipantCreation');
-          })
+        selectedComment.verify = true;
+        selectedComment.dialog = USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.viewComment;
+        DialogService.showCustomizedDialog(selectedComment, DIALOG_CONTROLLER, DIRECTORY_DIALOG_CONTROLLER, true)
+          .then(() => _loadNoteAboutParticipantDashboard())
+          .catch(() => _loadNoteAboutParticipantDashboard());
       }
-    }
-
-    function fillSelectedComment(itemComment) {
-      if (self.selectedComment && self.selectedComment._id !== itemComment._id) {
-        UserCommentAboutParticipantService.showMsg('conflictMessage');
-        DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
-          .then(function () {
-            self.comment = itemComment.comment;
-            self.selectedComment = itemComment;
-            $element.find('#focus-textarea').focus();
-          });
-      } else {
-        DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmEditSelected)
-          .then(function () {
-            self.comment = itemComment.comment;
-            self.selectedComment = itemComment;
-            $element.find('#focus-textarea').focus();
-          });
-      }
-    }
-
-    function cancelFillSelectedComment() {
-      self.comment = "";
-      self.selectedComment = null;
     }
 
     function deleteSelectedComment(commentId) {

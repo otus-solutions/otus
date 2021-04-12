@@ -28,11 +28,10 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
 
   it('should verify properties definition', function () {
     expect(controller.$onInit).toBeDefined();
-    expect(controller.fillSelectedComment).toBeDefined();
-    expect(controller.cancelFillSelectedComment).toBeDefined();
     expect(controller.deleteSelectedComment).toBeDefined();
     expect(controller.showStarSelectedUserCommentAboutParticipant).toBeDefined();
-    expect(controller.saveUserCommentAboutParticipant).toBeDefined();
+    expect(controller.updateUserCommentAboutParticipant).toBeDefined();
+    expect(controller.addUserCommentAboutParticipant).toBeDefined();
     expect(controller.iconStar).toBeDefined();
     expect(controller.colorStar).toBeDefined();
     expect(controller.getFormattedDate).toBeDefined();
@@ -45,6 +44,8 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
       spyOn(Injections.EventService, "onParticipantSelected");
       spyOn(Injections.DashboardService, "getSelectedParticipant").and.returnValue(Mock.deferredResolve.promise);
       spyOn(Injections.DialogShowService, "showDialog").and.returnValue(Mock.deferredResolve.promise);
+      spyOn(Injections.DialogShowService, "showCustomizedDialog").and.returnValue(Mock.deferredResolve.promise);
+      spyOn(Injections.UserCommentAboutParticipantService, "getNoteAboutParticipant").and.returnValue(Mock.deferredResolve.promise);
     });
 
     it('onInitMethod should initialized the controller variables', function () {
@@ -56,33 +57,6 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
 
       expect(Injections.EventService.onParticipantSelected).toHaveBeenCalledTimes(1);
       expect(controller.selectedParticipant.recruitmentNumber).toEqual(Mock.participant.recruitmentNumber);
-    });
-
-    it('fillSelectedCommentMethod should initialized the controller variables', function () {
-      controller.fillSelectedComment(Mock.userCommentsAboutParticipant[0]);
-      Mock.scope.$digest();
-      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
-      expect(controller.comment).toEqual(Mock.userCommentsAboutParticipant[0].comment)
-      expect(controller.selectedComment).toEqual(Mock.userCommentsAboutParticipant[0])
-    });
-
-    it('fillSelectedCommentMethod should initialized the controller variables and selected comment', function () {
-      spyOn(Injections.UserCommentAboutParticipantService, "showMsg").and.callThrough();
-
-      controller.selectedComment = Mock.userCommentsAboutParticipant[0];
-      controller.fillSelectedComment(Mock.userCommentsAboutParticipant[1]);
-      Mock.scope.$digest();
-      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
-      expect(Injections.UserCommentAboutParticipantService.showMsg).toHaveBeenCalledTimes(1);
-      expect(controller.comment).toEqual(Mock.userCommentsAboutParticipant[1].comment)
-      expect(controller.selectedComment).toEqual(Mock.userCommentsAboutParticipant[1])
-    });
-
-    it('cancelSelectedCommentMethod should initialized the cancel selected comment', function () {
-      controller.cancelFillSelectedComment();
-      Mock.scope.$digest();
-      expect(controller.comment).toEqual("")
-      expect(controller.selectedComment).toBeNull();
     });
 
     it('deleteSelectedCommentMethod should initialized the delete selected', function () {
@@ -109,38 +83,27 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
       expect(Injections.UserCommentAboutParticipantService.showMsg).toHaveBeenCalledTimes(1);
     });
 
-    it('saveUserCommentAboutParticipantMethod should initialized the save', function () {
+    it('addUserCommentAboutParticipantMethod should initialized the add', function () {
+      controller.comment = Mock.userCommentsAboutParticipant[0].comment;
+      controller.selectedParticipant = Mock.participant;
+
+      controller.addUserCommentAboutParticipant();
+
+      Mock.scope.$digest();
+      expect(Injections.DialogShowService.showCustomizedDialog).toHaveBeenCalledTimes(1);
+      expect(Injections.UserCommentAboutParticipantService.getNoteAboutParticipant).toHaveBeenCalledTimes(1);
+    });
+
+    it('updateUserCommentAboutParticipantMethod should initialized the updateUserComment', function () {
       let userComment = {
         comment: Mock.userCommentsAboutParticipant[0].comment,
         recruitmentNumber: Mock.participant.recruitmentNumber
       }
       controller.comment = Mock.userCommentsAboutParticipant[0].comment;
-      controller.selectedParticipant = Mock.participant;
 
-      spyOn(Injections.UserCommentAboutParticipantService, 'saveUserCommentAboutParticipant').and.returnValue(Mock.deferredResolve.promise);
-      spyOn(Injections.UserCommentAboutParticipantService, "getNoteAboutParticipant").and.returnValue(Mock.deferredResolve.promise);
-      spyOn(Injections.UserCommentAboutParticipantService, "showMsg").and.callThrough();
+      controller.updateUserCommentAboutParticipant(userComment);
 
-      controller.saveUserCommentAboutParticipant();
-
-      Mock.scope.$digest();
-
-      expect(Injections.UserCommentAboutParticipantService.saveUserCommentAboutParticipant).toHaveBeenCalledTimes(1);
-      expect(Injections.UserCommentAboutParticipantService.saveUserCommentAboutParticipant).toHaveBeenCalledWith(userComment);
-      expect(Injections.UserCommentAboutParticipantService.getNoteAboutParticipant).toHaveBeenCalledTimes(1);
-      expect(Injections.UserCommentAboutParticipantService.showMsg).toHaveBeenCalledTimes(1);
-    });
-
-    it('saveUserCommentAboutParticipantMethod should initialized the save and updateUserComment', function () {
-      controller.comment = Mock.userCommentsAboutParticipant[0].comment;
-      controller.selectedComment = Mock.userCommentsAboutParticipant[0];
-
-      spyOn(Injections.UserCommentAboutParticipantService, 'updateUserCommentAboutParticipant').and.returnValue(Promise.resolve());
-
-      controller.saveUserCommentAboutParticipant();
-
-      expect(Injections.UserCommentAboutParticipantService.updateUserCommentAboutParticipant).toHaveBeenCalledTimes(1);
-      expect(Injections.UserCommentAboutParticipantService.updateUserCommentAboutParticipant).toHaveBeenCalledWith(Mock.userCommentsAboutParticipant[0]);
+      expect(Injections.DialogShowService.showCustomizedDialog).toHaveBeenCalledTimes(1);
     });
 
     it('iconStarMethod should initialized the controller variable for color', function () {
