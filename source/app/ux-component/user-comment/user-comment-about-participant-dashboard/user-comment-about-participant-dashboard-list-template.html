@@ -7,11 +7,11 @@
       ng-click="$ctrl.viewPlusUserCommentAboutParticipant()"> VER TODOS
     </md-button>
     <md-button class="md-accent viewAll" ng-show="$ctrl.items.length == 0" aria-label="Adicionar"
-      ng-click="$ctrl.viewPlusUserCommentAboutParticipant()"> ADICIONAR
+      ng-click="$ctrl.addUserCommentAboutParticipant()"> ADICIONAR
     </md-button>
   </div>
-  <div class="comment-list-null md-headline" ng-show="$ctrl.items.length == 0">
-    <span class="comment-null">
+  <div class="comment-list-null" ng-show="$ctrl.items.length == 0">
+    <span class="comment-null md-headline" layout="row" layout-align="center center">
       Não há comentários adicionados.
     </span>
   </div>
@@ -31,7 +31,7 @@
         Data de realização
       </md-tooltip>
     </div>
-    <div class="comment-text" layout="row" layout-align="start center">
+    <div class="comment-text" ng-click="$ctrl.viewUserCommentAboutParticipant(item)" layout="row" layout-align="start center">
       <p class="md-body-1 margin-line ellipsis">{{item.comment}}</p>
     </div>
     <div class="comment-button" layout="row" layout-align="center center">
@@ -51,19 +51,15 @@
       </md-button>
       <md-menu-content width="2">
         <md-menu-item>
-          <md-button class="md-warn" ng-show="item.isCreator" aria-label="Excluir"
-            ng-click="$ctrl.deleteSelectedComment(item._id)">
-            <md-tooltip md-direction="top">Excluir</md-tooltip>
-            <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
-            Excluir
+          <md-button class="md-accent" ng-show="item.isCreator" aria-label="Editar"
+            ng-click="$ctrl.updateUserCommentAboutParticipant(item)">
+            Editar
           </md-button>
         </md-menu-item>
         <md-menu-item>
-          <md-button class="md-accent" ng-show="item.isCreator" aria-label="Editar"
-            ng-click="$ctrl.fillSelectedComment(item)">
-            <md-tooltip md-direction="top">Editar</md-tooltip>
-            <md-icon md-font-set="material-icons" aria-label="Editar">edited</md-icon>
-            Editar
+          <md-button class="md-warn" ng-show="item.isCreator" aria-label="Excluir"
+            ng-click="$ctrl.deleteSelectedComment(item._id)">
+            Excluir
           </md-button>
         </md-menu-item>
       </md-menu-content>

@@ -12,6 +12,17 @@ otus-user-comment-about-participant-dashboard-list {
         "comment-text  comment-text comment-text comment-text  comment-button comment-button-menu";
     }
 
+    .comment-list-null {
+      display: grid;
+      max-height: 15vh;
+      align-items: center;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.05fr 1fr 0.05fr;
+      grid-template-rows: auto;
+      grid-template-areas: ". comment-null .";
+    }
+
     .layout-uc {
       height: auto;
     }
@@ -20,6 +31,12 @@ otus-user-comment-about-participant-dashboard-list {
       font-size: 2em;
       height: auto;
       width: auto;
+    }
+
+    .md-headline {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
     }
   }
 
@@ -56,6 +73,17 @@ otus-user-comment-about-participant-dashboard-list {
         "comment-text  comment-text  comment-text    comment-button comment-button-menu";
     }
 
+    .comment-list-null {
+      display: grid;
+      max-height: 15vh;
+      align-items: center;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      grid-template-areas: ". comment-null .";
+    }
+
     .layout-uc {
       padding-left: 16px;
       padding-right: 16px;
@@ -71,18 +99,14 @@ otus-user-comment-about-participant-dashboard-list {
     .comment-box {
       line-height: 2em;
     }
+
+    .md-headline {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 32px;
+    }
   }
 
-  .comment-list-null {
-    display: grid;
-    max-height: 15vh;
-    align-items: center;
-    padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    grid-template-areas: ". comment-null .";
-  }
   .margin-line {
     margin: 1px;
   }
@@ -100,6 +124,7 @@ otus-user-comment-about-participant-dashboard-list {
   .comment-text {
     grid-area: comment-text;
     align-items: start;
+    cursor: pointer;
   }
 
   .comment-button {
@@ -150,6 +175,7 @@ otus-user-comment-about-participant-dashboard-list {
 
   .viewAll {
     font-size: 10px;
+    margin-top: 10px;
     line-height: 16px;
   }
 
