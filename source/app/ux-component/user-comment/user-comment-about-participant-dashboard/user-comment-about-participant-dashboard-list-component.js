@@ -52,7 +52,6 @@
     self.$onInit = onInit;
 
     self.items = [];
-    self.selectedComment = null;
     self.stuntmanSearchSettings = {};
     self.selectedParticipant = null;
 

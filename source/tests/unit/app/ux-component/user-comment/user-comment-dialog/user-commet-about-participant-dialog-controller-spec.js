@@ -6,7 +6,7 @@ describe('otusUserCommentAboutParticipantDialogCtrl Test', function () {
 
   beforeEach(function () {
     angular.mock.module('otusjs.otus');
-    Mock.data = { cancel: function () { return }, comment: "", verify: true, loadNoteAboutParticipantDashboard: function () {return}};
+    Mock.data = { cancel: function () { return }, comment: "", verify: true };
     angular.mock.inject(function ($injector, $controller, $rootScope, $q) {
       Injections.$element = Mock.element;
       Injections.data = Mock.data;
@@ -25,7 +25,7 @@ describe('otusUserCommentAboutParticipantDialogCtrl Test', function () {
   it('should verify properties definition', function () {
     expect(controller.cancelFillSelectedComment).toBeDefined();
     expect(controller.showStarSelectedUserCommentAboutParticipant).toBeDefined();
-    expect(controller.updateUserCommentAboutParticipant).toBeDefined();
+    expect(controller.saveUserCommentAboutParticipant).toBeDefined();
     expect(controller.iconStar).toBeDefined();
     expect(controller.colorStar).toBeDefined();
     expect(controller.getFormattedDate).toBeDefined();
@@ -53,10 +53,35 @@ describe('otusUserCommentAboutParticipantDialogCtrl Test', function () {
       expect(Injections.UserCommentAboutParticipantService.showMsg).toHaveBeenCalledTimes(1);
     });
 
-    it('updateUserCommentAboutParticipantMethod should initialized the save and updateUserComment', function () {
+    it('saveUserCommentAboutParticipantMethod should initialized the save', function () {
+      let userComment = {
+        comment: Mock.userCommentsAboutParticipant[0].comment,
+        recruitmentNumber: Mock.participant.recruitmentNumber
+      }
+      controller.comment = Mock.userCommentsAboutParticipant[0].comment;
+      controller.selectedComment.recruitmentNumber = Mock.participant.recruitmentNumber;
+
+      spyOn(Injections.UserCommentAboutParticipantService, 'saveUserCommentAboutParticipant').and.returnValue(Mock.deferredResolve.promise);
+      spyOn(Injections.UserCommentAboutParticipantService, "showMsg").and.callThrough();
+
+      controller.saveUserCommentAboutParticipant();
+
+      Mock.scope.$digest();
+
+      expect(Injections.UserCommentAboutParticipantService.saveUserCommentAboutParticipant).toHaveBeenCalledTimes(1);
+      expect(Injections.UserCommentAboutParticipantService.saveUserCommentAboutParticipant).toHaveBeenCalledWith(userComment);
+      expect(Injections.UserCommentAboutParticipantService.showMsg).toHaveBeenCalledTimes(1);
+    });
+
+    it('saveUserCommentAboutParticipantMethod should initialized the save and updateUserComment', function () {
+      controller.comment = Mock.userCommentsAboutParticipant[0].comment;
+      controller.selectedComment = Mock.userCommentsAboutParticipant[0];
+      controller.selectedComment.recruitmentNumber = Mock.participant.recruitmentNumber;
+      controller.selectedComment.comment = Mock.userCommentsAboutParticipant[1].comment;
+
       spyOn(Injections.UserCommentAboutParticipantService, 'updateUserCommentAboutParticipant').and.returnValue(Promise.resolve());
 
-      controller.updateUserCommentAboutParticipant(Mock.userCommentsAboutParticipant[0]);
+      controller.saveUserCommentAboutParticipant();
 
       expect(Injections.UserCommentAboutParticipantService.updateUserCommentAboutParticipant).toHaveBeenCalledTimes(1);
       expect(Injections.UserCommentAboutParticipantService.updateUserCommentAboutParticipant).toHaveBeenCalledWith(Mock.userCommentsAboutParticipant[0]);
