@@ -1638,21 +1638,34 @@ otus-dashboard-display .display-report-dashboard {
   otus-user-comment-about-participant-list .comment-list-layout {
     display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
-        grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+    -ms-grid-columns: (0.8fr)[4] (0.1fr)[4];
+        grid-template-columns: repeat(4, 0.8fr) repeat(4, 0.1fr);
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-image . comment-date comment-status comment-button comment-button" "comment-image comment-name  comment-name  comment-name comment-button comment-button" "comment-text comment-text  comment-text  comment-text  comment-text comment-text";
+        grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-status comment-date comment-button  comment-button-menu" "comment-text  comment-text comment-text  comment-text   comment-text   comment-text comment-text    comment-text";
   }
-  otus-user-comment-about-participant-list .md-body-2 {
-    font-size: 14px;
-    line-height: 14px;
+  otus-user-comment-about-participant-list .comment-list-null {
+    display: -ms-grid;
+    display: grid;
+    max-height: 15vh;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.05fr 1fr 0.05fr;
+        grid-template-columns: 0.05fr 1fr 0.05fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: ". comment-null .";
+  }
+  otus-user-comment-about-participant-list .layout-box {
+    padding-left: 8px;
+    padding-right: 8px;
+    height: auto;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 2em;
@@ -1665,6 +1678,15 @@ otus-dashboard-display .display-report-dashboard {
   otus-user-comment-about-participant-list .layout-pagination {
     width: 100vw;
   }
+  otus-user-comment-about-participant-list .comment-layout-margin-line {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+  otus-user-comment-about-participant-list .comment-layout-padding {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 
 @media screen and (min-width: 410px) {
@@ -1673,26 +1695,55 @@ otus-dashboard-display .display-report-dashboard {
   }
 }
 
+@media screen and (min-width: 1024px) {
+  otus-user-comment-about-participant-list .comment-list-layout {
+    display: -ms-grid;
+    display: grid;
+    height: auto;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: (1fr)[2] (0.09fr)[5];
+        grid-template-columns: repeat(2, 1fr) repeat(5, 0.09fr);
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "comment-name  comment-name   comment-status  comment-status  comment-date  comment-button  comment-button-menu" "comment-text  comment-text   comment-text    comment-text    comment-text  comment-text    comment-text";
+  }
+}
+
 @media screen and (min-width: 1200px) {
   otus-user-comment-about-participant-list .comment-list-layout {
     display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
     height: auto;
     min-width: 90vw;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.1fr 2fr 0.8fr 0.6fr 0.6fr 0.4fr;
-        grid-template-columns: 0.1fr 2fr 0.8fr 0.6fr 0.6fr 0.4fr;
+    -ms-grid-columns: (1fr)[2] (0.07fr)[5];
+        grid-template-columns: repeat(2, 1fr) repeat(5, 0.07fr);
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-image comment-name comment-date comment-status comment-status comment-button" "comment-image comment-text comment-text comment-text comment-text comment-button";
+        grid-template-areas: "comment-name  comment-name  comment-status  comment-date   comment-date  comment-button  comment-button-menu" "comment-text  comment-text  comment-text    comment-text   comment-text  comment-text    comment-text";
   }
-  otus-user-comment-about-participant-list .md-body-2 {
-    font-size: 14px;
-    line-height: 14px;
+  otus-user-comment-about-participant-list .comment-list-null {
+    display: -ms-grid;
+    display: grid;
+    max-height: 15vh;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: (1fr)[3];
+        grid-template-columns: repeat(3, 1fr);
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: ". comment-null .";
+  }
+  otus-user-comment-about-participant-list .layout-box {
+    padding-left: 16px;
+    padding-right: 16px;
+    background-color: #fff;
+    height: auto;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 1.5em;
@@ -1705,20 +1756,24 @@ otus-dashboard-display .display-report-dashboard {
   otus-user-comment-about-participant-list .layout-pagination {
     width: 50vw;
   }
+  otus-user-comment-about-participant-list .comment-layout-margin-line {
+    background: #fff;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  otus-user-comment-about-participant-list .comment-layout-padding {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+}
+
+otus-user-comment-about-participant-list .comment-null {
+  grid-area: comment-null;
+  margin-bottom: 16px;
 }
 
 otus-user-comment-about-participant-list .margin-line {
-  margin: 1px;
-}
-
-otus-user-comment-about-participant-list .layout-box {
-  min-height: 40vh;
-  min-width: 95vw;
-  max-width: 95vw;
-}
-
-otus-user-comment-about-participant-list .comment-image {
-  grid-area: comment-image;
+  margin-bottom: 6px;
 }
 
 otus-user-comment-about-participant-list .comment-name {
@@ -1728,12 +1783,9 @@ otus-user-comment-about-participant-list .comment-name {
 
 otus-user-comment-about-participant-list .comment-text {
   grid-area: comment-text;
-  border-radius: 5px;
-  background-color: rgba(158, 158, 158, 0.1);
-  margin-bottom: 8px;
-  margin-left: 8px;
-  margin-right: 8px;
-  padding-left: 8px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
   word-break: break-word;
 }
 
@@ -1741,12 +1793,8 @@ otus-user-comment-about-participant-list .comment-button {
   grid-area: comment-button;
 }
 
-otus-user-comment-about-participant-list .comment-list-layout:hover {
-  background-color: rgba(158, 158, 158, 0.1);
-  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
+otus-user-comment-about-participant-list .comment-button-menu {
+  grid-area: comment-button-menu;
 }
 
 otus-user-comment-about-participant-list .comment-status {
@@ -1762,39 +1810,21 @@ otus-user-comment-about-participant-list md-list {
   padding: 0;
 }
 
-otus-user-comment-about-participant-list md-card {
-  margin: 8px;
-}
-
-otus-user-comment-about-participant-list .comment-textarea {
-  max-width: 100vw;
-  margin-top: 1.5em;
-  margin-bottom: 1.2em;
-  padding: 1em;
-}
-
-otus-user-comment-about-participant-list .md-caption {
-  font-size: 11px;
-  letter-spacing: 0.02em;
-}
-
-otus-user-comment-about-participant-list .md-body-2 {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  line-height: 20px;
-}
-
-otus-user-comment-about-participant-list .md-body-3 {
-  font-size: 12px;
-  letter-spacing: 0.02em;
+otus-user-comment-about-participant-list .md-body-1 {
+  color: rgba(0, 0, 0, 0.6);
 }
 
 otus-user-comment-about-participant-list .md-button {
   min-width: auto;
+  margin: 6px 4px;
 }
 
 otus-user-comment-about-participant-list .comment-box {
+  max-width: 100vw;
+  padding: 1em;
+}
+
+otus-user-comment-about-participant-list .comment-textarea {
   height: auto;
   color: #999 !important;
   font-family: "Ubuntu", Helvetica, Arial, sans-serif;
@@ -1811,9 +1841,17 @@ otus-user-comment-about-participant-list .comment-box {
   resize: vertical;
 }
 
-otus-user-comment-about-participant-list .comment-box:focus {
-  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
-          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
+otus-user-comment-about-participant-list md-card {
+  margin: 8px;
+}
+
+otus-user-comment-about-participant-list md-input-container {
+  padding: 4px 0;
+  margin: 0;
+}
+
+otus-user-comment-about-participant-list md-input-container .md-errors-spacer {
+  min-height: 0;
 }
 
 @media screen and (min-width: 360px) {
