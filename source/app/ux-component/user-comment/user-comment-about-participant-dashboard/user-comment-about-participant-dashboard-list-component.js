@@ -35,7 +35,8 @@
     const DIRECTORY_DIALOG_CONTROLLER = 'app/ux-component/user-comment/user-comment-about-participant-dialog/user-comment-about-participant-dialog-template.html';
 
     var self = this;
-    var originatorEv;
+
+    let stuntmanSearchSettings = {};
 
     /* Public methods */
     self.viewUserCommentAboutParticipant = viewUserCommentAboutParticipant;
@@ -52,7 +53,6 @@
     self.$onInit = onInit;
 
     self.items = [];
-    self.stuntmanSearchSettings = {};
     self.selectedParticipant = null;
 
     function onInit() {
@@ -62,7 +62,6 @@
     }
 
     function openMenu($mdMenu, ev) {
-      originatorEv = ev;
       $mdMenu.open(ev);
     };
 
@@ -92,13 +91,13 @@
     }
 
     function _loadNoteAboutParticipantDashboard() {
-      self.stuntmanSearchSettings = {
+      stuntmanSearchSettings = {
         currentQuantity: SKIP,
         quantityToGet: LIMIT,
         recruitmentNumber: self.selectedParticipant.recruitmentNumber
       }
 
-      UserCommentAboutParticipantService.getNoteAboutParticipant(self.stuntmanSearchSettings).then((arrayComment) => {
+      UserCommentAboutParticipantService.getNoteAboutParticipant(stuntmanSearchSettings).then((arrayComment) => {
         self.items = arrayComment
       })
     }
