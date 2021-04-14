@@ -1562,6 +1562,10 @@ otus-user-comment-about-participant-dashboard-list .ellipsis {
   overflow: hidden;
 }
 
+otus-dashboard-display {
+  background-color: #eeeeee;
+}
+
 @media screen and (min-width: 360px) {
   otus-dashboard-display .dashboard-display-layout {
     display: -ms-grid;
@@ -2221,6 +2225,111 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
 
 .otus-user-comment-about-participant-dialog md-input-container .md-errors-spacer {
   min-height: 0;
+}
+
+@media screen and (min-width: 360px) {
+  otus-participant-info .participant-info-layout {
+    display: -ms-grid;
+    display: grid;
+    height: auto;
+    padding-top: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 2fr 0.2fr;
+        grid-template-columns: 2fr 0.2fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "participant-info-name participant-info-button-edit" "participant-info-recruitmentNumber ." "participant-info-sex ." "participant-birthdate ." "participant-field-center ." "participant-mother-name ." "participant-laboratory-identification .";
+  }
+  otus-participant-info .participant-info-box {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  otus-participant-info .participant-padding {
+    padding-top: 8px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  otus-participant-info .participant-info-layout {
+    display: -ms-grid;
+    display: grid;
+    height: auto;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 20px;
+    -ms-grid-columns: (1.2fr)[3] 0.2fr;
+        grid-template-columns: repeat(3, 1.2fr) 0.2fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "participant-info-name participant-info-name participant-info-name participant-info-button-edit" "participant-info-recruitmentNumber . . ." "participant-info-sex participant-birthdate  participant-field-center ." "participant-mother-name . . ." "participant-laboratory-identification . . .";
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  otus-participant-info .participant-info-layout {
+    display: -ms-grid;
+    display: grid;
+    height: auto;
+    padding-top: 0;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: (1.4fr)[2] (1fr)[2] 0.2fr;
+        grid-template-columns: repeat(2, 1.4fr) repeat(2, 1fr) 0.2fr;
+    -ms-grid-rows: auto;
+        grid-template-rows: auto;
+        grid-template-areas: "participant-info-name participant-info-name participant-info-name participant-info-name participant-info-button-edit" "participant-info-recruitmentNumber . . . . " "participant-info-sex participant-birthdate  participant-field-center . ." "participant-mother-name . . . ." "participant-laboratory-identification . . . .";
+  }
+  otus-participant-info .participant-info-box {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  otus-participant-info .participant-padding {
+    padding-top: 16px;
+  }
+}
+
+otus-participant-info .participant-info-box {
+  width: 100%;
+  background-color: white;
+}
+
+otus-participant-info .participant-info-name {
+  grid-area: participant-info-name;
+}
+
+otus-participant-info .participant-mother-name {
+  grid-area: participant-mother-name;
+}
+
+otus-participant-info .participant-info-button-edit {
+  grid-area: participant-info-button-edit;
+}
+
+otus-participant-info .participant-info-recruitmentNumber {
+  grid-area: participant-info-recruitmentNumber;
+}
+
+otus-participant-info .participant-info-sex {
+  grid-area: participant-info-sex;
+}
+
+otus-participant-info .participant-birthdate {
+  grid-area: participant-birthdate;
+}
+
+otus-participant-info .participant-field-center {
+  grid-area: participant-field-center;
+}
+
+otus-participant-info .participant-laboratory-identification {
+  grid-area: participant-laboratory-identification;
+}
+
+otus-participant-info .md-button {
+  min-width: auto;
 }
 
 .md-accordion .expandCollapse {

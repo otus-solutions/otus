@@ -1,0 +1,118 @@
+otus-participant-info {
+  @media screen and (min-width: 360px) {
+    .participant-info-layout {
+      display: grid;
+      height: auto;
+      padding-top: 0;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 2fr 0.2fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "participant-info-name participant-info-button-edit"
+        "participant-info-recruitmentNumber ."
+        "participant-info-sex ."
+        "participant-birthdate ."
+        "participant-field-center ."
+        "participant-mother-name ."
+        "participant-laboratory-identification .";
+    }
+
+    .participant-info-box {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .participant-padding {
+      padding-top: 8px;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .participant-info-layout {
+      display: grid;
+      height: auto;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      padding-bottom: 20px;
+      grid-template-columns: repeat(3, 1.2fr) 0.2fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "participant-info-name participant-info-name participant-info-name participant-info-button-edit"
+        "participant-info-recruitmentNumber . . ."
+        "participant-info-sex participant-birthdate  participant-field-center ."
+        "participant-mother-name . . ."
+        "participant-laboratory-identification . . .";
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .participant-info-layout {
+      display: grid;
+      height: auto;
+      padding-top: 0;
+      padding-left: 16px;
+      padding-right: 16px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: repeat(2, 1.4fr) repeat(2, 1fr) 0.2fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "participant-info-name participant-info-name participant-info-name participant-info-name participant-info-button-edit"
+        "participant-info-recruitmentNumber . . . . "
+        "participant-info-sex participant-birthdate  participant-field-center . ."
+        "participant-mother-name . . . ."
+        "participant-laboratory-identification . . . .";
+    }
+
+    .participant-info-box {
+      margin-left: 16px;
+      margin-right: 16px;
+    }
+
+    .participant-padding {
+      padding-top: 16px;
+    }
+  }
+
+  .participant-info-box {
+    width: 100%;
+    background-color: white;
+  }
+
+  .participant-info-name {
+    grid-area: participant-info-name;
+  }
+
+  .participant-mother-name {
+    grid-area: participant-mother-name;
+  }
+
+  .participant-info-button-edit {
+    grid-area: participant-info-button-edit;
+  }
+
+  .participant-info-recruitmentNumber {
+    grid-area: participant-info-recruitmentNumber;
+  }
+
+  .participant-info-sex {
+    grid-area: participant-info-sex;
+  }
+
+  .participant-birthdate {
+    grid-area: participant-birthdate;
+  }
+
+  .participant-field-center {
+    grid-area: participant-field-center;
+  }
+
+  .participant-laboratory-identification {
+    grid-area: participant-laboratory-identification;
+  }
+
+  .md-button {
+    min-width: auto;
+  }
+}
