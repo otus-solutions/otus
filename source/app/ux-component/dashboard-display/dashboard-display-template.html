@@ -1,7 +1,37 @@
 <div ui-view layout="row" flex>
-  <md-content class="backgroud-color-default" style="background-color: #eeeeee;">
+  <md-content class="backgroud-color-default">
+    <div layout="row" layout-align="space-around">
+      <md-card class="card-button" ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess">
+        <md-card-content class="no-padding" layout="column" layout-align="center center">
+          <generate-custom-label-dialog basic-button="true" participant-button="true"
+            label-data="$ctrl.participantLabel">
+          </generate-custom-label-dialog>
+          <span class="md-caption display-color-gray">Ediquetas</span>
+        </md-card-content>
+      </md-card>
+
+      <md-card class="card-button" ng-show="$ctrl.userAccessToLaboratory.examLotsAccess">
+        <md-card-content class="no-padding" layout="column" layout-align="center center">
+          <md-button class="md-accent md-mini" ng-click="$ctrl.updateParticipant()">
+            <md-icon>edit</md-icon>
+            <md-tooltip md-direction="bottom">Editar participante selecionado</md-tooltip>
+          </md-button>
+          <span class="md-caption display-color-gray">Editar</span>
+        </md-card-content>
+      </md-card>
+
+      <md-card class="card-button" ng-show="$ctrl.userAccessToLaboratory.examSendingAccess">
+        <md-card-content class="no-padding" layout="column" layout-align="cente center">
+          <otus-participant-password-reset-button email="$ctrl.selectedParticipant.email">
+          </otus-participant-password-reset-button>
+          <span class="md-caption display-color-gray">Recuperar</span>
+          <span class="md-caption display-color-gray">senha</span>
+        </md-card-content>
+      </md-card>
+    </div>
     <div class="dashboard-display-layout">
-      <otus-participant-info class="display-participant-info" has-laboratory="$ctrl.hasLaboratory" participant-laboratory="$ctrl.participantLaboratory">
+      <otus-participant-info class="display-participant-info" has-laboratory="$ctrl.hasLaboratory"
+        participant-laboratory="$ctrl.participantLaboratory">
       </otus-participant-info>
       <otus-participant-attempt class="display-participant-attempt mobile-width-left"
         participant="$ctrl.participantLaboratory">

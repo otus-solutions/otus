@@ -1,4 +1,6 @@
 otus-dashboard-display {
+  background-color: #eeeeee;
+
   @media screen and (min-width: 360px) {
     .dashboard-display-layout {
       display: grid;
@@ -56,6 +58,10 @@ otus-dashboard-display {
 
   .mobile-height {
     min-height: 40vh;
+  }
+
+  .display-color-gray {
+    color: gray;
   }
 
   .display-participant-info {

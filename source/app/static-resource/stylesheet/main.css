@@ -1618,6 +1618,10 @@ otus-dashboard-display .mobile-height {
   min-height: 40vh;
 }
 
+otus-dashboard-display .display-color-gray {
+  color: gray;
+}
+
 otus-dashboard-display .display-participant-info {
   grid-area: display-participant-info;
 }
