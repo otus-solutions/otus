@@ -4,13 +4,14 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusParticipantInfo', {
-      controller: Controller,
+      controller: 'otusParticipantInfoCtrl as $ctrl',
       templateUrl: 'app/ux-component/participant-info/participant-info-template.html',
       bindings: {
         hasLaboratory: '=',
         participantLaboratory: '='
       }
-    });
+    })
+    .controller('otusParticipantInfoCtrl', Controller);
 
   Controller.$inject = [
     'otusjs.application.state.ApplicationStateService',
