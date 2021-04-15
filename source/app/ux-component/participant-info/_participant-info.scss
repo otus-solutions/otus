@@ -5,11 +5,10 @@ otus-participant-info {
       height: auto;
       padding-top: 0;
       padding-bottom: 20px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       grid-template-columns: 2fr 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
-        "participant-info-name participant-info-button-edit"
+        "participant-info-name ."
         "participant-info-recruitmentNumber ."
         "participant-info-sex ."
         "participant-birthdate ."
@@ -21,10 +20,19 @@ otus-participant-info {
     .participant-info-box {
       margin-left: 0;
       margin-right: 0;
+      padding-left: 8px;
+      padding-right: 8px;
     }
 
     .participant-padding {
-      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
+
+  @media screen and (min-width: 410px) {
+    .participant-info-box {
+      margin-left: 16px;
+      margin-right: 16px;
     }
   }
 
@@ -33,16 +41,20 @@ otus-participant-info {
       display: grid;
       height: auto;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       padding-bottom: 20px;
       grid-template-columns: repeat(3, 1.2fr) 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
-        "participant-info-name participant-info-name participant-info-name participant-info-button-edit"
+        "participant-info-name participant-info-name participant-info-name ."
         "participant-info-recruitmentNumber . . ."
         "participant-info-sex participant-birthdate  participant-field-center ."
         "participant-mother-name . . ."
         "participant-laboratory-identification . . .";
+    }
+
+    .participant-info-box {
+      margin-left: 16px;
+      margin-right: 16px;
     }
   }
 
@@ -54,11 +66,10 @@ otus-participant-info {
       padding-left: 16px;
       padding-right: 16px;
       padding-bottom: 20px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      grid-template-columns: repeat(2, 1.4fr) repeat(2, 1fr) 0.2fr;
+      grid-template-columns: repeat(4, 1fr) 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
-        "participant-info-name participant-info-name participant-info-name participant-info-name participant-info-button-edit"
+        "participant-info-name participant-info-name participant-info-name participant-info-name ."
         "participant-info-recruitmentNumber . . . . "
         "participant-info-sex participant-birthdate  participant-field-center . ."
         "participant-mother-name . . . ."
@@ -68,10 +79,12 @@ otus-participant-info {
     .participant-info-box {
       margin-left: 16px;
       margin-right: 16px;
+      padding-left: 0;
+      padding-right: 0;
     }
 
     .participant-padding {
-      padding-top: 16px;
+      padding-bottom: 8px;
     }
   }
 
@@ -86,10 +99,6 @@ otus-participant-info {
 
   .participant-mother-name {
     grid-area: participant-mother-name;
-  }
-
-  .participant-info-button-edit {
-    grid-area: participant-info-button-edit;
   }
 
   .participant-info-recruitmentNumber {

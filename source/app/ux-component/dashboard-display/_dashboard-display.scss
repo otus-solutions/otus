@@ -84,3 +84,28 @@ otus-dashboard-display {
     grid-area: display-report-dashboard;
   }
 }
+
+@media screen and (min-width: 360px) {
+  .icon-display-size {
+    font-size: 1.6em;
+    height: auto;
+    width: auto;
+  }
+
+  .icon-display-generate-size {
+    font-size: 1.6em;
+    height: auto;
+    padding-right: 15px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .icon-display-size {
+    font-size: 2.6em;
+  }
+
+  .icon-display-generate-size {
+    font-size: 2.6em;
+    padding-right: 35px;
+  }
+}

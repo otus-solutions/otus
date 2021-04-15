@@ -1387,7 +1387,7 @@ otus-activity-stage-list .new-chip-white {
     display: grid;
     height: auto;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: (0.8fr)[4] (0.1fr)[2];
         grid-template-columns: repeat(4, 0.8fr) repeat(2, 0.1fr);
     -ms-grid-rows: auto;
@@ -1402,7 +1402,6 @@ otus-activity-stage-list .new-chip-white {
         -ms-flex-align: center;
             align-items: center;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.05fr 1fr 0.05fr;
         grid-template-columns: 0.05fr 1fr 0.05fr;
     -ms-grid-rows: auto;
@@ -1436,7 +1435,7 @@ otus-activity-stage-list .new-chip-white {
     display: grid;
     height: auto;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: (1fr)[2] (0.09fr)[3];
         grid-template-columns: repeat(2, 1fr) repeat(3, 0.09fr);
     -ms-grid-rows: auto;
@@ -1451,7 +1450,7 @@ otus-activity-stage-list .new-chip-white {
     display: grid;
     max-height: 15vh;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: 1fr 0.8fr (0.09fr)[3];
         grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
     -ms-grid-rows: auto;
@@ -1466,7 +1465,6 @@ otus-activity-stage-list .new-chip-white {
         -ms-flex-align: center;
             align-items: center;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: (1fr)[3];
         grid-template-columns: repeat(3, 1fr);
     -ms-grid-rows: auto;
@@ -1643,12 +1641,35 @@ otus-dashboard-display .display-report-dashboard {
 }
 
 @media screen and (min-width: 360px) {
+  .icon-display-size {
+    font-size: 1.6em;
+    height: auto;
+    width: auto;
+  }
+  .icon-display-generate-size {
+    font-size: 1.6em;
+    height: auto;
+    padding-right: 15px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .icon-display-size {
+    font-size: 2.6em;
+  }
+  .icon-display-generate-size {
+    font-size: 2.6em;
+    padding-right: 35px;
+  }
+}
+
+@media screen and (min-width: 360px) {
   otus-user-comment-about-participant-list .comment-list-layout {
     display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: (0.8fr)[4] (0.1fr)[4];
         grid-template-columns: repeat(4, 0.8fr) repeat(4, 0.1fr);
     -ms-grid-rows: auto;
@@ -1663,7 +1684,6 @@ otus-dashboard-display .display-report-dashboard {
         -ms-flex-align: center;
             align-items: center;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.05fr 1fr 0.05fr;
         grid-template-columns: 0.05fr 1fr 0.05fr;
     -ms-grid-rows: auto;
@@ -1709,7 +1729,7 @@ otus-dashboard-display .display-report-dashboard {
     display: grid;
     height: auto;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: (1fr)[2] (0.09fr)[5];
         grid-template-columns: repeat(2, 1fr) repeat(5, 0.09fr);
     -ms-grid-rows: auto;
@@ -1725,7 +1745,7 @@ otus-dashboard-display .display-report-dashboard {
     height: auto;
     min-width: 90vw;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: (1fr)[2] (0.07fr)[5];
         grid-template-columns: repeat(2, 1fr) repeat(5, 0.07fr);
     -ms-grid-rows: auto;
@@ -2152,7 +2172,7 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     display: grid;
     height: 7vh;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: 1fr 0.8fr (0.09fr)[3];
         grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
     -ms-grid-rows: auto;
@@ -2238,19 +2258,27 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     height: auto;
     padding-top: 0;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 2fr 0.2fr;
         grid-template-columns: 2fr 0.2fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "participant-info-name participant-info-button-edit" "participant-info-recruitmentNumber ." "participant-info-sex ." "participant-birthdate ." "participant-field-center ." "participant-mother-name ." "participant-laboratory-identification .";
+        grid-template-areas: "participant-info-name ." "participant-info-recruitmentNumber ." "participant-info-sex ." "participant-birthdate ." "participant-field-center ." "participant-mother-name ." "participant-laboratory-identification .";
   }
   otus-participant-info .participant-info-box {
     margin-left: 0;
     margin-right: 0;
+    padding-left: 8px;
+    padding-right: 8px;
   }
   otus-participant-info .participant-padding {
-    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+@media screen and (min-width: 410px) {
+  otus-participant-info .participant-info-box {
+    margin-left: 16px;
+    margin-right: 16px;
   }
 }
 
@@ -2260,13 +2288,16 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     display: grid;
     height: auto;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     padding-bottom: 20px;
     -ms-grid-columns: (1.2fr)[3] 0.2fr;
         grid-template-columns: repeat(3, 1.2fr) 0.2fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "participant-info-name participant-info-name participant-info-name participant-info-button-edit" "participant-info-recruitmentNumber . . ." "participant-info-sex participant-birthdate  participant-field-center ." "participant-mother-name . . ." "participant-laboratory-identification . . .";
+        grid-template-areas: "participant-info-name participant-info-name participant-info-name ." "participant-info-recruitmentNumber . . ." "participant-info-sex participant-birthdate  participant-field-center ." "participant-mother-name . . ." "participant-laboratory-identification . . .";
+  }
+  otus-participant-info .participant-info-box {
+    margin-left: 16px;
+    margin-right: 16px;
   }
 }
 
@@ -2279,19 +2310,20 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: (1.4fr)[2] (1fr)[2] 0.2fr;
-        grid-template-columns: repeat(2, 1.4fr) repeat(2, 1fr) 0.2fr;
+    -ms-grid-columns: (1fr)[4] 0.2fr;
+        grid-template-columns: repeat(4, 1fr) 0.2fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "participant-info-name participant-info-name participant-info-name participant-info-name participant-info-button-edit" "participant-info-recruitmentNumber . . . . " "participant-info-sex participant-birthdate  participant-field-center . ." "participant-mother-name . . . ." "participant-laboratory-identification . . . .";
+        grid-template-areas: "participant-info-name participant-info-name participant-info-name participant-info-name ." "participant-info-recruitmentNumber . . . . " "participant-info-sex participant-birthdate  participant-field-center . ." "participant-mother-name . . . ." "participant-laboratory-identification . . . .";
   }
   otus-participant-info .participant-info-box {
     margin-left: 16px;
     margin-right: 16px;
+    padding-left: 0;
+    padding-right: 0;
   }
   otus-participant-info .participant-padding {
-    padding-top: 16px;
+    padding-bottom: 8px;
   }
 }
 
@@ -2306,10 +2338,6 @@ otus-participant-info .participant-info-name {
 
 otus-participant-info .participant-mother-name {
   grid-area: participant-mother-name;
-}
-
-otus-participant-info .participant-info-button-edit {
-  grid-area: participant-info-button-edit;
 }
 
 otus-participant-info .participant-info-recruitmentNumber {
