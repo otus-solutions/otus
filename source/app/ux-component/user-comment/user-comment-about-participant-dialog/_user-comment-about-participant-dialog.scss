@@ -47,7 +47,7 @@
       display: grid;
       height: 7vh;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
       grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
       grid-template-rows: auto;
       grid-template-areas: "comment-name  comment-name  comment-status  comment-button   comment-date";

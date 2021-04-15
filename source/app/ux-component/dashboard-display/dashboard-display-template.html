@@ -1,7 +1,34 @@
 <div ui-view layout="row" flex>
-  <md-content class="backgroud-color-default" style="background-color: #eeeeee;">
+  <md-content class="backgroud-color-default">
+    <div layout="row" layout-margin>
+      <div layout="row" layout-align="space-between" layout-fill>
+        <div>
+          <generate-custom-label-dialog basic-button="true" participant-button="true"
+            label-data="$ctrl.participantLabel">
+          </generate-custom-label-dialog>
+        </div>
+
+        <md-card>
+          <md-button style="margin: 0; padding: 8px;" class="md-accent" layout="column" layout-align="center center"
+            ng-click="$ctrl.updateParticipant()">
+            <md-icon class="icon-display-size">
+              contact_page
+            </md-icon>
+            <md-tooltip md-direction="bottom">Editar participante selecionado</md-tooltip>
+            <span class="md-caption display-color-gray">Contato</span>
+          </md-button>
+        </md-card>
+
+        <div>
+          <otus-participant-password-reset-button email="$ctrl.selectedParticipant.email">
+          </otus-participant-password-reset-button>
+        </div>
+      </div>
+      <div layout="row" hide-xs layout-fill></div>
+    </div>
     <div class="dashboard-display-layout">
-      <otus-participant-info class="display-participant-info" has-laboratory="$ctrl.hasLaboratory" participant-laboratory="$ctrl.participantLaboratory">
+      <otus-participant-info class="display-participant-info" has-laboratory="$ctrl.hasLaboratory"
+        participant-laboratory="$ctrl.participantLaboratory">
       </otus-participant-info>
       <otus-participant-attempt class="display-participant-attempt mobile-width-left"
         participant="$ctrl.participantLaboratory">

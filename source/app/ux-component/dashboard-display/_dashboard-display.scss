@@ -1,4 +1,6 @@
 otus-dashboard-display {
+  background-color: #eeeeee;
+
   @media screen and (min-width: 360px) {
     .dashboard-display-layout {
       display: grid;
@@ -58,6 +60,10 @@ otus-dashboard-display {
     min-height: 40vh;
   }
 
+  .display-color-gray {
+    color: gray;
+  }
+
   .display-participant-info {
     grid-area: display-participant-info;
   }
@@ -76,5 +82,30 @@ otus-dashboard-display {
 
   .display-report-dashboard {
     grid-area: display-report-dashboard;
+  }
+}
+
+@media screen and (min-width: 360px) {
+  .icon-display-size {
+    font-size: 1.6em;
+    height: auto;
+    width: auto;
+  }
+
+  .icon-display-generate-size {
+    font-size: 1.6em;
+    height: auto;
+    padding-right: 15px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .icon-display-size {
+    font-size: 2.6em;
+  }
+
+  .icon-display-generate-size {
+    font-size: 2.6em;
+    padding-right: 35px;
   }
 }
