@@ -17,8 +17,6 @@
   ];
 
   function Controller(DashboardEventService, DashboardService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS) {
-    const LIMIT = 100;
-    const SKIP = 0;
     const DIALOG_CONTROLLER = 'otusUserCommentAboutParticipantDialogCtrl';
     const DIRECTORY_DIALOG_CONTROLLER = 'app/ux-component/user-comment/user-comment-about-participant-dialog/user-comment-about-participant-dialog-template.html';
 
@@ -73,8 +71,6 @@
 
     function _loadNoteAboutParticipant() {
       stuntmanSearchSettings = {
-        currentQuantity: SKIP,
-        quantityToGet: LIMIT,
         recruitmentNumber: self.selectedParticipant.recruitmentNumber
       }
 

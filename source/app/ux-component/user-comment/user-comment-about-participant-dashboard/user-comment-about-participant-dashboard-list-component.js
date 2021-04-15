@@ -29,6 +29,7 @@
     DialogService,
     UserCommentAboutParticipantService,
     USER_COMMENT_MANAGER_LABELS) {
+    const FILTER_STAR_RED = true;
     const LIMIT = 3;
     const SKIP = 0;
     const DIALOG_CONTROLLER = 'otusUserCommentAboutParticipantDialogCtrl';
@@ -92,8 +93,11 @@
 
     function _loadNoteAboutParticipantDashboard() {
       stuntmanSearchSettings = {
-        currentQuantity: SKIP,
         quantityToGet: LIMIT,
+        currentQuantity: SKIP,
+        filters: {
+          starred: FILTER_STAR_RED
+        },
         recruitmentNumber: self.selectedParticipant.recruitmentNumber
       }
 
