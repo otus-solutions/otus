@@ -4,7 +4,7 @@ otus-user-comment-about-participant-dashboard-list {
       display: grid;
       height: auto;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
       grid-template-columns: repeat(4, 0.8fr) repeat(2, 0.1fr);
       grid-template-rows: auto;
       grid-template-areas:
@@ -17,7 +17,6 @@ otus-user-comment-about-participant-dashboard-list {
       max-height: 15vh;
       align-items: center;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       grid-template-columns: 0.05fr 1fr 0.05fr;
       grid-template-rows: auto;
       grid-template-areas: ". comment-null .";
@@ -51,7 +50,7 @@ otus-user-comment-about-participant-dashboard-list {
       display: grid;
       height: auto;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
       grid-template-columns: repeat(2, 1fr) repeat(3, 0.09fr);
       grid-template-rows: auto;
       grid-template-areas:
@@ -65,7 +64,7 @@ otus-user-comment-about-participant-dashboard-list {
       display: grid;
       max-height: 15vh;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
       grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
       grid-template-rows: auto;
       grid-template-areas:
@@ -78,7 +77,6 @@ otus-user-comment-about-participant-dashboard-list {
       max-height: 15vh;
       align-items: center;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: auto;
       grid-template-areas: ". comment-null .";
