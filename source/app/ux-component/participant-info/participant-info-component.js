@@ -50,9 +50,9 @@
 
     /* Lifecycle methods */
     function onInit() {
+      self.selectedParticipant = null;
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
-      self.selectedParticipant = null;
     }
 
     function getCurrentState() {
