@@ -1,11 +1,12 @@
 (function() {
   'use strict';
 
+  console.log('roi')
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusDashboardSidenav', {
+    .component('otusNavigation', {
       controller: Controller,
-      templateUrl: 'app/ux-component/dashboard-sidenav/dashboard-navigation-template.html',
+      templateUrl: 'app/ux-component/dashboard-navigation/dashboard-navigation-template.html',
       bindings: {
         participant: '<'
       },

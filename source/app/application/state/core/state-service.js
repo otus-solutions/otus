@@ -60,6 +60,7 @@
     self.getCurrentStateStorage = getCurrentStateStorage;
     self.setCurrentStateStorage = setCurrentStateStorage;
     self.userCommentAboutParticipant = userCommentAboutParticipant;
+    self.getStateName = getStateName;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -243,6 +244,10 @@
 
     function userCommentAboutParticipant() {
       $state.go(STATE.USER_COMMENT_ABOUT_PARTICIPANT);
+    }
+
+    function getStateName() {
+      return $state.getCurrentState();
     }
   }
 }());
