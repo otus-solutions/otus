@@ -1,7 +1,4 @@
-<div
-  layout="column"
-  md-is-locked-open="$mdMedia('min-width: 333px')"
->
+<div layout="column" style="max-width: 290px;">
   <md-toolbar class="md-primary md-whiteframe-1dp">
     <div class="md-toolbar-tools">
       <img ng-src="{{$ctrl.iconImage}}" class="toolbar-icon">
@@ -14,12 +11,15 @@
     </div>
   </md-toolbar>
   <div ng-transclude="hideHomeButton">
-    <div layout-margin>
+    <div style="padding-top: 8px; padding: bottom 8px;">
       <md-list>
+        <span class="md-body-2 participant-box-title" style="color:gray; padding:0 16px">
+          Projeto
+        </span>
         <md-list-item>
           <div layout-align="start center">
             <md-icon md-svg-icon="home" aria-label="Home" class="md-accent"></md-icon>
-            <md-button id="home-menu" ng-click="$ctrl.home()">INÍCIO</md-button>
+            <md-button id="home-menu" ng-click="$ctrl.home()">Home</md-button>
           </div>
         </md-list-item>
       </md-list>

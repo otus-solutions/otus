@@ -38,10 +38,6 @@ otus-user-comment-about-participant-list {
       line-height: 2em;
     }
 
-    .layout-pagination {
-      width: 100vw;
-    }
-
     .comment-layout-margin-line {
       margin: 0;
       padding: 0;
@@ -79,7 +75,7 @@ otus-user-comment-about-participant-list {
       display: -ms-grid;
       display: grid;
       height: auto;
-      min-width: 90vw;
+      min-width: 50vw;
       padding-top: 0;
       border-bottom: 1px solid rgba(33, 33, 33, 0.08);
       grid-template-columns: repeat(2, 1fr) repeat(5, 0.07fr);
@@ -104,7 +100,7 @@ otus-user-comment-about-participant-list {
       padding-left: 16px;
       padding-right: 16px;
       background-color: #fff;
-      height: auto;
+      min-height: 100vh;
     }
 
     .icon-size {

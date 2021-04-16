@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusDashboardSidenav', {
       controller: Controller,
-      templateUrl: 'app/ux-component/dashboard-sidenav/dashboard-navigation-template.html',
+      templateUrl: 'app/ux-component/dashboard-sidenav/dashboard-sidenav-template.html',
       bindings: {
         participant: '<'
       },
