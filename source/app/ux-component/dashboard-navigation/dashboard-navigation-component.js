@@ -1,7 +1,6 @@
 (function() {
   'use strict';
 
-  console.log('roi')
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusNavigation', {
