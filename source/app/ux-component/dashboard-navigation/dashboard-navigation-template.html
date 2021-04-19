@@ -11,15 +11,15 @@
     </div>
   </md-toolbar>
   <div ng-transclude="hideHomeButton">
-    <div style="padding-top: 8px; padding: bottom 8px;">
+    <div style="padding-top: 8px; padding-bottom: 8px;">
       <md-list>
         <span class="md-body-2 participant-box-title" style="color:gray; padding:0 16px">
           Projeto
         </span>
-        <md-list-item>
+        <md-list-item id="home-menu" ng-click="$ctrl.home()">
           <div layout-align="start center">
             <md-icon md-svg-icon="home" aria-label="Home" class="md-accent"></md-icon>
-            <md-button id="home-menu" ng-click="$ctrl.home()">Home</md-button>
+            <span style="padding-left: 16px; padding-right: 16px;">Home</span>
           </div>
         </md-list-item>
       </md-list>
@@ -31,13 +31,12 @@
   </div>
   <span flex="100"></span>
   <div layout-align="end center" md-colors="::{background: 'default-primary-500'}">
-    <div layout-margin>
+    <div layout="column" layout-align="start center" layout-margin>
       <label class="md-caption">Importação de dados</label>
       <md-list>
         <md-list-item>
-          <div layout-align="start center">
+          <div layout="column" layout-align="start center">
             <md-button class="md-fab md-mini md-accent md-raised">
-
               <md-icon aria-label="backup">backup</md-icon>
             </md-button>
             <md-button id="home-menu" ng-click="$ctrl.importActivity()">IMPORTAR ATIVIDADES</md-button>
