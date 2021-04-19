@@ -1703,9 +1703,6 @@ otus-dashboard-display .display-report-dashboard {
   otus-user-comment-about-participant-list .comment-box {
     line-height: 2em;
   }
-  otus-user-comment-about-participant-list .layout-pagination {
-    width: 100vw;
-  }
   otus-user-comment-about-participant-list .comment-layout-margin-line {
     margin: 0;
     padding: 0;
@@ -1760,7 +1757,6 @@ otus-dashboard-display .display-report-dashboard {
         -ms-flex-align: center;
             align-items: center;
     padding-top: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: (1fr)[3];
         grid-template-columns: repeat(3, 1fr);
     -ms-grid-rows: auto;

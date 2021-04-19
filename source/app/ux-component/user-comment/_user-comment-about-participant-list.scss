@@ -38,10 +38,6 @@ otus-user-comment-about-participant-list {
       line-height: 2em;
     }
 
-    .layout-pagination {
-      width: 100vw;
-    }
-
     .comment-layout-margin-line {
       margin: 0;
       padding: 0;
@@ -94,7 +90,6 @@ otus-user-comment-about-participant-list {
       max-height: 15vh;
       align-items: center;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: auto;
       grid-template-areas: "comment-null comment-null comment-null";
