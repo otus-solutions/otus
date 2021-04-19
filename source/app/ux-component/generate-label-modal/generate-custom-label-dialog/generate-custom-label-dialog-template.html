@@ -1,7 +1,11 @@
-<md-button class="md-primary md-raised" ng-hide="!$ctrl.primaryBtn()"  ng-click="$ctrl.showAdvanced($event)">
+<md-button class="md-primary md-raised" ng-hide="!$ctrl.primaryBtn()" ng-click="$ctrl.showAdvanced($event)">
   Gerar etiquetas
 </md-button>
-<md-button class="md-basic" ng-hide="!$ctrl.basicBtn()" ng-click="$ctrl.showAdvanced($event)">
-  Gerar etiquetas
-</md-button>
-
+<md-card class="card-button">
+  <md-button style="margin: 0; padding: 8px;" layout="column" layout-align="center center" class="md-basic md-accent display-auto-size"
+    ng-hide="!$ctrl.basicBtn()" ng-click="$ctrl.showAdvanced($event)">
+    <md-icon class="icon-display-generate-size">label_black</md-icon>
+    <md-tooltip md-direction="bottom">Gerar etiquetas</md-tooltip>
+    <span class="md-caption" style="color:gray">Etiquetas</span>
+  </md-button>
+</md-card>
