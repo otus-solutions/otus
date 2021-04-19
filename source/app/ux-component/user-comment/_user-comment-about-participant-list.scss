@@ -4,7 +4,7 @@ otus-user-comment-about-participant-list {
       display: grid;
       height: auto;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
       grid-template-columns: repeat(4, 0.8fr) repeat(4, 0.1fr);
       grid-template-rows: auto;
       grid-template-areas:
@@ -17,16 +17,15 @@ otus-user-comment-about-participant-list {
       max-height: 15vh;
       align-items: center;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       grid-template-columns: 0.05fr 1fr 0.05fr;
       grid-template-rows: auto;
-      grid-template-areas: ". comment-null .";
+      grid-template-areas: "comment-null comment-null comment-null";
     }
 
     .layout-box {
       padding-left: 8px;
       padding-right: 8px;
-      height: auto;
+      min-height: 70vh;
     }
 
     .icon-size {
@@ -37,10 +36,6 @@ otus-user-comment-about-participant-list {
 
     .comment-box {
       line-height: 2em;
-    }
-
-    .layout-pagination {
-      width: 100vw;
     }
 
     .comment-layout-margin-line {
@@ -66,7 +61,7 @@ otus-user-comment-about-participant-list {
       display: grid;
       height: auto;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
       grid-template-columns: repeat(2, 1fr) repeat(5, 0.09fr);
       grid-template-rows: auto;
       grid-template-areas:
@@ -80,9 +75,9 @@ otus-user-comment-about-participant-list {
       display: -ms-grid;
       display: grid;
       height: auto;
-      min-width: 90vw;
+      min-width: 50vw;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
       grid-template-columns: repeat(2, 1fr) repeat(5, 0.07fr);
       grid-template-rows: auto;
       grid-template-areas:
@@ -98,14 +93,14 @@ otus-user-comment-about-participant-list {
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: auto;
-      grid-template-areas: ". comment-null .";
+      grid-template-areas: "comment-null comment-null comment-null";
     }
 
     .layout-box {
       padding-left: 16px;
       padding-right: 16px;
       background-color: #fff;
-      height: auto;
+      min-height: 70vh;
     }
 
     .icon-size {
