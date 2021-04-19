@@ -12,12 +12,12 @@
       </div>
     </md-toolbar>
     <div ng-transclude="hideHomeButton">
-      <div layout-margin>
+      <div>
         <md-list>
-          <md-list-item>
+          <md-list-item id="home-menu" ng-click="$ctrl.home()">
             <div layout-align="start center">
               <md-icon md-svg-icon="home" aria-label="Home" class="md-accent"></md-icon>
-              <md-button id="home-menu" ng-click="$ctrl.home()">INÍCIO</md-button>
+              <span style='padding-left: 16px'>Home</span>
             </div>
           </md-list-item>
         </md-list>
