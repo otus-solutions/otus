@@ -1,66 +1,69 @@
-<md-content layout="column" flex layout-padding layout-align="center center" ng-show="$ctrl.isEmpty">
+<md-content layout="column" flex class="participant-padding-top-and-bottom" layout-align="center center"
+  ng-show="$ctrl.isEmpty">
   <span class="md-title" style="text-align: center">Não há participante selecionado(a).</span>
 </md-content>
 <div layout="column" ng-show="!$ctrl.isEmpty" flex>
-  <div md-colors="::{background: 'default-primary-500'}" flex>
-    <div layout-margin layout-padding layout="column" flex>
-      <div layout-align="start center" layout="row">
-        <md-button class="md-fab md-accent">
-          <md-icon md-font-set="material-icons">person</md-icon>
-        </md-button>
-        <div layout="column">
-          <span class="md-title">{{ $ctrl.selectedParticipant.recruitmentNumber }}</span>
-          <span class="md-body-1">{{ $ctrl.selectedParticipant.fieldCenter.name }} ({{
-            $ctrl.selectedParticipant.fieldCenter.acronym }})</span>
-        </div>
-      </div>
-      <span class="md-title">{{ $ctrl.selectedParticipant.name }}</span>
-    </div>
-  </div>
-  <div layout-margin>
+  <md-divider></md-divider>
+  <div class="participant-padding-top-and-bottom">
     <md-list ng-show="!$ctrl.isEmpty">
-      <md-list-item class="md-2-line">
+      <span class="md-body-2 participant-box-title">Participante</span>
+      <md-list-item id="home-menu" ng-click="$ctrl.home()"
+        ng-style="$ctrl.selectedStateColor($ctrl.state.PARTICIPANT_DASHBOARD)">
         <div layout-align="start center">
-          <md-icon aria-label="Home" class="md-accent">person</md-icon>
-          <md-button id="home-menu" ng-click="$ctrl.home()">Home</md-button>
+          <md-icon aria-label="Home" class="md-accent">
+            dashboard
+          </md-icon>
+          <span class="participant-padding-sivenav">Dashboard</span>
         </div>
       </md-list-item>
-      <md-list-item class="md-2-line" ng-show="$ctrl.userAccessToActivity.participantActivityAccess">
+      <md-list-item id="surveyforms-menu" ng-show="$ctrl.userAccessToActivity.participantActivityAccess"
+        ng-style="$ctrl.selectedStateColor($ctrl.state.PARTICIPANT_ACTIVITY)"
+        ng-click="$ctrl.loadParticipantActivities()">
         <div layout-align="start center">
           <md-icon md-svg-icon="file-document-box" aria-label="Atividades" class="md-accent"></md-icon>
-          <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantActivities()">Atividades</md-button>
+          <span class="participant-padding-sivenav">Atividades</span>
         </div>
       </md-list-item>
-      <md-list-item class="md-2-line" ng-show="$ctrl.userAccessToActivity.participantActivityAccess" style="margin:0 0 8px 0">
-        <div layout-align="start center" style="border:2px solid orange; border-radius: 5px;">
-          <p style="color: orange; margin: 0; padding: 0 4px">Novo</p>
-          <md-icon md-svg-icon="file-document-box" aria-label="Etapas de Atividades" style="margin-top:0; margin-bottom:0;"
-            class="md-accent"></md-icon>
-          <md-button id="surveyforms-menu-stage" ng-click="$ctrl.loadParticipantActivityStage()" style="margin-top:0; margin-bottom:0;">
-            Atividades</md-button>
+      <md-list-item id="surveyforms-menu-stage" ng-show="$ctrl.userAccessToActivity.participantActivityAccess"
+        ng-style="$ctrl.selectedStateColor($ctrl.state.PARTICIPANT_ACTIVITY_STAGE)"
+        ng-click="$ctrl.loadParticipantActivityStage()">
+        <div layout-align="start center">
+          <md-icon md-svg-icon="file-document-box" aria-label="Etapas de Atividades" class="md-accent"></md-icon>
+          <span class="participant-padding-sivenav">Atividades (nova)</span>
         </div>
       </md-list-item>
-      <md-list-item ng-if="$ctrl.laboratoryChecking && $ctrl.userAccessToLaboratory.participantLaboratoryAccess"
-                    class="md-2-line">
+      <md-list-item id="laboratory-menu"
+        ng-if="$ctrl.laboratoryChecking && $ctrl.userAccessToLaboratory.participantLaboratoryAccess"
+        ng-click="$ctrl.loadLaboratory()" ng-style="$ctrl.selectedStateColor($ctrl.state.LABORATORY)">
         <div layout-align="start center">
           <md-icon md-svg-icon="eyedropper-variant" aria-label="Laboratório" class="md-accent"></md-icon>
-          <md-button id="laboratory-menu" ng-click="$ctrl.loadLaboratory()">Laboratório</md-button>
+          <span class="participant-padding-sivenav">Laboratório</span>
         </div>
       </md-list-item>
-      <md-list-item class="md-2-line">
+      <md-list-item id="comment-menu" ng-show="$ctrl.userAccessToActivity.participantActivityAccess"
+        ng-click="$ctrl.loadUserCommentAboutParticipant()"
+        ng-style="$ctrl.selectedStateColor($ctrl.state.USER_COMMENT_ABOUT_PARTICIPANT)">
+        <div layout-align="start center">
+          <md-icon aria-label="Comentários" class="md-accent">chat_bubble_outline</md-icon>
+          <span class="participant-padding-sivenav">Comentários</span>
+        </div>
+      </md-list-item>
+      <md-list-item id="follow-up-menu" ng-click="$ctrl.loadFollowUps()"
+        ng-style="$ctrl.selectedStateColor($ctrl.state.PARTICIPANT_FOLLOW_UPS)">
         <div layout-align="start center">
           <md-icon class="material-icons md-accent">
             linear_scale
           </md-icon>
-          <md-button id="follow-up-menu" ng-click="$ctrl.loadFollowUps()">Seguimentos</md-button>
+          <span class="participant-padding-sivenav">Seguimentos</span>
         </div>
       </md-list-item>
-      <!-- <md-list-item>
-      <div layout-align="start center">
-        <md-icon md-font-library="material-icons">insert_chart</md-icon>
-        <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantReports()">Relatórios</md-button>
-      </div>
-    </md-list-item> -->
+      <!-- <md-list-item id="surveyforms-menu" ng-click="$ctrl.loadParticipantReports()"
+        ng-style="$ctrl.selectedStateColor($ctrl.state.PARTICIPANT_REPORT)">
+        <div layout-align="start center">
+          <md-icon md-font-library="material-icons">insert_chart</md-icon>
+          <span class="participant-padding-sivenav">Relatórios</span>
+        </div>
+      </md-list-item> -->
     </md-list>
   </div>
 </div>

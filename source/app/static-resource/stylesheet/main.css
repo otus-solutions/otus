@@ -1469,7 +1469,7 @@ otus-activity-stage-list .new-chip-white {
         grid-template-columns: repeat(3, 1fr);
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-null comment-null comment-null";
+        grid-template-areas: ". comment-null .";
   }
   otus-user-comment-about-participant-dashboard-list .layout-uc {
     padding-left: 16px;
@@ -1688,12 +1688,12 @@ otus-dashboard-display .display-report-dashboard {
         grid-template-columns: 0.05fr 1fr 0.05fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-null comment-null comment-null";
+        grid-template-areas: ". comment-null .";
   }
   otus-user-comment-about-participant-list .layout-box {
     padding-left: 8px;
     padding-right: 8px;
-    min-height: 70vh;
+    height: auto;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 2em;
@@ -1702,6 +1702,9 @@ otus-dashboard-display .display-report-dashboard {
   }
   otus-user-comment-about-participant-list .comment-box {
     line-height: 2em;
+  }
+  otus-user-comment-about-participant-list .layout-pagination {
+    width: 100vw;
   }
   otus-user-comment-about-participant-list .comment-layout-margin-line {
     margin: 0;
@@ -1740,7 +1743,7 @@ otus-dashboard-display .display-report-dashboard {
     display: -ms-grid;
     display: grid;
     height: auto;
-    min-width: 50vw;
+    min-width: 90vw;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: (1fr)[2] (0.07fr)[5];
@@ -1762,13 +1765,13 @@ otus-dashboard-display .display-report-dashboard {
         grid-template-columns: repeat(3, 1fr);
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: "comment-null comment-null comment-null";
+        grid-template-areas: ". comment-null .";
   }
   otus-user-comment-about-participant-list .layout-box {
     padding-left: 16px;
     padding-right: 16px;
     background-color: #fff;
-    min-height: 70vh;
+    height: auto;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 1.5em;
