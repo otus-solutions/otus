@@ -4,13 +4,14 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusDashboardToolbar', {
-      controller: Controller,
+      controller: 'otusDashboardToolbarCtrl as $ctrl',
       templateUrl: 'app/ux-component/dashboard-toolbar/dashboard-toolbar-template.html',
       bindings: {
         onParticipantSelect: '&'
       },
       transclude: true
-    });
+    })
+    .controller('otusDashboardToolbarCtrl', Controller)
 
   Controller.$inject = [
     'otusjs.otus.dashboard.core.ContextService',

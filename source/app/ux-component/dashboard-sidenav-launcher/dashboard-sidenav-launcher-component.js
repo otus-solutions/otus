@@ -4,9 +4,10 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusDashboardSidenavLauncher', {
-      controller: Controller,
+      controller: 'otusDashboardSidenavLauncherCtrl as $ctrl',
       templateUrl: 'app/ux-component/dashboard-sidenav-launcher/dashboard-sidenav-launcher-template.html'
-    });
+    })
+    .controller('otusDashboardSidenavLauncherCtrl', Controller)
 
   Controller.$inject = [
     '$mdSidenav',
