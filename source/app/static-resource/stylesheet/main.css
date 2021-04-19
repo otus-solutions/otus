@@ -1469,7 +1469,7 @@ otus-activity-stage-list .new-chip-white {
         grid-template-columns: repeat(3, 1fr);
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: ". comment-null .";
+        grid-template-areas: "comment-null comment-null comment-null";
   }
   otus-user-comment-about-participant-dashboard-list .layout-uc {
     padding-left: 16px;
@@ -1688,12 +1688,12 @@ otus-dashboard-display .display-report-dashboard {
         grid-template-columns: 0.05fr 1fr 0.05fr;
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: ". comment-null .";
+        grid-template-areas: "comment-null comment-null comment-null";
   }
   otus-user-comment-about-participant-list .layout-box {
     padding-left: 8px;
     padding-right: 8px;
-    height: auto;
+    min-height: 70vh;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 2em;
@@ -1743,7 +1743,7 @@ otus-dashboard-display .display-report-dashboard {
     display: -ms-grid;
     display: grid;
     height: auto;
-    min-width: 90vw;
+    min-width: 50vw;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     -ms-grid-columns: (1fr)[2] (0.07fr)[5];
@@ -1765,13 +1765,13 @@ otus-dashboard-display .display-report-dashboard {
         grid-template-columns: repeat(3, 1fr);
     -ms-grid-rows: auto;
         grid-template-rows: auto;
-        grid-template-areas: ". comment-null .";
+        grid-template-areas: "comment-null comment-null comment-null";
   }
   otus-user-comment-about-participant-list .layout-box {
     padding-left: 16px;
     padding-right: 16px;
     background-color: #fff;
-    height: auto;
+    min-height: 70vh;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 1.5em;
@@ -2362,6 +2362,21 @@ otus-participant-info .participant-laboratory-identification {
 
 otus-participant-info .md-button {
   min-width: auto;
+}
+
+otus-participant-box .participant-box-title {
+  color: gray;
+  padding: 0 16px;
+}
+
+otus-participant-box .participant-padding-sivenav {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+otus-participant-box .participant-padding-top-and-bottom {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .md-accordion .expandCollapse {
