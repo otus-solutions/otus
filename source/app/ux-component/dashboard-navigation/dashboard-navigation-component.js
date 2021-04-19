@@ -68,10 +68,5 @@
     function loadParticipantReports() {
       ApplicationStateService.activateParticipantReports();
     }
-
-    function getStateName() {
-      ApplicationStateService.getStateName();
-    }
-
   }
 }());
