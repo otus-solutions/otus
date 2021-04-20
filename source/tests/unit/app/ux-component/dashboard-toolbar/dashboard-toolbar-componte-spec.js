@@ -23,5 +23,14 @@ describe('otusDashboardToolbarCtrl_UnitTest_Suite', function () {
   it('ctrlMethodsExistence_check', function () {
     expect(ctrl.$onInit).toBeDefined();
     expect(ctrl.selectParticipant).toBeDefined();
+    expect(ctrl.verifyStateParticipantDashboard).toBeDefined();
+  });
+
+  it('verifyStateParticipantDashboard_method_should_verify_state', function () {
+    spyOn(Injections.ApplicationStateService, 'getCurrentState').and.callThrough();
+
+    expect(ctrl.verifyStateParticipantDashboard()).toEqual(false);
+
+    expect(Injections.ApplicationStateService.getCurrentState).toHaveBeenCalledTimes(1);
   });
 });
