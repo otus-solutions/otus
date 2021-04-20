@@ -30,6 +30,7 @@
     /* Public methods */
     self.setFocus = setFocus;
     self.sendingExam = sendingExam;
+    self.importActivity = importActivity;
     self.examsDashboard = examsDashboard;
     self.startMonitoring = startMonitoring;
     self.laboratoryMonitoring = laboratoryMonitoring;
@@ -42,6 +43,7 @@
     self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
     self.activateIssueViewer = activateIssueViewer;
     self.activateLaboratoryMaterialManager = activateLaboratoryMaterialManager;
+
 
     function onInit() {
       _loadLoggedUser();
@@ -93,6 +95,11 @@
     function managerParticipantsDashboard() {
       ApplicationStateService.activateParticipantsList();
     }
+
+    function importActivity() {
+      ApplicationStateService.activateActivityImport();
+    }
+
 
     function examsDashboard() {
       ApplicationStateService.activateExamsLotsManagerList();
