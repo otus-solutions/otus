@@ -148,7 +148,6 @@
     }
 
     function displayGridLarge() {
-      console.log(window.innerWidth)
       if (window.innerWidth < 1400) {
         return '1:1.6';
       }
