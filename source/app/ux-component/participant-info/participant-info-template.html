@@ -1,8 +1,8 @@
 <div layout="row" layout-align="center center">
-  <div class="participant-info-box md-whiteframe-2dp" style="background-color:white; width:97vw" layout-margin layout="row" layout-align="center center" ng-show="!$ctrl.selectedParticipant">
+  <div class="participant-info-box participant-info-box-dimensions md-whiteframe-2dp" layout-fill layout-margin layout="row" layout-align="center center" ng-show="!$ctrl.selectedParticipant">
     <span class="md-display-1">Não há participante selecionado</span>
   </div>
-  <div ng-show="$ctrl.selectedParticipant" class="participant-info-box md-whiteframe-2dp" layout="column">
+  <div ng-show="$ctrl.selectedParticipant" class="participant-info-box participant-info-box-dimensions md-whiteframe-2dp" layout="column">
     <div class="participant-info-layout">
       <div hide-xs class="participant-info-name" layout="row" layout-align="start end">
         <span class="md-display-1" ng-if="$ctrl.selectedParticipant.name" md-truncate>
@@ -37,7 +37,7 @@
         Laboratório vinculado: {{$ctrl.participantLaboratory.identification}}
       </span>
     </div>
-    <attache-laboratory ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle"
+    <attache-laboratory class="participant-info-box" ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle"
       selected-participant="$ctrl.selectedParticipant"></attache-laboratory>
     <otus-user-comment-about-participant-dashboard-list participant="$ctrl.selectedParticipant">
     </otus-user-comment-about-participant-dashboard-list>

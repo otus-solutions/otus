@@ -4,7 +4,6 @@ otus-participant-info {
       display: grid;
       height: auto;
       padding-top: 0;
-      padding-bottom: 20px;
       grid-template-columns: 2fr 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
@@ -41,7 +40,6 @@ otus-participant-info {
       display: grid;
       height: auto;
       padding-top: 0;
-      padding-bottom: 20px;
       grid-template-columns: 0.8fr repeat(2, 1fr) 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
@@ -65,7 +63,6 @@ otus-participant-info {
       padding-top: 0;
       padding-left: 16px;
       padding-right: 16px;
-      padding-bottom: 20px;
       grid-template-columns: 0.8fr repeat(3, 1fr) 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
@@ -88,7 +85,7 @@ otus-participant-info {
     }
   }
 
-  .participant-info-box {
+  .participant-info-box-dimensions {
     width: 100%;
     background-color: white;
   }
