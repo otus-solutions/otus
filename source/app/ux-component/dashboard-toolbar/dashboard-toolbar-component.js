@@ -91,6 +91,10 @@
           response = true;
           break;
         }
+        case STATE.PARTICIPANT_UPDATE: {
+          response = true;
+          break;
+        }
         default: {
           break;
           }
