@@ -33,7 +33,6 @@
     /* Public methods */
     self.$onInit = onInit;
     self.close = close;
-    self.logout = logout;
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantReports = loadParticipantReports;
     self.home = home;
@@ -46,10 +45,6 @@
 
     function close() {
       $mdSidenav(SIDENAV_ORIGIN).toggle();
-    }
-
-    function logout() {
-      LogoutService.logout();
     }
 
     function home() {

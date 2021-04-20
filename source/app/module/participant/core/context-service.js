@@ -14,9 +14,6 @@
     var _context = null;
     var _storage = null;
 
-    var _cachedEvents = [];
-    var _parentContextService = null;
-
     var PARTICIPANT_CONTEXT = 'participant_context';
 
     //* Public methods */
