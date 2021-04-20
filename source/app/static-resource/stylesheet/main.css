@@ -1693,7 +1693,7 @@ otus-dashboard-display .display-report-dashboard {
   otus-user-comment-about-participant-list .layout-box {
     padding-left: 8px;
     padding-right: 8px;
-    min-height: 70vh;
+    min-height: 60vh;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 2em;
@@ -1767,7 +1767,6 @@ otus-dashboard-display .display-report-dashboard {
     padding-left: 16px;
     padding-right: 16px;
     background-color: #fff;
-    min-height: 70vh;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 1.5em;
