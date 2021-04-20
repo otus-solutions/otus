@@ -17,14 +17,6 @@ otus-dashboard-display {
     .mobile-width {
       width: 100vw;
     }
-
-    .mobile-width-left {
-      width: 100vw;
-    }
-
-    .mobile-width-right {
-      width: 100vw;
-    }
   }
 
   @media screen and (min-width: 1200px) {
@@ -45,14 +37,6 @@ otus-dashboard-display {
 
     .mobile-width {
       width: auto;
-    }
-
-    .mobile-width-left {
-      width: 50vw;
-    }
-
-    .mobile-width-right {
-      width: 48vw;
     }
   }
 
