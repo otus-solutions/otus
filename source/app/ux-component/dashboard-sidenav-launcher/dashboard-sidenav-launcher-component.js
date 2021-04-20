@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -63,6 +63,10 @@
           break;
         }
         case STATE.PARTICIPANT_FOLLOW_UPS: {
+          response = true;
+          break;
+        }
+        case STATE.ACTIVITY_ADDER: {
           response = true;
           break;
         }

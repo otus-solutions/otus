@@ -87,6 +87,10 @@
           response = true;
           break;
         }
+        case STATE.ACTIVITY_ADDER: {
+          response = true;
+          break;
+        }
         default: {
           break;
           }
