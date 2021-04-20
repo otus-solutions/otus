@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -18,16 +18,18 @@
     'otusjs.otus.dashboard.core.EventService',
     'THEME_CONSTANTS',
     'otusjs.application.state.ApplicationStateService',
+    'otusjs.participant.core.ContextService',
     'STATE'
   ];
 
-  function Controller(ContextService, EventService, THEME_CONSTANTS, ApplicationStateService, STATE) {
+  function Controller(ContextService, EventService, THEME_CONSTANTS, ApplicationStateService, ParticipantContextService, STATE) {
     var self = this;
 
     /* Public methods */
     self.$onInit = onInit;
     self.selectParticipant = selectParticipant;
     self.verifyStateParticipantDashboard = verifyStateParticipantDashboard;
+    self.home = home;
 
     function onInit() {
       self.imageIconURL = THEME_CONSTANTS.imageURLs.favicon;
@@ -48,11 +50,17 @@
       } else {
         ContextService
           .getLoggedUser()
-          .then(function(userData) {
+          .then(function (userData) {
             self.loggedUser = userData;
           });
       }
     }
+
+    function home() {
+      ParticipantContextService.removeData('selectedParticipant');
+      ApplicationStateService.activateDashboard();
+    }
+
 
     function verifyStateParticipantDashboard() {
       let selectedState = ApplicationStateService.getCurrentState();
@@ -89,7 +97,7 @@
         }
         default: {
           break;
-          }
+        }
       }
 
       return response;
