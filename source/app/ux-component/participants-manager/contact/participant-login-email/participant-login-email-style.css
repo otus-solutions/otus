@@ -1,6 +1,6 @@
 .info-card {
   display: grid;
-  width: 80vw;
+  width: 70vw;
   grid-template-columns: 12fr;
   grid-template-rows: .1fr .5fr;
   grid-template-areas: "infoTitle" "infoItem"
