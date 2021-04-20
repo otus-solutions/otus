@@ -28,7 +28,6 @@
     /* Public methods */
     self.$onInit = onInit;
     self.selectParticipant = selectParticipant;
-    self.verifyStateParticipantDashboard = verifyStateParticipantDashboard;
     self.home = home;
 
     function onInit() {
@@ -61,54 +60,5 @@
       ApplicationStateService.activateDashboard();
     }
 
-
-    function verifyStateParticipantDashboard() {
-      let selectedState = ApplicationStateService.getCurrentState();
-      let response = false;
-
-      switch (selectedState) {
-        case STATE.PARTICIPANT_ACTIVITY: {
-          response = true;
-          break;
-        }
-        case STATE.PARTICIPANT_DASHBOARD: {
-          response = true;
-          break;
-        }
-        case STATE.PARTICIPANT_REPORT: {
-          response = true;
-          break;
-        }
-        case STATE.PARTICIPANT_ACTIVITY_STAGE: {
-          response = true;
-          break;
-        }
-        case STATE.LABORATORY: {
-          response = true;
-          break;
-        }
-        case STATE.USER_COMMENT_ABOUT_PARTICIPANT: {
-          response = true;
-          break;
-        }
-        case STATE.PARTICIPANT_FOLLOW_UPS: {
-          response = true;
-          break;
-        }
-        case STATE.ACTIVITY_ADDER: {
-          response = true;
-          break;
-        }
-        case STATE.PARTICIPANT_UPDATE: {
-          response = true;
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-
-      return response;
-    }
   }
 }());

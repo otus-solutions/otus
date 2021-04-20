@@ -129,9 +129,9 @@ describe('otusActivityAdder_UnitTest_Suite', function () {
 
   it('should call displayGridLarge method', function () {
     window.innerWidth = 1300;
-    expect(controller.displayGridLarge()).toEqual('1:1.5');
+    expect(controller.displayGridLarge()).toEqual('1:1.6');
     window.innerWidth = 1900;
-    expect(controller.displayGridLarge()).toEqual('1:1.05');
+    expect(controller.displayGridLarge()).toEqual('1:1.4');
   });
 
   it('should call displayGridSmall method', function () {
