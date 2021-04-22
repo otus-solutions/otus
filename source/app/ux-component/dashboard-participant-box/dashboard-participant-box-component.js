@@ -118,7 +118,7 @@
       if (selected == ApplicationStateService.getCurrentState()) {
         return _menuSelectedColor();
       }
-      return { background: '#FAFAFA'};
+      return { background: '##f5f5f5'};
     }
 
     function _menuSelectedColor() {
