@@ -112,9 +112,9 @@ describe('otusActivityManagerGridList Test', function() {
 
     it('should call displayGridLarge method', function () {
       window.innerWidth = 1300;
-      expect(controller.displayGridLarge()).toEqual('1:0.9');
+      expect(controller.displayGridLarge()).toEqual('1:1');
       window.innerWidth = 1900;
-      expect(controller.displayGridLarge()).toEqual('6:4');
+      expect(controller.displayGridLarge()).toEqual('6:4.9');
     });
 
     it('should call displayGridSmall method', function () {
