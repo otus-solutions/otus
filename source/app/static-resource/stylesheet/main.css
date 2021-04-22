@@ -1681,7 +1681,7 @@ otus-dashboard-display .display-report-dashboard {
   otus-user-comment-about-participant-list .layout-box {
     padding-left: 8px;
     padding-right: 8px;
-    min-height: 60vh;
+    height: 100%;
   }
   otus-user-comment-about-participant-list .icon-size {
     font-size: 2em;
