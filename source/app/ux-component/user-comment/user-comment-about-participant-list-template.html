@@ -2,9 +2,12 @@
   <md-content layout="column" class="layout-box" ng-cloak>
     <div layout="column" layout-align="center center">
       <div layout-fill>
-        <div class="comment-list-null" ng-show="$ctrl.items.length == 0">
-        <span class="comment-null md-headline" layout="row" layout-align="center center">
+        <div class="comment-list-null" ng-show="$ctrl.ready">
+        <span class="comment-null md-headline" ng-show="$ctrl.items.length === 0" layout="row" layout-align="center center">
           Não há comentários adicionados.
+        </span>
+        <span class="comment-null md-headline" ng-if="!$ctrl.selectedParticipant" layout="row" layout-align="center center">
+          Não há participante selecionado.
         </span>
         </div>
         <md-list class="comment-list-layout" ng-repeat="item in $ctrl.items track by $id(item)">

@@ -13,10 +13,12 @@
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentAboutParticipantService',
-    'USER_COMMENT_MANAGER_LABELS'
+    'USER_COMMENT_MANAGER_LABELS',
+    'otusjs.deploy.LoadingScreenService'
+
   ];
 
-  function Controller(DashboardEventService, DashboardService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS) {
+  function Controller(DashboardEventService, DashboardService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS, LoadingScreenService) {
     const DIALOG_CONTROLLER = 'otusUserCommentAboutParticipantDialogCtrl';
     const DIRECTORY_DIALOG_CONTROLLER = 'app/ux-component/user-comment/user-comment-about-participant-dialog/user-comment-about-participant-dialog-template.html';
 
@@ -42,41 +44,45 @@
     self.selectedParticipant = null;
     self.paginatorActive = true;
 
-    function onInit() {
-      _loadSelectedParticipant();
+    async function onInit() {
       DashboardEventService.onParticipantSelected(_loadSelectedParticipant);
+      await _loadSelectedParticipant();
+    }
+
+    function ready () {
+      self.ready = true;
+      LoadingScreenService.finish();
+    }
+    function unready () {
+      self.ready = false;
+      LoadingScreenService.start();
+
     }
 
     function openMenu($mdMenu, ev) {
       $mdMenu.open(ev);
-    };
+    }
 
-    function _loadSelectedParticipant(participantData) {
+    async function _loadSelectedParticipant(participantData) {
+      unready();
       if (participantData) {
         self.selectedParticipant = participantData;
-        self.isEmpty = false;
-        _loadNoteAboutParticipant();
+        await _loadNoteAboutParticipant();
       } else {
-        DashboardService
-          .getSelectedParticipant()
-          .then(function (participantData) {
-            if (participantData) {
-              self.selectedParticipant = participantData;
-              self.isEmpty = false;
-              _loadNoteAboutParticipant();
-            }
-          });
+        self.selectedParticipant = await DashboardService.getSelectedParticipant()
+        if (self.selectedParticipant) {
+          await _loadNoteAboutParticipant();
+          ready();
+        }
       }
     }
 
-    function _loadNoteAboutParticipant() {
+    async function _loadNoteAboutParticipant() {
       stuntmanSearchSettings = {
         recruitmentNumber: self.selectedParticipant.recruitmentNumber
       }
 
-      UserCommentAboutParticipantService.getNoteAboutParticipant(stuntmanSearchSettings).then((arrayComment) => {
-        self.items = arrayComment
-      })
+      self.items = await UserCommentAboutParticipantService.getNoteAboutParticipant(stuntmanSearchSettings)
     }
 
     function showStarSelectedUserCommentAboutParticipant(userCommentAboutParticipant) {
@@ -113,7 +119,10 @@
     }
 
     function saveUserCommentAboutParticipant() {
-      UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.selectedParticipant.recruitmentNumber })
+      UserCommentAboutParticipantService.saveUserCommentAboutParticipant({
+        comment: self.comment,
+        recruitmentNumber: self.selectedParticipant.recruitmentNumber
+      })
         .then(() => {
           UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
           self.comment = "";

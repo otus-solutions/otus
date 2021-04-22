@@ -29,9 +29,7 @@
     DialogService,
     UserCommentAboutParticipantService,
     USER_COMMENT_MANAGER_LABELS) {
-    const FILTER_STAR_RED = true;
-    const LIMIT = 3;
-    const SKIP = 0;
+    const MAX_COMMENT_QUANTITY = 3;
     const DIALOG_CONTROLLER = 'otusUserCommentAboutParticipantDialogCtrl';
     const DIRECTORY_DIALOG_CONTROLLER = 'app/ux-component/user-comment/user-comment-about-participant-dialog/user-comment-about-participant-dialog-template.html';
 
@@ -64,7 +62,7 @@
 
     function openMenu($mdMenu, ev) {
       $mdMenu.open(ev);
-    };
+    }
 
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
@@ -91,19 +89,8 @@
       }
     }
 
-    function _loadNoteAboutParticipantDashboard() {
-      stuntmanSearchSettings = {
-        quantityToGet: LIMIT,
-        currentQuantity: SKIP,
-        filters: {
-          starred: FILTER_STAR_RED
-        },
-        recruitmentNumber: self.selectedParticipant.recruitmentNumber
-      }
-
-      UserCommentAboutParticipantService.getNoteAboutParticipant(stuntmanSearchSettings).then((arrayComment) => {
-        self.items = arrayComment
-      })
+    async function _loadNoteAboutParticipantDashboard() {
+      self.items = await UserCommentAboutParticipantService.getDashboardComments(self.selectedParticipant.recruitmentNumber, MAX_COMMENT_QUANTITY)
     }
 
     function viewPlusUserCommentAboutParticipant() {
