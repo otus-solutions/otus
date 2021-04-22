@@ -58,17 +58,27 @@
     }
 
     function removeAliquots() {
-      var aliquotsCount = self.selectedAliquots.length;
-
-      for (var i = 0; i < self.selectedAliquots.length; i++) {
-        var aliquotIndex = self.lot.aliquotList.indexOf(self.selectedAliquots[i]);
-        self.lot.removeAliquotByIndex(aliquotIndex);
-      }
+      let removedCount = self.selectedAliquots.length;
+      self.selectedAliquots.forEach((data) => {
+        if(_isAliquot(data)) {
+          const index = self.lot.aliquotList.indexOf(data);
+          self.lot.removeAliquotByIndex(index);
+        } else {
+          self.lot.tubeList.find((tube, index) => {
+            tube.code === data.code ?
+              self.lot.removeTubeByIndex(index) : "";
+          });
+        }
+      })
       self.updateLotStateData(self.lot);
       self.selectedAliquots = [];
       MaterialTransportationService.dynamicDataTableFunction.updateDataTable(self.lot.aliquotList.concat(self.lot.getTubeForDynamicTable()));
       self.setChartData();
-      _toastAliquotsRemoved(aliquotsCount);
+      _toastMaterialsRemoved(removedCount);
+    }
+
+    function _isAliquot(data) {
+      return data.hasOwnProperty("name");
     }
 
     function createLot() {
@@ -149,10 +159,11 @@
       );
     }
 
-    function _toastAliquotsRemoved(count) {
+    function _toastMaterialsRemoved(count) {
+      const text = count +' Material(is) removido(s).';
       $mdToast.show(
         $mdToast.simple()
-        .textContent(count +' Alíquota(s) removida(s).')
+        .textContent(text)
         .hideDelay(3000)
       );
     }
