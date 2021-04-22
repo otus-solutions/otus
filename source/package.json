@@ -46,7 +46,7 @@
     "angular-resource": "1.5.5",
     "angular-sanitize": "1.5.8",
     "angular-ui-mask": "1.8.3",
-    "angular-ui-router": "0.3.1",
+    "@uirouter/angularjs": "1.0.24",
     "angularjs-dragula": "2.0.0",
     "chart.js": "2.7.0",
     "chart.js-scatter": "1.1.4",
