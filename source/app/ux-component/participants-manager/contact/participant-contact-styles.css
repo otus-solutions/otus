@@ -1,6 +1,7 @@
 .pc-layout {
   display: grid;
   width: 100%;
+  height: 100%;
   grid-template-columns: .5fr 11.5fr;
   grid-template-rows: .5fr 11.5fr;
   grid-template-areas:
@@ -21,23 +22,11 @@
 }
 
 .personal-data-card {
-  width: 70vw;
+  width: 65vw;
 }
 
 .contact-label{
   width: 80vw;
   margin-bottom: 0px;
   margin-top: 0px;
-}
-
-@media (min-height: 1000px) {
-  .pc-layout {
-    height: 60vh;
-  }
-}
-
-@media (min-height: 1300px) {
-  .pc-layout {
-    height: 50vh;
-  }
 }

@@ -2,7 +2,7 @@
 
 .info-card {
   display: grid;
-  width: 70vw;
+  width: 65vw;
   grid-template-columns: 12fr;
   grid-template-rows: .1fr .5fr;
   grid-template-areas: "infoTitle" "infoItem"

@@ -53,6 +53,7 @@
 
     self.isValid = false;
     self.isChanged = false;
+    self.align = "center center";
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
