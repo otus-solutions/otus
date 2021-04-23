@@ -17,6 +17,7 @@
 
     self.showMsg = showMsg;
     self.getNoteAboutParticipant = getNoteAboutParticipant;
+    self.getDashboardComments = getDashboardComments;
     self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
     self.deleteSelectedComment = deleteSelectedComment;
     self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
@@ -25,8 +26,37 @@
     self.colorStar = colorStar;
     self.iconStar = iconStar;
 
-    function getNoteAboutParticipant(stuntmanSearchSettings) {
-      return UserCommentAboutParticipantRepositoryService.getNoteAboutParticipant(stuntmanSearchSettings);
+    async function getDashboardComments(recruitmentNumber, quantity) {
+      let starredFilters = {
+        quantityToGet: quantity,
+        currentQuantity: 0,
+        filters: {
+          starred: true
+        },
+        recruitmentNumber: recruitmentNumber
+      }
+
+      let starred = await getNoteAboutParticipant(starredFilters)
+
+      if (starred === quantity) {
+        return starred
+      }
+
+      let notStarredFilters = {
+        quantityToGet: quantity - starred.length,
+        currentQuantity: 0,
+        filters: {
+          starred: false
+        },
+        recruitmentNumber: recruitmentNumber
+      }
+
+      let notStarred = await getNoteAboutParticipant(notStarredFilters);
+      return starred.concat(notStarred);
+    }
+
+    function getNoteAboutParticipant(searchSettings) {
+      return UserCommentAboutParticipantRepositoryService.getNoteAboutParticipant(searchSettings);
     }
 
     function showStarSelectedUserCommentAboutParticipant(commentId, starred) {
@@ -63,7 +93,7 @@
     }
 
     function colorStar(starSelected) {
-      return starSelected ? { color: STAR_COLOR } : null;
+      return starSelected ? {color: STAR_COLOR} : null;
     }
 
     function iconStar(starSelected) {

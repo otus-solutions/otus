@@ -33,5 +33,4 @@ describe('otusDashboardToolbarCtrl_UnitTest_Suite', function () {
 
     expect(Injections.ApplicationStateService.getCurrentState).toHaveBeenCalledTimes(1);
   });
-
 });

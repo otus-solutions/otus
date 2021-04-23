@@ -24,7 +24,7 @@
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
               <md-chips>
                 <md-chip>
-                  <span class="md-body-2 ">{{activity.acronym}}</span>
+                  <span class="md-body-2">{{activity.acronym}}</span>
                 </md-chip>
               </md-chips>
             </div>
@@ -75,9 +75,7 @@
               </md-tooltip>
             </div>
             <div class="activity-user-email" layout="row" layout-align-gt-sm="center center">
-              <p class="md-caption" ng-style="{ color: '#797985' }" hide-xs hide-sm hide-md>por <small class="md-body-2"
-                  ng-style="{color:'black'}">{{item.lastStatus.user.email}}</small></p>
-              <p class="md-body-2" hide-gt-md>{{item.lastStatus.user.email}}</p>
+              <p class="md-body-2">{{item.lastStatus.user.email}}</p>
               <md-tooltip md-direction="top">
                 Realizado por
               </md-tooltip>

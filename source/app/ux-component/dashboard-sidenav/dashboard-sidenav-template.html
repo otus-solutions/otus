@@ -1,25 +1,20 @@
 <div>
-  <md-sidenav md-component-id="left" class="md-sidenav-left md-whiteframe-1dp"
-               layout="column"
-  >
+  <md-sidenav md-component-id="left" class="md-sidenav-left md-whiteframe-1dp" style="background: #f5f5f5;" layout="column">
     <md-toolbar class="md-primary md-whiteframe-1dp">
       <div class="md-toolbar-tools">
         <img ng-src="{{$ctrl.iconImage}}" class="toolbar-icon">
         <span flex></span>
         <span class="md-body-2">{{$ctrl.projectName}} | PROJETO</span>
         <span flex></span>
-        <md-button aria-label="Logout" ng-click="$ctrl.logout()" layout="column">
-          <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
-        </md-button>
       </div>
     </md-toolbar>
     <div ng-transclude="hideHomeButton">
-      <div layout-margin>
+      <div>
         <md-list>
-          <md-list-item>
+          <md-list-item id="home-menu" ng-click="$ctrl.home()">
             <div layout-align="start center">
               <md-icon md-svg-icon="home" aria-label="Home" class="md-accent"></md-icon>
-              <md-button id="home-menu" ng-click="$ctrl.home()">INÍCIO</md-button>
+              <span style='padding-left: 16px'>Home</span>
             </div>
           </md-list-item>
         </md-list>
@@ -45,5 +40,6 @@
           </md-list-item>
         </md-list>
       </div>
-    </div>  </md-sidenav>
+    </div>
+  </md-sidenav>
 </div>

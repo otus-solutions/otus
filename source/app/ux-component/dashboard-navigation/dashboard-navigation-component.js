@@ -1,7 +1,6 @@
 (function() {
   'use strict';
 
-  console.log('roi')
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusNavigation', {
@@ -64,10 +63,5 @@
     function loadParticipantReports() {
       ApplicationStateService.activateParticipantReports();
     }
-
-    function getStateName() {
-      ApplicationStateService.getStateName();
-    }
-
   }
 }());

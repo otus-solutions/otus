@@ -4,7 +4,7 @@ otus-participant-info {
       display: grid;
       height: auto;
       padding-top: 0;
-      padding-bottom: 20px;
+      padding-bottom: 8px;
       grid-template-columns: 2fr 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
@@ -24,6 +24,11 @@ otus-participant-info {
       padding-right: 8px;
     }
 
+    .participant-info-virculars {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
     .participant-padding {
       padding-bottom: 8px;
     }
@@ -41,8 +46,8 @@ otus-participant-info {
       display: grid;
       height: auto;
       padding-top: 0;
-      padding-bottom: 20px;
-      grid-template-columns: repeat(3, 1.2fr) 0.2fr;
+      padding-bottom: 8px;
+      grid-template-columns: 0.8fr repeat(2, 1fr) 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
         "participant-info-name participant-info-name participant-info-name ."
@@ -65,8 +70,8 @@ otus-participant-info {
       padding-top: 0;
       padding-left: 16px;
       padding-right: 16px;
-      padding-bottom: 20px;
-      grid-template-columns: repeat(4, 1fr) 0.2fr;
+      padding-bottom: 8px;
+      grid-template-columns: 0.8fr repeat(3, 1fr) 0.2fr;
       grid-template-rows: auto;
       grid-template-areas:
         "participant-info-name participant-info-name participant-info-name participant-info-name ."
@@ -83,12 +88,17 @@ otus-participant-info {
       padding-right: 0;
     }
 
+    .participant-info-virculars {
+      margin-left: 16px;
+      margin-right: 16px;
+    }
+
     .participant-padding {
       padding-bottom: 8px;
     }
   }
 
-  .participant-info-box {
+  .participant-info-box-dimensions {
     width: 100%;
     background-color: white;
   }

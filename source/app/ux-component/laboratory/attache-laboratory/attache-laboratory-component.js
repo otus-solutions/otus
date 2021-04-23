@@ -10,7 +10,8 @@
         hasLaboratory: '=',
         selectedParticipant: '=',
         subtitle: '=',
-        text: '='
+        text: '=',
+        hideConfirmation: '='
       }
     })
     .controller('attacheLaboratoryCtrl', Controller);

@@ -12,7 +12,6 @@
     }).controller('otusUserCommentAboutParticipantDashboardListCtrl', Controller);
 
   Controller.$inject = [
-    '$element',
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.application.state.ApplicationStateService',
@@ -22,21 +21,17 @@
   ];
 
   function Controller(
-    $element,
     DashboardEventService,
     DashboardService,
     ApplicationStateService,
     DialogService,
     UserCommentAboutParticipantService,
     USER_COMMENT_MANAGER_LABELS) {
-    const LIMIT = 3;
-    const SKIP = 0;
+    const MAX_COMMENT_QUANTITY = 3;
     const DIALOG_CONTROLLER = 'otusUserCommentAboutParticipantDialogCtrl';
     const DIRECTORY_DIALOG_CONTROLLER = 'app/ux-component/user-comment/user-comment-about-participant-dialog/user-comment-about-participant-dialog-template.html';
 
     var self = this;
-
-    let stuntmanSearchSettings = {};
 
     /* Public methods */
     self.viewUserCommentAboutParticipant = viewUserCommentAboutParticipant;
@@ -63,7 +58,7 @@
 
     function openMenu($mdMenu, ev) {
       $mdMenu.open(ev);
-    };
+    }
 
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
@@ -90,16 +85,8 @@
       }
     }
 
-    function _loadNoteAboutParticipantDashboard() {
-      stuntmanSearchSettings = {
-        currentQuantity: SKIP,
-        quantityToGet: LIMIT,
-        recruitmentNumber: self.selectedParticipant.recruitmentNumber
-      }
-
-      UserCommentAboutParticipantService.getNoteAboutParticipant(stuntmanSearchSettings).then((arrayComment) => {
-        self.items = arrayComment
-      })
+    async function _loadNoteAboutParticipantDashboard() {
+      self.items = await UserCommentAboutParticipantService.getDashboardComments(self.selectedParticipant.recruitmentNumber, MAX_COMMENT_QUANTITY)
     }
 
     function viewPlusUserCommentAboutParticipant() {

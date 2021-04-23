@@ -61,7 +61,6 @@
       ApplicationStateService.activateDashboard();
     }
 
-
     function verifyStateParticipantDashboard() {
       let selectedState = ApplicationStateService.getCurrentState();
       let response = false;
@@ -95,6 +94,14 @@
           response = true;
           break;
         }
+        case STATE.ACTIVITY_ADDER: {
+          response = true;
+          break;
+        }
+        case STATE.PARTICIPANT_UPDATE: {
+          response = true;
+          break;
+        }
         default: {
           break;
         }
@@ -102,5 +109,6 @@
 
       return response;
     }
+
   }
 }());

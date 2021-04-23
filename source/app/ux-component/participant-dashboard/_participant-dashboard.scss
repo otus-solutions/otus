@@ -1,0 +1,11 @@
+.participant-dashboard-display otus-participant-contact {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+otus-participant-dashboard {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  width: 100%;
+}

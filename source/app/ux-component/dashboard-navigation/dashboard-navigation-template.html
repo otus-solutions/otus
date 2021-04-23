@@ -1,4 +1,4 @@
-<div layout="column" style="max-width: 290px;">
+<div layout="column" class="md-whiteframe-3dp">
   <md-toolbar class="md-primary md-whiteframe-1dp">
     <div class="md-toolbar-tools">
       <img ng-src="{{$ctrl.iconImage}}" class="toolbar-icon">
@@ -8,7 +8,7 @@
     </div>
   </md-toolbar>
   <div ng-transclude="hideHomeButton">
-    <div style="padding-top: 8px; padding-bottom: 8px;">
+    <div class="participant-padding-navigation-top-and-bottom">
       <md-list>
         <span class="md-body-2 participant-box-title" style="color:gray; padding:0 16px">
           Projeto
@@ -16,7 +16,7 @@
         <md-list-item id="home-menu" ng-click="$ctrl.home()">
           <div layout-align="start center">
             <md-icon md-svg-icon="home" aria-label="Home" class="md-accent"></md-icon>
-            <span style="padding-left: 16px; padding-right: 16px;">Home</span>
+            <span class="participant-padding-navigation">Home</span>
           </div>
         </md-list-item>
       </md-list>

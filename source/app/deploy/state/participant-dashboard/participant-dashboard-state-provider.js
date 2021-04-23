@@ -22,12 +22,12 @@
       parent: STATE.SESSION,
       name: STATE.PARTICIPANT_DASHBOARD,
       url: '/' + STATE.PARTICIPANT_DASHBOARD,
-      template: '<otus-participant-dashboard layout="column" flex></otus-participant-dashboard>',
+      component:'otusParticipantDashboard',
       data: {
         redirect: _redirect
       },
       resolve: {
-        loadParticipantContext: _loadParticipantContext
+        loadParticipantContext: _loadParticipantContext,
       }
     };
 
