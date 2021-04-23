@@ -2253,6 +2253,10 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     padding-left: 8px;
     padding-right: 8px;
   }
+  otus-participant-info .participant-info-virculars {
+    margin-left: 0;
+    margin-right: 0;
+  }
   otus-participant-info .participant-padding {
     padding-bottom: 8px;
   }
@@ -2304,6 +2308,10 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     margin-right: 16px;
     padding-left: 0;
     padding-right: 0;
+  }
+  otus-participant-info .participant-info-virculars {
+    margin-left: 16px;
+    margin-right: 16px;
   }
   otus-participant-info .participant-padding {
     padding-bottom: 8px;
