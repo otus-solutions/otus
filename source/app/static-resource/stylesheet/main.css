@@ -1562,6 +1562,16 @@ otus-user-comment-about-participant-dashboard-list .ellipsis {
 
 otus-dashboard-display {
   background-color: #eeeeee;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 0;
 }
 
 @media screen and (min-width: 360px) {
@@ -2366,6 +2376,45 @@ otus-participant-box .participant-padding-sivenav {
 }
 
 otus-participant-box .participant-padding-top-and-bottom {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.participant-dashboard-display otus-participant-contact {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+}
+
+otus-participant-dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+}
+
+otus-navigation {
+  max-width: 290px;
+  height: 100vh;
+  background: #f5f5f5;
+}
+
+otus-navigation .participant-padding-navigation {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+otus-navigation .participant-padding-navigation-top-and-bottom {
   padding-top: 8px;
   padding-bottom: 8px;
 }

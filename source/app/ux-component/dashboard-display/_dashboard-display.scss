@@ -1,5 +1,9 @@
 otus-dashboard-display {
   background-color: #eeeeee;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  height: 0;
 
   @media screen and (min-width: 360px) {
     .dashboard-display-layout {
