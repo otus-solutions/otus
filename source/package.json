@@ -24,6 +24,7 @@
     "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
     "test": "karma start karma.conf.js --single-run --browsers ChromeHeadless",
     "start": "gulp browser-sync --api-url $API_URL --player-url $PLAYER_URL",
+    "dev": "API_URL='http://localhost:51002/' PLAYER_URL='http://localhost:51001' npm start",
     "gulp": "gulp",
     "karma": "karma",
     "build": "gulp compress",
