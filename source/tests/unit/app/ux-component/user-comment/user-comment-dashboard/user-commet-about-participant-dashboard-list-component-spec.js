@@ -46,6 +46,7 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
       spyOn(Injections.DialogShowService, "showDialog").and.returnValue(Mock.deferredResolve.promise);
       spyOn(Injections.DialogShowService, "showCustomizedDialog").and.returnValue(Mock.deferredResolve.promise);
       spyOn(Injections.UserCommentAboutParticipantService, "getNoteAboutParticipant").and.returnValue(Mock.deferredResolve.promise);
+      spyOn(Injections.UserCommentAboutParticipantService, "getDashboardComments").and.returnValue(Mock.deferredResolve.promise);
     });
 
     it('onInitMethod should initialized the controller variables', function () {
@@ -91,7 +92,7 @@ describe('otusUserCommentAboutParticipantDashboardListCtrl Test', function () {
 
       Mock.scope.$digest();
       expect(Injections.DialogShowService.showCustomizedDialog).toHaveBeenCalledTimes(1);
-      expect(Injections.UserCommentAboutParticipantService.getNoteAboutParticipant).toHaveBeenCalledTimes(1);
+      expect(Injections.UserCommentAboutParticipantService.getDashboardComments).toHaveBeenCalledTimes(1);
     });
 
     it('updateUserCommentAboutParticipantMethod should initialized the updateUserComment', function () {

@@ -12,7 +12,6 @@
     }).controller('otusUserCommentAboutParticipantDashboardListCtrl', Controller);
 
   Controller.$inject = [
-    '$element',
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.application.state.ApplicationStateService',
@@ -22,7 +21,6 @@
   ];
 
   function Controller(
-    $element,
     DashboardEventService,
     DashboardService,
     ApplicationStateService,
@@ -34,8 +32,6 @@
     const DIRECTORY_DIALOG_CONTROLLER = 'app/ux-component/user-comment/user-comment-about-participant-dialog/user-comment-about-participant-dialog-template.html';
 
     var self = this;
-
-    let stuntmanSearchSettings = {};
 
     /* Public methods */
     self.viewUserCommentAboutParticipant = viewUserCommentAboutParticipant;
