@@ -8,13 +8,12 @@
   Run.$inject = [
     'STATE',
     'otusjs.deploy.OtusApiService',
-    '$rootScope',
     '$injector',
     '$state',
     '$transitions'
   ];
 
-  function Run(STATE, OtusApiService, $rootScope, $injector, $state, $transitions) {
+  function Run(STATE, OtusApiService, $injector, $state, $transitions) {
     $transitions.onBefore({}, function(transition) {
       let toState = transition.to();
       if (toState.data && toState.data.redirect) {
@@ -33,7 +32,7 @@
      * Initialize the Rest Services that cannot be initialized before de login
      */
     function _loadRestrictResourses(toState) {
-      if(toState != STATE.LOGIN){
+      if(toState !== STATE.LOGIN){
         OtusApiService.initializeRestrictResources();
       }
     }
