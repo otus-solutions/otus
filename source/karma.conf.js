@@ -33,7 +33,7 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'angular-material-badge/angular-material-badge.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
-      NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.js',
+      NODE_MODULES_ROOT_PATH + '@uirouter/angularjs/release/angular-ui-router.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-ui-mask/dist/mask.min.js',
       NODE_MODULES_ROOT_PATH + 'ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js',
       NODE_MODULES_ROOT_PATH + 'jquery/dist/jquery.min.js',
