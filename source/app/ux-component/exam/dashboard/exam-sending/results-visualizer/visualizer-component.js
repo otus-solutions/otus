@@ -174,7 +174,7 @@
         //header, flex, align, ordinationPriorityIndex
         .addHeader('Data de realização', '15', 'left', 5)
         //property, formatType
-        .addColumnProperty('releaseDate', 'DATE')
+        .addColumnProperty('realizationDate', 'DATE')
 
         .setFilter(true)
 

@@ -37,7 +37,7 @@
         Laboratório vinculado: {{$ctrl.participantLaboratory.identification}}
       </span>
     </div>
-    <attache-laboratory class="participant-info-box" ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle"
+    <attache-laboratory hide-confirmation="true" class="participant-info-virculars" ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle"
       selected-participant="$ctrl.selectedParticipant"></attache-laboratory>
     <otus-user-comment-about-participant-dashboard-list participant="$ctrl.selectedParticipant">
     </otus-user-comment-about-participant-dashboard-list>
