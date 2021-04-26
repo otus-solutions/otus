@@ -68,10 +68,15 @@
 
           <md-input-container flex="100" flex-gt-xs="80">
             <label>Destino:</label>
-            <md-select ng-model="$ctrl.lot.destinationLocationPoint" ng-disabled="$ctrl.lot.code">
+            <md-select ng-model="$ctrl.lot.destinationLocationPoint" ng-disabled="$ctrl.lot.code"
+                       ng-model-options="{trackBy: $ctrl.lot.destinationLocationPoint}"
+            >
               <md-option
-                ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: '!'+$ctrl.lot.originLocationPoint} track by $index"
-                value="{{destination._id}}">{{destination.name}}
+                ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: '!'+$ctrl.lot.originLocationPoint}"
+                ng-selected="destination._id === $ctrl.lot.destinationLocationPoint"
+                value="{{destination._id}}"
+              >
+                  {{destination.name}}
               </md-option>
             </md-select>
           </md-input-container>
@@ -191,10 +196,10 @@
         <md-divider></md-divider>
         <div layout="row" layout-margin ng-if="$ctrl.lot.receivedMaterials.length">
 
-          <div layout="column" flex class="subtitle-table-container" layout-fill="">
+          <div ng-if="$ctrl.receivedTubes.length > 0" layout="column" flex class="subtitle-table-container" layout-fill="">
             <span class="md-title" layout-margin="">Materiais recebidos</span>
             <md-content class="no-background-color" flex layout-fill="">
-              <md-list ng-if="$ctrl.receivedTubes.length > 0">
+              <md-list>
                 <span class="md-subheader" layout-margin="">Tubos</span>
                 <md-list-item ng-repeat="received in $ctrl.receivedTubes">
                   <div style="background-color: #F44336;border-radius:30%;width:13px;height:13px; margin-right: 5px;">

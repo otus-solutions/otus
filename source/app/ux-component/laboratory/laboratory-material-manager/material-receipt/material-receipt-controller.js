@@ -49,12 +49,11 @@
     self.hasMaterialTrackingList = hasMaterialTrackingList;
 
     $scope.$watch("$ctrl.material", function(value) {
+      _findMetadataOptions();
       _findMaterialTrackingList();
     })
 
-    function onInit() {
-      _findMetadataOptions();
-    }
+    function onInit() {}
 
     function receiveMaterial() {
       const receiveMaterialStruct = {

@@ -60,8 +60,10 @@
           self.clearLot(oldValue);
         }
       }
+      if(newValue === self.lot.destinationLocationPoint) {
+        self.lot.destinationLocationPoint = "";
+      }
     });
-
 
     function changeNavItem(newNavItem) {
       self.currentNavItem = newNavItem;
