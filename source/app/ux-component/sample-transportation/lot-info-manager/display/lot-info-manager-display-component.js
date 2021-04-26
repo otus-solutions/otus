@@ -12,7 +12,10 @@
         lotDataSet: '<',
         fullAliquotsList: '<',
         setChartData: '&',
-        onLotAlteration: '&'
+        onLotAlteration: '&',
+        receivedTubes: "=",
+        receivedAliquots: "=",
+        canRemoveMaterial: "<"
       }
     });
 }());

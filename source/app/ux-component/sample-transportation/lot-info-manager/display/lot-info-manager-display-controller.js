@@ -96,7 +96,6 @@
       self.initialDate = new Date();
       self.finalDate = new Date();
       _buildDynamicTableSettings();
-      _receivedMaterialInfo();
     }
 
     function _buildDynamicTableSettings() {
@@ -145,21 +144,6 @@
         .getSettings();
     }
 
-    function _receivedMaterialInfo() {
-      if(self.lot.receivedMaterials){
-        if(self.lot.receivedMaterials.length){
-          const receivedTube = self.lot.receivedMaterials.map((material) => {
-            return self.lot.tubeList.find(tube => tube.code === material.materialCode)
-          })
-          const receivedAliquots = self.lot.receivedMaterials.map((material) => {
-            return self.lot.aliquotList.find(aliquot => aliquot.code === material.materialCode)
-          })
-          self.receivedTubes = self.receivedList.concat(receivedTube[0] ? receivedTube : []);
-          self.receivedAliquots = self.receivedList.concat(receivedAliquots[0] ? receivedAliquots : []);
-        }
-      }
-    }
-
     function _getMaterialList() {
       return self.lot.aliquotList.concat(self.lot.getTubeForDynamicTable());
     }
@@ -199,17 +183,7 @@
     }
 
     function removeElement(element) {
-      const tubeCodes = self.receivedTubes.map(tube => tube.code);
-      const aliquotCodes = self.receivedAliquots.map(aliquot => aliquot.code);
-
-      if (tubeCodes.concat(aliquotCodes).includes(element.code)) {
-        DialogService.showWarningDialog(
-          "Remoção de material do lote",
-          "Operação não autorizada",
-          "Não foi possível o remover material " + element.code + " pois seu recebimento já foi registrado.",
-          "Aviso: remoção de material do lote não foi autorizada"
-        );
-
+      if (!self.canRemoveMaterial(element)) {
         return;
       }
 
