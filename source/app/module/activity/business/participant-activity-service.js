@@ -19,7 +19,7 @@
   ];
 
   function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
-    PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues, STATE) {
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues, STATE) {
     var self = this;
     var _paperActivityCheckerData = null;
     const FAIL_ACTIVITY_CREATION = true;
@@ -77,6 +77,7 @@
     }
 
     function saveActivities(preActivities) {
+      self.activities = [];
       LoadingScreenService.start();
       _prepareActivities(preActivities)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
@@ -88,6 +89,22 @@
           _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
           LoadingScreenService.finish();
         });
+    }
+
+    async function betterSaveActivities(preActivities) {
+      LoadingScreenService.start();
+
+      try {
+        await _prepareActivities(preActivities);
+        await ActivityRepositoryService.saveActivities(self.activities)
+        await _loadStateActivity();
+      } catch (err) {
+        _loadStateActivity();
+        _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
+      } finally {
+        self.activities = []
+        LoadingScreenService.finish();
+      }
     }
 
     function _loadStateActivity() {
@@ -204,7 +221,7 @@
     }
 
     function updateCheckerActivity(recruitmentNumber, id, activityStatus) {
-      return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({ id, activityStatus }));
+      return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({id, activityStatus}));
     }
 
     function addActivityRevision(activityRevision, activity) {
