@@ -3,6 +3,10 @@ otus-navigation {
   height: 100vh;
   background: #f5f5f5;
 
+  div {
+    min-width: 256px;
+  }
+
   .participant-padding-navigation {
     padding-left: 16px;
     padding-right: 16px;

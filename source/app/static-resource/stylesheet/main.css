@@ -3,20 +3,17 @@ otus-dashboard-sidenav md-sidenav {
   width: 320px;
   min-width: 320px !important;
 }
-
 otus-dashboard-sidenav md-backdrop {
   position: fixed !important;
 }
-
 otus-dashboard-sidenav md-backdrop ~ md-content {
   position: fixed;
   overflow: hidden;
 }
-
 @media (max-width: 456px) {
   otus-dashboard-sidenav md-sidenav,
-  otus-dashboard-sidenav md-sidenav.md-locked-open,
-  otus-dashboard-sidenav md-sidenav.md-closed.md-locked-open-add-active {
+otus-dashboard-sidenav md-sidenav.md-locked-open,
+otus-dashboard-sidenav md-sidenav.md-closed.md-locked-open-add-active {
     position: fixed !important;
     min-width: 320px !important;
   }
@@ -25,11 +22,9 @@ otus-dashboard-sidenav md-backdrop ~ md-content {
 otus-participants-list .dynamic-table-container-md-content {
   max-height: 90%;
 }
-
 otus-participants-list .dynamic-table-container {
   min-width: 850px;
 }
-
 otus-participants-list .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
@@ -39,7 +34,6 @@ otus-participants-list .dynamic-table-container .dynamic-structure {
     display: none;
   }
 }
-
 @media only screen and (min-width: 800px) {
   otus-dashboard-toolbar .mobile {
     display: none;
@@ -58,7 +52,6 @@ otus-participants-list .dynamic-table-container .dynamic-structure {
 otus-report-dashboard otus-panel .report-list {
   min-width: 250px;
 }
-
 otus-report-dashboard otus-panel .report-list .report-item {
   min-width: 250px;
   background-color: #ffffff;
@@ -69,31 +62,23 @@ otus-report-dashboard otus-panel .report-list .report-item {
     display: none;
   }
 }
-
 otus-activity-manager otus-activity-list .dynamic-table-container {
   min-width: 800px;
 }
-
 otus-activity-manager otus-activity-list .dynamic-table-container .dynamic-structure {
   min-width: 750px !important;
 }
-
 otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
   max-height: 50px;
 }
-
 @media only screen and (max-width: 450px) {
   otus-activity-manager otus-activity-manager-bottom-sheet md-toolbar {
     display: none !important;
   }
   otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     z-index: 20;
   }
   otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger {
@@ -107,13 +92,11 @@ otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     padding-right: 0;
   }
 }
-
 @media only screen and (min-width: 451px) {
   otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     display: none;
   }
 }
-
 @media only screen and (max-width: 451px) {
   otus-activity-manager otus-activity-manager-commander md-fab-speed-dial {
     display: none;
@@ -123,7 +106,6 @@ otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
 otus-activity-adder-list .dynamic-table-container {
   min-width: 800px;
 }
-
 otus-activity-adder-list .dynamic-table-container .dynamic-structure {
   min-width: 750px !important;
 }
@@ -137,12 +119,8 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
   }
   lab-control-panel .mobile-control-toolbar md-fab-speed-dial {
     max-height: 50px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     z-index: 20;
   }
   lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-trigger {
@@ -159,7 +137,6 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     min-width: 150px;
   }
 }
-
 @media only screen and (min-width: 551px) {
   lab-control-panel .mobile-control-toolbar {
     display: none;
@@ -168,7 +145,6 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     display: none;
   }
 }
-
 @media only screen and (max-width: 650px) {
   lab-control-panel .collect-control-toolbar {
     display: none;
@@ -180,12 +156,8 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     position: relative;
     top: -18px;
     max-height: 30px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     z-index: 20;
   }
   lab-control-panel .mobile-collect-control-toolbar fast-collection {
@@ -216,22 +188,16 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     position: relative;
     top: -18px;
     max-height: 30px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     z-index: 20;
   }
 }
-
 @media only screen and (max-width: 359px) {
   lab-control-panel .mobile-aliquots-control-toolbar div label {
     display: none;
   }
 }
-
 @media only screen and (min-width: 651px) {
   lab-control-panel .mobile-collect-control-toolbar {
     display: none;
@@ -244,7 +210,6 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
 aliquots-view .aliquots-container {
   min-width: 700px;
 }
-
 @media screen and (max-width: 768px) {
   aliquots-view .input-footer-message {
     font-size: 11px;
@@ -254,13 +219,11 @@ aliquots-view .aliquots-container {
 otus-sample-transportation-manager-list otus-sample-transportation-lot-info-sidenav md-sidenav {
   min-width: 320px !important;
 }
-
 @media screen and (max-width: 726px) {
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter div .md-subheader {
     display: none !important;
   }
 }
-
 @media screen and (max-width: 600px) {
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter {
     display: none;
@@ -289,7 +252,6 @@ otus-sample-transportation-manager-list otus-sample-transportation-lot-info-side
     top: -24px;
   }
 }
-
 @media screen and (min-width: 601px) {
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .mobile-filter {
     display: none;
@@ -303,16 +265,13 @@ otus-lot-info-manager-display .subtitle-table-container {
   max-height: 300px;
   padding-top: 20px;
 }
-
 otus-lot-info-manager-display .dynamic-table-container {
   min-width: 850px;
   max-height: 420px;
 }
-
 otus-lot-info-manager-display .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
-
 otus-lot-info-manager-display md-input-container md-datepicker {
   position: relative;
   left: -15px;
@@ -321,37 +280,30 @@ otus-lot-info-manager-display md-input-container md-datepicker {
 otus-view-sending-exam .dynamic-table-container-md-content {
   min-height: 400px;
 }
-
 otus-view-sending-exam .dynamic-table-container-md-content .dynamic-table-container {
   min-width: 850px;
   max-height: 420px;
 }
-
 otus-view-sending-exam .dynamic-table-container-md-content .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
-
 otus-view-sending-exam otus-result-visualizer .dynamic-table-container {
   min-width: 850px;
   max-height: 420px;
 }
-
 otus-view-sending-exam otus-result-visualizer .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
-
 @media screen and (max-width: 726px) {
   otus-view-sending-exam .desktop-filter .md-subheader {
     display: none !important;
   }
 }
-
 @media screen and (max-width: 600px) {
   otus-view-sending-exam .desktop-filter {
     display: none;
   }
 }
-
 @media screen and (min-width: 601px) {
   otus-view-sending-exam .mobile-filter {
     display: none;
@@ -361,23 +313,19 @@ otus-view-sending-exam otus-result-visualizer .dynamic-table-container .dynamic-
 otus-exams-lots-manager .table-container {
   min-width: 750px;
 }
-
 otus-exams-lots-manager .table-container md-list {
   min-width: 700px;
 }
-
 @media screen and (max-width: 726px) {
   otus-exams-lots-manager .desktop-filter .md-subheader {
     display: none !important;
   }
 }
-
 @media screen and (max-width: 650px) {
   otus-exams-lots-manager .desktop-filter {
     display: none;
   }
 }
-
 @media screen and (min-width: 651px) {
   otus-exams-lots-manager .mobile-filter {
     display: none;
@@ -387,11 +335,9 @@ otus-exams-lots-manager .table-container md-list {
 otus-exam-lot-info-manager-display .dynamic-table-container {
   min-width: 850px;
 }
-
 otus-exam-lot-info-manager-display .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
-
 @media screen and (max-width: 600px) {
   otus-exam-lot-info-manager-display .dynamic-table-container {
     max-height: 395px;
@@ -400,11 +346,9 @@ otus-exam-lot-info-manager-display .dynamic-table-container .dynamic-structure {
     display: none !important;
   }
 }
-
 otus-exam-lot-info-manager-display .aliquot-form {
   max-height: 70px;
 }
-
 otus-exam-lot-info-manager-display .aliquot-form md-input-container {
   margin-bottom: 0;
 }
@@ -418,7 +362,6 @@ otus-exam-lot-info-sidenav md-sidenav {
     display: none;
   }
 }
-
 @media screen and (min-width: 601px) {
   otus-monitoring-dashboard .mobile-filter {
     display: none;
@@ -430,7 +373,6 @@ otus-exam-lot-info-sidenav md-sidenav {
     max-height: 400px;
   }
 }
-
 @media screen and (min-width: 651px) {
   otus-flag-report-list-manager otus-flag-report-visualization md-content {
     max-height: 100%;
@@ -442,7 +384,6 @@ otus-exam-lot-info-sidenav md-sidenav {
     min-height: 400px;
   }
 }
-
 @media screen and (min-width: 651px) {
   otus-laboratory-flag-report-list-manager .exam-heatmap-container {
     min-height: 100%;
@@ -463,52 +404,36 @@ otus-activity-category-adder otus-activity-category-adder-list md-card md-input-
 
 activity-grid-list .gridListDynamicTiles md-grid-list {
   margin: 10px;
-  -webkit-transition-duration: 0s;
-          transition-duration: 0s;
+  transition-duration: 0s;
 }
-
 activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
   position: relative;
   width: 100%;
   overflow: inherit;
   padding: 8px;
 }
-
 activity-grid-list .gridListDynamicTiles md-grid-tile figure {
-  -webkit-box-pack: normal;
-      -ms-flex-pack: normal;
-          justify-content: normal;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
-  -webkit-transition-duration: 0s;
-          transition-duration: 0s;
+  justify-content: normal;
+  flex-direction: column;
+  align-items: start;
+  transition-duration: 0s;
 }
-
 activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
   background: #f5f5f5;
   cursor: pointer;
 }
-
 activity-grid-list .gridListDynamicTiles md-grid-tile-header figcaption {
   display: block;
   width: 100%;
 }
-
 activity-grid-list .gridListDynamicTiles md-grid-tile-header figcaption md-icon {
   margin: 0;
 }
-
 activity-grid-list .gridListDynamicTiles .grid-aligh {
   padding-left: 10px;
   padding-top: 5px;
   width: 100%;
 }
-
 @media only screen and (max-width: 999px) {
   activity-grid-list .gridListDynamicTiles .clipped {
     overflow: hidden;
@@ -526,7 +451,6 @@ otus-activity-adder-card md-grid-tile-header figcaption {
   display: block;
   width: 100%;
 }
-
 otus-activity-adder-card md-input-container {
   padding: 0 15px 0 0;
   margin: 0;
@@ -543,53 +467,37 @@ otus-activity-adder-card md-input-container {
 otus-activity-adder md-input-container {
   margin-bottom: 0px;
 }
-
 otus-activity-adder .button-hover :hover {
   background-color: rgba(0, 0, 0, 0.06);
   border-radius: 0 0 0 0;
   width: auto;
   height: auto;
 }
-
 otus-activity-adder md-grid-tile figure {
-  -webkit-box-pack: normal;
-      -ms-flex-pack: normal;
-          justify-content: normal;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
-  -webkit-transition-duration: 0s;
-          transition-duration: 0s;
+  justify-content: normal;
+  flex-direction: column;
+  align-items: start;
+  transition-duration: 0s;
 }
-
 otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
   position: relative;
   width: 100%;
   overflow: inherit;
   padding: 8px;
 }
-
 otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-footer {
   padding-left: 10px;
   color: red;
   height: 24px;
   background: rgba(0, 0, 0, 0.05);
 }
-
 otus-activity-adder md-grid-list {
   margin: 10px;
-  -webkit-transition-duration: 0s;
-          transition-duration: 0s;
+  transition-duration: 0s;
 }
-
 otus-activity-adder md-select {
   margin: 5px 0 0;
 }
-
 otus-activity-adder md-input-container {
   margin: 0;
   height: 40px;
@@ -620,10 +528,8 @@ otus-activity-adder md-input-container {
 }
 
 .no-shadow {
-  -webkit-transition: none !important;
   transition: none !important;
-  -webkit-box-shadow: none !important;
-          box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 md-toast.md-error-toast-theme .md-toast-content {
@@ -633,74 +539,53 @@ md-toast.md-error-toast-theme .md-toast-content {
 
 otus-dashboard-pendency md-grid-list {
   margin: 10px;
-  -webkit-transition-duration: 0s;
-          transition-duration: 0s;
+  transition-duration: 0s;
 }
-
 otus-dashboard-pendency md-grid-tile {
   border-radius: 5px;
 }
-
 otus-dashboard-pendency md-grid-tile figure {
-  -webkit-box-pack: normal;
-      -ms-flex-pack: normal;
-          justify-content: normal;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: normal;
-      -ms-flex-align: normal;
-          align-items: normal;
-  -webkit-transition-duration: 0s;
-          transition-duration: 0s;
+  justify-content: normal;
+  flex-direction: column;
+  align-items: normal;
+  transition-duration: 0s;
   padding: 8px;
 }
-
 otus-dashboard-pendency md-grid-tile md-grid-tile-header {
   background: rgba(255, 255, 255, 0);
   position: relative;
   width: 100%;
   overflow: inherit;
 }
-
 otus-dashboard-pendency md-grid-tile md-grid-tile-header figcaption {
   display: block;
   width: 100%;
 }
-
 otus-dashboard-pendency md-grid-tile md-grid-tile-header figcaption md-icon {
   margin: 0;
 }
-
 otus-dashboard-pendency md-grid-tile md-grid-tile-footer {
   background: rgba(255, 255, 255, 0);
   overflow: inherit;
   padding: 8px;
 }
-
 otus-dashboard-pendency md-grid-tile md-grid-tile-footer figcaption {
   display: block;
   width: 100%;
 }
-
 otus-dashboard-pendency .md-badge {
   background-color: red;
   z-index: 10;
 }
-
 otus-dashboard-pendency md-card md-card-content {
   border-radius: 5px;
 }
-
 otus-dashboard-pendency .full-list-items {
   min-width: 90vw;
 }
-
 otus-dashboard-pendency md-input-container {
   margin: 0;
 }
-
 otus-dashboard-pendency .header-list {
   font-weight: bold;
   min-height: 70px !important;
@@ -726,7 +611,6 @@ otus-follow-up-event #event-icon {
   max-width: 60px;
   max-height: 60px;
 }
-
 otus-follow-up-event #event-container {
   padding-bottom: 5px;
 }
@@ -740,11 +624,9 @@ otus-follow-up-event #event-container {
 unattached-laboratory md-grid-tile-header {
   background: rgba(19, 125, 108, 0.68) !important;
 }
-
 unattached-laboratory md-grid-tile-header figcaption {
   width: 100%;
 }
-
 unattached-laboratory md-input-container {
   margin-bottom: 0px;
 }
@@ -756,28 +638,22 @@ unattached-laboratory-dashboard otus-panel {
 offline-activity-collection md-card {
   min-width: 340px;
 }
-
 offline-activity-collection #md-content-container {
   height: 400px !important;
   width: 100%;
 }
-
 offline-activity-collection md-content {
   width: 100% !important;
 }
-
 offline-activity-collection md-grid-tile-header {
   background: rgba(19, 125, 108, 0.68) !important;
 }
-
 offline-activity-collection md-grid-tile-header figcaption {
   width: 100%;
 }
-
 offline-activity-collection md-input-container {
   margin-bottom: 0px;
 }
-
 offline-activity-collection otus-panel {
   min-width: 320px;
 }
@@ -789,59 +665,42 @@ offline-activity-synchronize-dashboard #groups-container {
 otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete {
   color: white !important;
 }
-
 otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap input {
   color: white !important;
 }
-
 otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap button {
   color: white !important;
 }
-
 otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap input::-webkit-input-placeholder {
   color: white !important;
 }
 
 @media screen and (min-width: 360px) {
   otus-activity-stage-list .stage-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
-    -ms-grid-columns: 0.2fr 1fr 0.2fr;
-        grid-template-columns: 0.2fr 1fr 0.2fr;
-    -ms-grid-rows: 0.6fr;
-        grid-template-rows: 0.6fr;
-        grid-template-areas: "activity-acronym   activity-name   activity-button";
+    grid-template-columns: 0.2fr 1fr 0.2fr;
+    grid-template-rows: 0.6fr;
+    grid-template-areas: "activity-acronym   activity-name   activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
     padding-top: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
-        grid-template-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
+    grid-template-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
     justify-items: stretch;
-        grid-template-areas: "activity-status  activity-mode  activity-date  activity-category" "activity-status  activity-user-email   activity-user-email activity-user-email" "activity-externalID  activity-externalID  activity-externalID  activity-button";
+    grid-template-areas: "activity-status  activity-mode  activity-date  activity-category" "activity-status  activity-user-email   activity-user-email activity-user-email" "activity-externalID  activity-externalID  activity-externalID  activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
-    -ms-grid-columns: 0.1fr 1fr;
-        grid-template-columns: 0.1fr 1fr;
-    -ms-grid-rows: 0.8fr;
-        grid-template-rows: 0.8fr;
-        grid-template-areas: ".    activity-null" ".    activity-null";
+    grid-template-columns: 0.1fr 1fr;
+    grid-template-rows: 0.8fr;
+    grid-template-areas: ".    activity-null" ".    activity-null";
   }
   otus-activity-stage-list .md-headline {
     font-size: 4.2vw;
@@ -872,46 +731,31 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     width: 34px;
   }
 }
-
 @media screen and (min-width: 600px) {
   otus-activity-stage-list .stage-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 16vh;
-    -ms-grid-columns: 0.1fr (1fr)[3] 0.1fr;
-        grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr (0.8fr)[2];
-        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr repeat(2, 0.8fr);
-        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+    grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr repeat(2, 0.8fr);
+    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 12vh;
-    -ms-grid-columns: 0.1fr (1fr)[4];
-        grid-template-columns: 0.1fr repeat(4, 1fr);
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    grid-template-columns: 0.1fr repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 8px 4px 8px 4px;
@@ -939,48 +783,32 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     width: auto;
   }
 }
-
 @media screen and (min-width: 768px) {
   otus-activity-stage-list .stage-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 8vh;
-    -ms-grid-columns: 0.1fr (1fr)[3] 0.6fr;
-        grid-template-columns: 0.1fr repeat(3, 1fr) 0.6fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    grid-template-columns: 0.1fr repeat(3, 1fr) 0.6fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 6.5vh;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
-        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+    grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 6vh;
-    -ms-grid-columns: 0.1fr (1fr)[4];
-        grid-template-columns: 0.1fr repeat(4, 1fr);
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    grid-template-columns: 0.1fr repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 8px 4px 8px 4px;
@@ -1011,48 +839,32 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     margin-left: 0;
   }
 }
-
 @media screen and (min-width: 800px) {
   otus-activity-stage-list .stage-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 15vh;
-    -ms-grid-columns: 0.1fr (1fr)[3] 0.1fr;
-        grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 15.5vh;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr (1fr)[2];
-        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr repeat(2, 1fr);
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-status     activity-mode    activity-date    activity-user-email    activity-category    activity-externalID     activity-button";
+    grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-status     activity-mode    activity-date    activity-user-email    activity-category    activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 12vh;
-    -ms-grid-columns: 0.1fr (1fr)[4];
-        grid-template-columns: 0.1fr repeat(4, 1fr);
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    grid-template-columns: 0.1fr repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 8px 4px 8px 4px;
@@ -1083,48 +895,32 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     margin-left: 0;
   }
 }
-
 @media screen and (min-width: 1024px) {
   otus-activity-stage-list .stage-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 5.2vh;
-    -ms-grid-columns: 0.2fr (1fr)[3] 0.1fr;
-        grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.15fr 0.15fr (0.8fr)[5];
-        grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
+    grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
-    -ms-grid-columns: 0.1fr (1fr)[4];
-        grid-template-columns: 0.1fr repeat(4, 1fr);
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    grid-template-columns: 0.1fr repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 4px;
@@ -1155,48 +951,32 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     margin-left: 0;
   }
 }
-
 @media screen and (min-width: 1200px) {
   otus-activity-stage-list .stage-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: 7.8vh;
-    -ms-grid-columns: 0.2fr (1fr)[3] 0.1fr;
-        grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
   otus-activity-stage-list .activity-list-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    -ms-grid-columns: 0.15fr 0.15fr (0.8fr)[5];
-        grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
+    grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
   }
   otus-activity-stage-list .activity-null-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
-    -ms-grid-columns: 0.1fr (1fr)[4];
-        grid-template-columns: 0.1fr repeat(4, 1fr);
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    grid-template-columns: 0.1fr repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
   otus-activity-stage-list .margin-layout {
     margin: 16px 24px 2px 24px;
@@ -1227,86 +1007,63 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     margin-left: 0;
   }
 }
-
 otus-activity-stage-list .margin-not-top {
   margin: 0 0 16px 0;
 }
-
 otus-activity-stage-list .activity-acronym {
   grid-area: activity-acronym;
 }
-
 otus-activity-stage-list .activity-name {
   grid-area: activity-name;
 }
-
 otus-activity-stage-list .activity-category {
   grid-area: activity-category;
 }
-
 otus-activity-stage-list .activity-button {
   grid-area: activity-button;
 }
-
 otus-activity-stage-list .activity-list-layout:hover {
   background-color: rgba(158, 158, 158, 0.1);
-  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-  -webkit-transition: 0.3s;
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
   transition: 0.3s;
 }
-
 otus-activity-stage-list .activity-null {
   grid-area: activity-null;
   color: gray;
 }
-
 otus-activity-stage-list .activity-status {
   grid-area: activity-status;
 }
-
 otus-activity-stage-list .activity-mode {
   grid-area: activity-mode;
 }
-
 otus-activity-stage-list .activity-date {
   grid-area: activity-date;
 }
-
 otus-activity-stage-list .activity-user-email {
   grid-area: activity-user-email;
 }
-
 otus-activity-stage-list .activity-externalID {
   grid-area: activity-externalID;
 }
-
 otus-activity-stage-list .activity-buttons {
   grid-area: activity-buttons;
 }
-
 otus-activity-stage-list md-chips.md-default-theme .md-chips,
 otus-activity-stage-list md-chips .md-chips {
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
-
 otus-activity-stage-list md-list {
   padding: 0;
 }
-
 otus-activity-stage-list md-card {
   margin: 8px 0 8px 0;
 }
-
 otus-activity-stage-list .stage-list-layout:hover {
   background-color: rgba(158, 158, 158, 0.1);
-  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-  -webkit-transition: 0.3s;
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
   transition: 0.3s;
 }
-
 otus-activity-stage-list .new-chip-white {
   width: auto;
   color: white;
@@ -1317,96 +1074,57 @@ otus-activity-stage-list .new-chip-white {
   width: 30vw;
   background-color: #f3f3f3;
 }
-
 .dialog-layout md-chips.md-default-theme .md-chips,
 .dialog-layout md-chips .md-chips {
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
-
 .dialog-layout .activity-creation-form-layout {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column wrap;
-          flex-flow: column wrap;
+  flex-flow: column wrap;
 }
-
 .dialog-layout .date-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column;
-          flex-flow: column;
+  flex-flow: column;
   margin-top: 1em;
 }
-
 .dialog-layout .small-titles {
   color: #717171;
   margin: 0.8em 5px;
 }
-
 .dialog-layout .small-title-date {
   color: #717171;
   margin: 0.8em 0px 0px 5px;
 }
-
 .dialog-layout .checker-input {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column;
-          flex-flow: column;
+  flex-flow: column;
 }
-
 .dialog-layout .external-id-input {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column;
-          flex-flow: column;
+  flex-flow: column;
 }
-
 .dialog-layout .date-input {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 
 @media screen and (min-width: 360px) {
   otus-user-comment-about-participant-dashboard-list .comment-list-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
-    -ms-grid-columns: (0.8fr)[4] (0.1fr)[2];
-        grid-template-columns: repeat(4, 0.8fr) repeat(2, 0.1fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-status comment-date" "comment-text  comment-text comment-text comment-text  comment-button comment-button-menu";
+    grid-template-columns: repeat(4, 0.8fr) repeat(2, 0.1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-status comment-date" "comment-text  comment-text comment-text comment-text  comment-button comment-button-menu";
   }
   otus-user-comment-about-participant-dashboard-list .comment-list-null {
-    display: -ms-grid;
     display: grid;
     max-height: 15vh;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     padding-top: 0;
-    -ms-grid-columns: 0.05fr 1fr 0.05fr;
-        grid-template-columns: 0.05fr 1fr 0.05fr;
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-null comment-null comment-null";
+    grid-template-columns: 0.05fr 1fr 0.05fr;
+    grid-template-rows: auto;
+    grid-template-areas: "comment-null comment-null comment-null";
   }
   otus-user-comment-about-participant-dashboard-list .layout-uc {
     height: auto;
@@ -1422,54 +1140,40 @@ otus-activity-stage-list .new-chip-white {
     line-height: 22px;
   }
 }
-
 @media screen and (min-width: 410px) {
   otus-user-comment-about-participant-dashboard-list .comment-box {
     line-height: 6em;
   }
 }
-
 @media screen and (min-width: 1024px) {
   otus-user-comment-about-participant-dashboard-list .comment-list-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
-    -ms-grid-columns: (1fr)[2] (0.09fr)[3];
-        grid-template-columns: repeat(2, 1fr) repeat(3, 0.09fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name   comment-status  comment-status    comment-date" "comment-text  comment-text   comment-text    comment-button  comment-button-menu";
+    grid-template-columns: repeat(2, 1fr) repeat(3, 0.09fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name   comment-status  comment-status    comment-date" "comment-text  comment-text   comment-text    comment-button  comment-button-menu";
   }
 }
-
 @media screen and (min-width: 1200px) {
   otus-user-comment-about-participant-dashboard-list .comment-list-layout {
-    display: -ms-grid;
     display: grid;
     max-height: 15vh;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
-    -ms-grid-columns: 1fr 0.8fr (0.09fr)[3];
-        grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name  comment-status  comment-date   comment-date" "comment-text  comment-text  comment-text    comment-button comment-button-menu";
+    grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name  comment-status  comment-date   comment-date" "comment-text  comment-text  comment-text    comment-button comment-button-menu";
   }
   otus-user-comment-about-participant-dashboard-list .comment-list-null {
-    display: -ms-grid;
     display: grid;
     max-height: 15vh;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     padding-top: 0;
-    -ms-grid-columns: (1fr)[3];
-        grid-template-columns: repeat(3, 1fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-null comment-null comment-null";
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-null comment-null comment-null";
   }
   otus-user-comment-about-participant-dashboard-list .layout-uc {
     padding-left: 16px;
@@ -1490,69 +1194,51 @@ otus-activity-stage-list .new-chip-white {
     line-height: 32px;
   }
 }
-
 otus-user-comment-about-participant-dashboard-list .margin-line {
   margin: 1px;
 }
-
 otus-user-comment-about-participant-dashboard-list .comment-null {
   grid-area: comment-null;
   margin-bottom: 16px;
 }
-
 otus-user-comment-about-participant-dashboard-list .comment-name {
   grid-area: comment-name;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
-
 otus-user-comment-about-participant-dashboard-list .comment-text {
   grid-area: comment-text;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
+  align-items: start;
   cursor: pointer;
 }
-
 otus-user-comment-about-participant-dashboard-list .comment-button {
   grid-area: comment-button;
 }
-
 otus-user-comment-about-participant-dashboard-list .comment-button-menu {
   grid-area: comment-button-menu;
 }
-
 otus-user-comment-about-participant-dashboard-list .comment-status {
   grid-area: comment-status;
 }
-
 otus-user-comment-about-participant-dashboard-list .comment-date {
   grid-area: comment-date;
 }
-
 otus-user-comment-about-participant-dashboard-list md-list {
   padding: 0;
 }
-
 otus-user-comment-about-participant-dashboard-list .comment-textarea {
   max-width: 100vw;
 }
-
 otus-user-comment-about-participant-dashboard-list .md-body-1 {
   color: rgba(0, 0, 0, 0.6);
 }
-
 otus-user-comment-about-participant-dashboard-list .md-button {
   min-width: auto;
 }
-
 otus-user-comment-about-participant-dashboard-list .viewAll {
   font-size: 10px;
   margin-top: 10px;
   line-height: 16px;
 }
-
 otus-user-comment-about-participant-dashboard-list .ellipsis {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -1562,78 +1248,55 @@ otus-user-comment-about-participant-dashboard-list .ellipsis {
 
 otus-dashboard-display {
   background-color: #eeeeee;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  box-sizing: border-box;
+  flex-direction: column;
   height: 0;
 }
-
 @media screen and (min-width: 360px) {
   otus-dashboard-display .dashboard-display-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
-    -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "display-participant-info" "display-participant-attempt" "display-participant-heatmap" "display-participant-exam-heatmap" "display-report-dashboard";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "display-participant-info" "display-participant-attempt" "display-participant-heatmap" "display-participant-exam-heatmap" "display-report-dashboard";
   }
   otus-dashboard-display .mobile-width {
     width: 100vw;
   }
 }
-
 @media screen and (min-width: 1200px) {
   otus-dashboard-display .dashboard-display-layout {
-    display: -ms-grid;
     display: grid;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     height: auto;
     width: auto;
-    -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "display-participant-info" "display-participant-attempt" "display-participant-heatmap" "display-participant-exam-heatmap" "display-report-dashboard";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "display-participant-info" "display-participant-attempt" "display-participant-heatmap" "display-participant-exam-heatmap" "display-report-dashboard";
   }
   otus-dashboard-display .mobile-width {
     width: auto;
   }
 }
-
 otus-dashboard-display .mobile-height {
   min-height: 40vh;
 }
-
 otus-dashboard-display .display-color-gray {
   color: gray;
 }
-
 otus-dashboard-display .display-participant-info {
   grid-area: display-participant-info;
 }
-
 otus-dashboard-display .display-participant-attempt {
   grid-area: display-participant-attempt;
 }
-
 otus-dashboard-display .display-participant-heatmap {
   grid-area: display-participant-heatmap;
 }
-
 otus-dashboard-display .display-participant-exam-heatmap {
   grid-area: display-participant-exam-heatmap;
 }
-
 otus-dashboard-display .display-report-dashboard {
   grid-area: display-report-dashboard;
 }
@@ -1644,49 +1307,41 @@ otus-dashboard-display .display-report-dashboard {
     height: auto;
     width: auto;
   }
+
   .icon-display-generate-size {
     font-size: 1.6em;
     height: auto;
     padding-right: 15px;
   }
 }
-
 @media screen and (min-width: 1024px) {
   .icon-display-size {
     font-size: 2.6em;
   }
+
   .icon-display-generate-size {
     font-size: 2.6em;
     padding-right: 35px;
   }
 }
-
 @media screen and (min-width: 360px) {
   otus-user-comment-about-participant-list .comment-list-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
-    -ms-grid-columns: (0.8fr)[4] (0.1fr)[4];
-        grid-template-columns: repeat(4, 0.8fr) repeat(4, 0.1fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-status comment-date comment-button  comment-button-menu" "comment-text  comment-text comment-text  comment-text   comment-text   comment-text comment-text    comment-text";
+    grid-template-columns: repeat(4, 0.8fr) repeat(4, 0.1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-status comment-date comment-button  comment-button-menu" "comment-text  comment-text comment-text  comment-text   comment-text   comment-text comment-text    comment-text";
   }
   otus-user-comment-about-participant-list .comment-list-null {
-    display: -ms-grid;
     display: grid;
     max-height: 15vh;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     padding-top: 0;
-    -ms-grid-columns: 0.05fr 1fr 0.05fr;
-        grid-template-columns: 0.05fr 1fr 0.05fr;
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-null comment-null comment-null";
+    grid-template-columns: 0.05fr 1fr 0.05fr;
+    grid-template-rows: auto;
+    grid-template-areas: "comment-null comment-null comment-null";
   }
   otus-user-comment-about-participant-list .layout-box {
     padding-left: 8px;
@@ -1711,28 +1366,22 @@ otus-dashboard-display .display-report-dashboard {
     padding-right: 8px;
   }
 }
-
 @media screen and (min-width: 410px) {
   otus-user-comment-about-participant-list .comment-box {
     line-height: 6em;
   }
 }
-
 @media screen and (min-width: 1024px) {
   otus-user-comment-about-participant-list .comment-list-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
-    -ms-grid-columns: (1fr)[2] (0.09fr)[5];
-        grid-template-columns: repeat(2, 1fr) repeat(5, 0.09fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name   comment-status  comment-status  comment-date  comment-button  comment-button-menu" "comment-text  comment-text   comment-text    comment-text    comment-text  comment-text    comment-text";
+    grid-template-columns: repeat(2, 1fr) repeat(5, 0.09fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name   comment-status  comment-status  comment-date  comment-button  comment-button-menu" "comment-text  comment-text   comment-text    comment-text    comment-text  comment-text    comment-text";
   }
 }
-
 @media screen and (min-width: 1200px) {
   otus-user-comment-about-participant-list .comment-list-layout {
     display: -ms-grid;
@@ -1741,25 +1390,18 @@ otus-dashboard-display .display-report-dashboard {
     min-width: 50vw;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
-    -ms-grid-columns: (1fr)[2] (0.07fr)[5];
-        grid-template-columns: repeat(2, 1fr) repeat(5, 0.07fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name  comment-status  comment-date   comment-date  comment-button  comment-button-menu" "comment-text  comment-text  comment-text    comment-text   comment-text  comment-text    comment-text";
+    grid-template-columns: repeat(2, 1fr) repeat(5, 0.07fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name  comment-status  comment-date   comment-date  comment-button  comment-button-menu" "comment-text  comment-text  comment-text    comment-text   comment-text  comment-text    comment-text";
   }
   otus-user-comment-about-participant-list .comment-list-null {
-    display: -ms-grid;
     display: grid;
     max-height: 15vh;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     padding-top: 0;
-    -ms-grid-columns: (1fr)[3];
-        grid-template-columns: repeat(3, 1fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-null comment-null comment-null";
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-null comment-null comment-null";
   }
   otus-user-comment-about-participant-list .layout-box {
     padding-left: 16px;
@@ -1787,64 +1429,49 @@ otus-dashboard-display .display-report-dashboard {
     padding-right: 6px;
   }
 }
-
 otus-user-comment-about-participant-list .comment-null {
   grid-area: comment-null;
   margin-bottom: 16px;
 }
-
 otus-user-comment-about-participant-list .margin-line {
   margin-bottom: 6px;
 }
-
 otus-user-comment-about-participant-list .comment-name {
   grid-area: comment-name;
   min-height: 5vh;
 }
-
 otus-user-comment-about-participant-list .comment-text {
   grid-area: comment-text;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
+  align-items: start;
   word-break: break-word;
 }
-
 otus-user-comment-about-participant-list .comment-button {
   grid-area: comment-button;
 }
-
 otus-user-comment-about-participant-list .comment-button-menu {
   grid-area: comment-button-menu;
 }
-
 otus-user-comment-about-participant-list .comment-status {
   grid-area: comment-status;
 }
-
 otus-user-comment-about-participant-list .comment-date {
   grid-area: comment-date;
   padding-left: 4px;
 }
-
 otus-user-comment-about-participant-list md-list {
   padding: 0;
 }
-
 otus-user-comment-about-participant-list .md-body-1 {
   color: rgba(0, 0, 0, 0.6);
 }
-
 otus-user-comment-about-participant-list .md-button {
   min-width: auto;
   margin: 6px 4px;
 }
-
 otus-user-comment-about-participant-list .comment-box {
   max-width: 100vw;
   padding: 1em;
 }
-
 otus-user-comment-about-participant-list .comment-textarea {
   height: auto;
   color: #999 !important;
@@ -1854,71 +1481,53 @@ otus-user-comment-about-participant-list .comment-textarea {
   border-radius: 5px;
   line-height: 2em;
   border: 2px;
-  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
-          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
   padding: 4px;
-  -webkit-transition: height 2s ease;
   transition: height 2s ease;
   resize: vertical;
 }
-
 otus-user-comment-about-participant-list md-card {
   margin: 8px;
 }
-
 otus-user-comment-about-participant-list md-input-container {
   padding: 4px 0;
   margin: 0;
 }
-
 otus-user-comment-about-participant-list md-input-container .md-errors-spacer {
   min-height: 0;
 }
 
 @media screen and (min-width: 360px) {
   otus-generic-list-paginator .paginationCard {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: .1fr .8fr .8fr .8fr .1fr;
-        grid-template-columns: .1fr .8fr .8fr .8fr .1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "inputLeft previousPage playPage nextPage inputRight";
+    grid-template-columns: 0.1fr 0.8fr 0.8fr 0.8fr 0.1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "inputLeft previousPage playPage nextPage inputRight";
   }
 }
-
 @media screen and (min-width: 768px) {
   otus-generic-list-paginator .paginationCard {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: .1fr 1fr 1fr 1fr .1fr;
-        grid-template-columns: .1fr 1fr 1fr 1fr .1fr;
-    -ms-grid-rows: 1fr;
-        grid-template-rows: 1fr;
-        grid-template-areas: "inputLeft previousPage playPage nextPage inputRight";
+    grid-template-columns: 0.1fr 1fr 1fr 1fr 0.1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "inputLeft previousPage playPage nextPage inputRight";
   }
 }
-
 otus-generic-list-paginator .input-left {
   grid-area: inputLeft;
 }
-
 otus-generic-list-paginator .input-right {
   grid-area: inputRight;
 }
-
 otus-generic-list-paginator .next-page {
   grid-area: nextPage;
 }
-
 otus-generic-list-paginator .play-page {
   grid-area: playPage;
 }
-
 otus-generic-list-paginator .previous-page {
   grid-area: previousPage;
 }
-
 otus-generic-list-paginator .inputStuntmanSearchSettings {
   width: 40px;
   border: none;
@@ -1929,46 +1538,34 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
 @media screen and (min-width: 360px) {
   .generic-list-viewer-layout {
     background: #0d3349;
-    display: -ms-grid;
     display: grid;
     height: 100vh;
     /*width: 100vw;*/
-    -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
-    -ms-grid-rows: .1fr .1fr 1fr;
-        grid-template-rows: .1fr .1fr 1fr;
-        grid-template-areas: "toolbar" "listHeader" "list";
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 0.1fr 1fr;
+    grid-template-areas: "toolbar" "listHeader" "list";
   }
 }
-
 @media screen and (min-width: 768px) {
   .generic-list-viewer-layout {
-    display: -ms-grid;
     display: grid;
     height: 100vh;
     width: 100vw;
-    -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
-    -ms-grid-rows: .03fr .1fr 1fr;
-        grid-template-rows: .03fr .1fr 1fr;
-        grid-template-areas: "toolbar" "listHeader" "list";
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.03fr 0.1fr 1fr;
+    grid-template-areas: "toolbar" "listHeader" "list";
   }
 }
-
 @media screen and (min-width: 1280px) {
   .generic-list-viewer-layout {
-    display: -ms-grid;
     display: grid;
     height: 100vh;
     width: 100vw;
-    -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
-    -ms-grid-rows: .03fr .1fr 1fr;
-        grid-template-rows: .03fr .1fr 1fr;
-        grid-template-areas: "toolbar" "listHeader" "list";
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.03fr 0.1fr 1fr;
+    grid-template-areas: "toolbar" "listHeader" "list";
   }
 }
-
 .generic-list-viewer-layout otus-dashboard-toolbar {
   grid-area: toolbar;
 }
@@ -1987,45 +1584,33 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
 @media screen and (min-width: 360px) {
   .generic-list-viewer-layout {
     background: #0d3349;
-    display: -ms-grid;
     display: grid;
     height: 100vh;
-    -ms-grid-columns: 1fr;
-        grid-template-columns: 1fr;
-    -ms-grid-rows: 0.1fr 0.5fr 0.1fr 1fr 0.05fr;
-        grid-template-rows: 0.1fr 0.5fr 0.1fr 1fr 0.05fr;
-        grid-template-areas: "toolbar" "help" "control" "list" "paginator";
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 0.5fr 0.1fr 1fr 0.05fr;
+    grid-template-areas: "toolbar" "help" "control" "list" "paginator";
   }
 }
-
 @media screen and (min-width: 768px) {
   .generic-list-viewer-layout {
-    display: -ms-grid;
     display: grid;
     width: 100vw;
     height: 100vh;
-    -ms-grid-columns: (1fr)[4];
-        grid-template-columns: repeat(4, 1fr);
-    -ms-grid-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
-        grid-template-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
-        grid-template-areas: "toolbar toolbar   toolbar   toolbar" "help    help      help      help" "control control   control   control" "list    list      list      list" ".       .         .         paginator";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
+    grid-template-areas: "toolbar toolbar   toolbar   toolbar" "help    help      help      help" "control control   control   control" "list    list      list      list" ".       .         .         paginator";
   }
 }
-
 @media screen and (min-width: 1280px) {
   .generic-list-viewer-layout {
-    display: -ms-grid;
     display: grid;
     width: 100vw;
     height: 100vh;
-    -ms-grid-columns: (1fr)[4] 0.7fr;
-        grid-template-columns: repeat(4, 1fr) 0.7fr;
-    -ms-grid-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
-        grid-template-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
-        grid-template-areas: "toolbar toolbar toolbar toolbar  toolbar" "help    help    help    help     help" "control control control control  control" "list    list    list      list   list" ".       .       .         .      paginator";
+    grid-template-columns: repeat(4, 1fr) 0.7fr;
+    grid-template-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
+    grid-template-areas: "toolbar toolbar toolbar toolbar  toolbar" "help    help    help    help     help" "control control control control  control" "list    list    list      list   list" ".       .       .         .      paginator";
   }
 }
-
 .generic-list-viewer-layout otus-dashboard-toolbar {
   grid-area: toolbar;
 }
@@ -2057,28 +1642,20 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
 /*begin style for generic-list-control*/
 @media screen and (min-width: 360px) {
   .generic-list-control-layout {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: 1fr 0.2fr;
-        grid-template-columns: 1fr 0.2fr;
-    -ms-grid-rows: 0.1fr 0.2fr 0.1fr;
-        grid-template-rows: 0.1fr 0.2fr 0.1fr;
-        grid-template-areas: "title  ordination" "filter filter" "submit submit ";
+    grid-template-columns: 1fr 0.2fr;
+    grid-template-rows: 0.1fr 0.2fr 0.1fr;
+    grid-template-areas: "title  ordination" "filter filter" "submit submit ";
   }
 }
-
 @media screen and (min-width: 768px) {
   .generic-list-control-layout {
-    display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (1fr)[2] 0.2fr;
-        grid-template-columns: repeat(2, 1fr) 0.2fr;
-    -ms-grid-rows: 0.1fr 0.2fr 0.1fr;
-        grid-template-rows: 0.1fr 0.2fr 0.1fr;
-        grid-template-areas: "title  .      ordination" "filter filter filter" "submit submit submit";
+    grid-template-columns: repeat(2, 1fr) 0.2fr;
+    grid-template-rows: 0.1fr 0.2fr 0.1fr;
+    grid-template-areas: "title  .      ordination" "filter filter filter" "submit submit submit";
   }
 }
-
 .title {
   grid-area: title;
 }
@@ -2105,8 +1682,7 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
 }
 
 .generic-list-control-layout md-chips.md-default-theme .md-chips {
-  -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
 }
 
 /*end style for generic-list-control*/
@@ -2115,18 +1691,14 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
   min-height: 10vh;
   background-color: #fff;
 }
-
 @media screen and (min-width: 360px) {
   .otus-user-comment-about-participant-dialog .comment-list-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
-    -ms-grid-columns: (0.8fr)[4] (0.1fr)[2];
-        grid-template-columns: repeat(4, 0.8fr) repeat(2, 0.1fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-button comment-date";
+    grid-template-columns: repeat(4, 0.8fr) repeat(2, 0.1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name  comment-name comment-status comment-button comment-date";
   }
   .otus-user-comment-about-participant-dialog .comment-textarea {
     width: 100%;
@@ -2138,39 +1710,30 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     width: auto;
   }
 }
-
 @media screen and (min-width: 410px) {
   .otus-user-comment-about-participant-dialog .comment-box {
     line-height: 6em;
   }
 }
-
 @media screen and (min-width: 1024px) {
   .otus-user-comment-about-participant-dialog .comment-list-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
-    -ms-grid-columns: (1fr)[2] (0.09fr)[3];
-        grid-template-columns: repeat(2, 1fr) repeat(3, 0.09fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name   comment-status  comment-button    comment-date";
+    grid-template-columns: repeat(2, 1fr) repeat(3, 0.09fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name   comment-status  comment-button    comment-date";
   }
 }
-
 @media screen and (min-width: 1200px) {
   .otus-user-comment-about-participant-dialog .comment-list-layout {
-    display: -ms-grid;
     display: grid;
     height: 7vh;
     padding-top: 0;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
-    -ms-grid-columns: 1fr 0.8fr (0.09fr)[3];
-        grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "comment-name  comment-name  comment-status  comment-button   comment-date";
+    grid-template-columns: 1fr 0.8fr repeat(3, 0.09fr);
+    grid-template-rows: auto;
+    grid-template-areas: "comment-name  comment-name  comment-status  comment-button   comment-date";
   }
   .otus-user-comment-about-participant-dialog .comment-textarea {
     width: 46.5vw;
@@ -2185,40 +1748,30 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     line-height: 2em;
   }
 }
-
 .otus-user-comment-about-participant-dialog .layout-uc {
   padding-left: 24px;
   padding-right: 24px;
 }
-
 .otus-user-comment-about-participant-dialog .comment-name {
   grid-area: comment-name;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
-
 .otus-user-comment-about-participant-dialog .comment-status {
   grid-area: comment-status;
 }
-
 .otus-user-comment-about-participant-dialog .comment-button {
   grid-area: comment-button;
 }
-
 .otus-user-comment-about-participant-dialog .md-body-1 {
   color: rgba(0, 0, 0, 0.6);
 }
-
 .otus-user-comment-about-participant-dialog .md-button {
   min-width: auto;
 }
-
 .otus-user-comment-about-participant-dialog .comment-date {
   grid-area: comment-date;
   padding-left: 4px;
 }
-
 .otus-user-comment-about-participant-dialog .comment-textarea {
   margin-top: 0;
   padding: 0;
@@ -2228,34 +1781,27 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
   border-radius: 5px;
   line-height: 2em;
   border: 2px;
-  -webkit-box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
-          box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
-  -webkit-transition: height 2s ease;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1) !important;
   transition: height 2s ease;
   resize: none;
 }
-
 .otus-user-comment-about-participant-dialog md-input-container {
   padding: 4px 0;
   margin: 0 0 30px;
 }
-
 .otus-user-comment-about-participant-dialog md-input-container .md-errors-spacer {
   min-height: 0;
 }
 
 @media screen and (min-width: 360px) {
   otus-participant-info .participant-info-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
     padding-bottom: 8px;
-    -ms-grid-columns: 2fr 0.2fr;
-        grid-template-columns: 2fr 0.2fr;
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "participant-info-name ." "participant-info-recruitmentNumber ." "participant-info-sex ." "participant-birthdate ." "participant-field-center ." "participant-mother-name ." "participant-laboratory-identification .";
+    grid-template-columns: 2fr 0.2fr;
+    grid-template-rows: auto;
+    grid-template-areas: "participant-info-name ." "participant-info-recruitmentNumber ." "participant-info-sex ." "participant-birthdate ." "participant-field-center ." "participant-mother-name ." "participant-laboratory-identification .";
   }
   otus-participant-info .participant-info-box {
     margin-left: 0;
@@ -2271,47 +1817,38 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     padding-bottom: 8px;
   }
 }
-
 @media screen and (min-width: 410px) {
   otus-participant-info .participant-info-box {
     margin-left: 16px;
     margin-right: 16px;
   }
 }
-
 @media screen and (min-width: 1024px) {
   otus-participant-info .participant-info-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
     padding-bottom: 8px;
-    -ms-grid-columns: 0.8fr (1fr)[2] 0.2fr;
-        grid-template-columns: 0.8fr repeat(2, 1fr) 0.2fr;
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "participant-info-name participant-info-name participant-info-name ." "participant-info-recruitmentNumber . . ." "participant-info-sex participant-birthdate  participant-field-center ." "participant-mother-name . . ." "participant-laboratory-identification . . .";
+    grid-template-columns: 0.8fr repeat(2, 1fr) 0.2fr;
+    grid-template-rows: auto;
+    grid-template-areas: "participant-info-name participant-info-name participant-info-name ." "participant-info-recruitmentNumber . . ." "participant-info-sex participant-birthdate  participant-field-center ." "participant-mother-name . . ." "participant-laboratory-identification . . .";
   }
   otus-participant-info .participant-info-box {
     margin-left: 16px;
     margin-right: 16px;
   }
 }
-
 @media screen and (min-width: 1200px) {
   otus-participant-info .participant-info-layout {
-    display: -ms-grid;
     display: grid;
     height: auto;
     padding-top: 0;
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 8px;
-    -ms-grid-columns: 0.8fr (1fr)[3] 0.2fr;
-        grid-template-columns: 0.8fr repeat(3, 1fr) 0.2fr;
-    -ms-grid-rows: auto;
-        grid-template-rows: auto;
-        grid-template-areas: "participant-info-name participant-info-name participant-info-name participant-info-name ." "participant-info-recruitmentNumber . . . . " "participant-info-sex participant-birthdate  participant-field-center . ." "participant-mother-name . . . ." "participant-laboratory-identification . . . .";
+    grid-template-columns: 0.8fr repeat(3, 1fr) 0.2fr;
+    grid-template-rows: auto;
+    grid-template-areas: "participant-info-name participant-info-name participant-info-name participant-info-name ." "participant-info-recruitmentNumber . . . . " "participant-info-sex participant-birthdate  participant-field-center . ." "participant-mother-name . . . ." "participant-laboratory-identification . . . .";
   }
   otus-participant-info .participant-info-box {
     margin-left: 16px;
@@ -2327,40 +1864,31 @@ otus-generic-list-paginator .inputStuntmanSearchSettings {
     padding-bottom: 8px;
   }
 }
-
 otus-participant-info .participant-info-box-dimensions {
   width: 100%;
   background-color: white;
 }
-
 otus-participant-info .participant-info-name {
   grid-area: participant-info-name;
 }
-
 otus-participant-info .participant-mother-name {
   grid-area: participant-mother-name;
 }
-
 otus-participant-info .participant-info-recruitmentNumber {
   grid-area: participant-info-recruitmentNumber;
 }
-
 otus-participant-info .participant-info-sex {
   grid-area: participant-info-sex;
 }
-
 otus-participant-info .participant-birthdate {
   grid-area: participant-birthdate;
 }
-
 otus-participant-info .participant-field-center {
   grid-area: participant-field-center;
 }
-
 otus-participant-info .participant-laboratory-identification {
   grid-area: participant-laboratory-identification;
 }
-
 otus-participant-info .md-button {
   min-width: auto;
 }
@@ -2369,37 +1897,24 @@ otus-participant-box .participant-box-title {
   color: gray;
   padding: 0 16px;
 }
-
 otus-participant-box .participant-padding-sivenav {
   padding-left: 16px;
   padding-right: 16px;
 }
-
 otus-participant-box .participant-padding-top-and-bottom {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
 .participant-dashboard-display otus-participant-contact {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column nowrap;
-          flex-flow: column nowrap;
+  flex-flow: column nowrap;
 }
 
 otus-participant-dashboard {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  box-sizing: border-box;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -2408,12 +1923,13 @@ otus-navigation {
   height: 100vh;
   background: #f5f5f5;
 }
-
+otus-navigation div {
+  min-width: 256px;
+}
 otus-navigation .participant-padding-navigation {
   padding-left: 16px;
   padding-right: 16px;
 }
-
 otus-navigation .participant-padding-navigation-top-and-bottom {
   padding-top: 8px;
   padding-bottom: 8px;
@@ -2461,16 +1977,14 @@ otus-navigation .participant-padding-navigation-top-and-bottom {
 
 .md-accordion .expandCollapse:after {
   opacity: 1;
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
+  transform: rotate(-90deg);
   content: "|";
   margin-left: -3px;
 }
 
 .md-accordion .active:before {
   opacity: 1;
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
+  transform: rotate(90deg);
   margin-left: 3px;
   margin-top: 0px;
 }
@@ -2478,7 +1992,6 @@ otus-navigation .participant-padding-navigation-top-and-bottom {
 .md-accordion .dataContent {
   height: 0px;
   overflow: hidden;
-  -webkit-transition: 0.3s all ease-out;
   transition: 0.3s all ease-out;
 }
 
@@ -2486,4 +1999,5 @@ otus-navigation .participant-padding-navigation-top-and-bottom {
   height: auto;
   display: block;
 }
+
 /*# sourceMappingURL=main.css.map */

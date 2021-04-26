@@ -26,20 +26,4 @@
     <otus-participant-box on-close="$ctrl.close()" layout="row"></otus-participant-box>
     <!-- Insere participant-box caso não seja fornecido elemento para o transclude -->
   </div>
-  <span flex="100"></span>
-  <div layout-align="end center" md-colors="::{background: 'default-primary-500'}">
-    <div layout="column" layout-align="start center" layout-margin>
-      <label class="md-caption">Importação de dados</label>
-      <md-list>
-        <md-list-item>
-          <div layout="column" layout-align="start center">
-            <md-button class="md-fab md-mini md-accent md-raised">
-              <md-icon aria-label="backup">backup</md-icon>
-            </md-button>
-            <md-button id="home-menu" ng-click="$ctrl.importActivity()">IMPORTAR ATIVIDADES</md-button>
-          </div>
-        </md-list-item>
-      </md-list>
-    </div>
-  </div>
 </div>
