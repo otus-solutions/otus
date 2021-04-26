@@ -22,6 +22,7 @@
   function Controller($mdToast, laboratoryContextService, MaterialTransportationService, ApplicationStateService, DialogService) {
     var self = this;
 
+    self.receivedList = [];
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
     var color = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3",
       "#03A9F4","#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39",
@@ -39,6 +40,7 @@
     self.updateLotStateData = updateLotStateData;
     self.removeAliquots = removeAliquots;
     self.setChartData = setChartData;
+    self.canRemoveMaterial = canRemoveMaterial;
 
     function onInit() {
       self.selectedAliquots = [];
@@ -55,30 +57,75 @@
       }
       _formatLotDates();
       self.setChartData();
+      _receivedMaterialInfo();
     }
 
     function removeAliquots() {
       let removedCount = self.selectedAliquots.length;
+      let canRemove = true;
       self.selectedAliquots.forEach((data) => {
         if(_isAliquot(data)) {
           const index = self.lot.aliquotList.indexOf(data);
+          if(!canRemoveMaterial(data)) {
+            return canRemove = false;
+          }
           self.lot.removeAliquotByIndex(index);
         } else {
+          if(!canRemoveMaterial(data)) {
+            return canRemove = false;
+          }
           self.lot.tubeList.find((tube, index) => {
             tube.code === data.code ?
               self.lot.removeTubeByIndex(index) : "";
           });
         }
       })
-      self.updateLotStateData(self.lot);
-      self.selectedAliquots = [];
-      MaterialTransportationService.dynamicDataTableFunction.updateDataTable(self.lot.aliquotList.concat(self.lot.getTubeForDynamicTable()));
-      self.setChartData();
-      _toastMaterialsRemoved(removedCount);
+      if(canRemove){
+        self.updateLotStateData(self.lot);
+        self.selectedAliquots = [];
+        MaterialTransportationService.dynamicDataTableFunction.updateDataTable(self.lot.aliquotList.concat(self.lot.getTubeForDynamicTable()));
+        self.setChartData();
+        return _toastMaterialsRemoved(removedCount);
+      }
     }
+
 
     function _isAliquot(data) {
       return data.hasOwnProperty("name");
+    }
+
+    function _receivedMaterialInfo() {
+      if (self.lot.receivedMaterials) {
+        if (self.lot.receivedMaterials.length) {
+          const receivedTube = self.lot.receivedMaterials.map((material) => {
+            return self.lot.tubeList.find(tube => tube.code === material.materialCode)
+          })
+          const receivedAliquots = self.lot.receivedMaterials.map((material) => {
+            return self.lot.aliquotList.find(aliquot => aliquot.code === material.materialCode)
+          })
+          self.receivedTubes = receivedTube[0] ? receivedTube : [];
+          self.receivedAliquots = receivedAliquots[0] ? receivedAliquots : [];
+        }
+      }
+    }
+
+    function canRemoveMaterial(element) {
+      const tubeCodes = self.receivedTubes ? self.receivedTubes.map(tube => tube.code) : "";
+      const aliquotCodes = self.receivedAliquots ? self.receivedAliquots.map(aliquot => aliquot.code) : "";
+      if(tubeCodes ? tubeCodes.concat(aliquotCodes).includes(element.code) : false) {
+        showCantRemoveDialog(element);
+        return false;
+      }
+      return true;
+    }
+
+    function showCantRemoveDialog(element) {
+      DialogService.showWarningDialog(
+        "Remoção de material do lote",
+        "Operação não autorizada",
+        "Não foi possível o remover material " + element.code + " pois seu recebimento já foi registrado.",
+        "Aviso: remoção de material do lote não foi autorizada"
+      );
     }
 
     function createLot() {
