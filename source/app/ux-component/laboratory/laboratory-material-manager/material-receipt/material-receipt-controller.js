@@ -80,7 +80,11 @@
       self.transportationService.getMaterialTrackingList(self.material.code)
         .then(res => {
           self.materialTrackingList = res;
+          self.onTrackingListLoaded(false);
           _detachCurrLotFromMaterialList();
+        })
+        .catch(_err => {
+          self.onTrackingListLoaded(true);
         })
     }
 

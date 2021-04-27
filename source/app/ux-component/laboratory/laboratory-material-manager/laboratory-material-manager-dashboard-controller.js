@@ -28,7 +28,7 @@
     self.selectedTube = {};
     self.tubeCustomMetadataOptions = null;
     self.tubeLabelsData = {};
-
+    self.canUpdateTubeMetadata = true;
 
     self.$onInit = onInit;
     self.participantManagerService = ParticipantManagerService;
@@ -45,6 +45,7 @@
     self.saveDynamicMetadata = saveDynamicMetadata;
     self.updateAliquots = function (){};
     self.updateMaterialReceipt = function (){};
+    self.handleTrackingListLoaded = handleTrackingListLoaded;
 
     function onInit() {
       self.laboratoryExists = false;
@@ -109,6 +110,10 @@
           })
           .catch(e => _showToastMsg('Tubo ' + tubeCode + ' não encontrado'));
       }
+    }
+
+    function handleTrackingListLoaded(value) {
+      self.canUpdateTubeMetadata = value;
     }
 
     function tubeHasCustomMetadata(){

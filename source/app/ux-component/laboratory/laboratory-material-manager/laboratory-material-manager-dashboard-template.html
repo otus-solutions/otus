@@ -108,9 +108,12 @@
         <md-card-content flex-offset="5">
           <div layout="row" layout-align="start start" layout-align-xs="start center" layout-wrap flex >
             <div flex-gt-sm="30" flex-xs="100" flex-gt-xs="100" ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index">
-              <md-checkbox class="md-primary md-align-top-left"
-                           ng-model="option.selected"
-                           ng-change="$ctrl.updateTubeCustomMetadata(option)">
+              <md-checkbox
+                class="md-primary md-align-top-left"
+                ng-model="option.selected"
+                ng-change="$ctrl.updateTubeCustomMetadata(option)"
+                ng-disabled="!$ctrl.canUpdateTubeMetadata"
+              >
                 <span class="md-caption">{{ option.value }}</span>
               </md-checkbox>
             </div>
@@ -118,12 +121,27 @@
           <div layout="row" flex-offset-xs="0">
             <md-input-container flex-sm="100" flex-xs="100" flex="100" style="margin: 0 0 0 8px; padding: 0" layout="row" layout-align="start center">
               <label>Outro</label>
-              <input ng-model="$ctrl.newTube.tubeCollectionData.dynamicMetadata"/>
+              <input
+                ng-model="$ctrl.newTube.tubeCollectionData.dynamicMetadata"
+                ng-disabled="!$ctrl.canUpdateTubeMetadata"
+              />
             </md-input-container>
 
-            <md-button ng-click="$ctrl.saveDynamicMetadata()" class="md-icon-button md-primary">
+            <md-button
+              ng-click="$ctrl.saveDynamicMetadata()"
+              class="md-icon-button md-primary"
+              ng-disabled="!$ctrl.canUpdateTubeMetadata"
+            >
               <md-icon>save</md-icon>
             </md-button>
+          </div>
+          <div
+            ng-if="!$ctrl.canUpdateTubeMetadata"
+            class="md-caption"
+            md-colors="{color:'warn'}"
+            style="margin-top: 8px; text-align: right;"
+          >
+            Metadados não podem ser alterados, tubo está em transporte ou já foi recebido.            
           </div>
         </md-card-content>
       </md-card>
@@ -139,7 +157,14 @@
         </laboratory-aliquots-manager>
       </div>
     </div>
+
     <!-- material receipt -->
-    <material-receipt ng-if="$ctrl.originalTubeHasCode()" flex="50" flex-xs="100" material="$ctrl.originalTube"></material-receipt>
+    <material-receipt
+      ng-if="$ctrl.originalTubeHasCode()"
+      flex="50"
+      flex-xs="100"
+      material="$ctrl.originalTube"
+      on-tracking-list-loaded="$ctrl.handleTrackingListLoaded"
+    ></material-receipt>
   </md-content>
 </md-content>
