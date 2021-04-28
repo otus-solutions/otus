@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -77,13 +77,14 @@
     function _removeParticipantFromMemory() {
       setSelectedParticipant();
     }
+
     function getSelectedParticipant() {
       return _selectedParticipantDefer.promise;
     }
 
     function setSelectedParticipant(participantData) {
-      _selectedParticipantDefer = $q.defer();
       if (participantData) {
+        _selectedParticipantDefer = $q.defer();
         _selectedParticipantDefer.resolve(participantData);
       }
     }
