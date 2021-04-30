@@ -20,6 +20,7 @@
     self.getQualityControlGroupNames = getQualityControlGroupNames;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
     self.getLotReceiptMetadata = getLotReceiptMetadata;
+    self.getCodeConfiguration = getCodeConfiguration;
 
     /* Laboratory Configuration */
 
@@ -123,6 +124,22 @@
 
     function getLotReceiptMetadata() {
       return LaboratoryRepositoryService.getLotReceiptMetadata();
+    }
+
+    function getCodeConfiguration() {
+      var defer = $q.defer();
+      var labConfigInitialized = LaboratoryConfigurationService.checkLaboratoryConfiguration();
+
+      if (labConfigInitialized) {
+        defer.resolve(LaboratoryConfigurationService.getCodeConfiguration());
+      } else {
+        _fetchLaboratoryConfiguration()
+          .then(function (laboratoryConfiguration) {
+            LaboratoryConfigurationService.initializeLaboratoryConfiguration(laboratoryConfiguration);
+            defer.resolve(LaboratoryConfigurationService.getCodeConfiguration());
+          });
+      }
+      return defer.promise;      
     }
 
   }

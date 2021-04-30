@@ -217,6 +217,13 @@ describe('aliquotsViewCtrl_UnitTest_Suite', function () {
         return {
           email:"teste@teste.com"
         }
+      },
+      getSelectedParticipant: function() {
+        return Promise.resolve({
+          fieldCenter: {
+            code: 123
+          }
+        })
       }
     };
   }

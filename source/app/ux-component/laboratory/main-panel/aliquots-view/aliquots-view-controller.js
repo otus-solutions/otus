@@ -37,7 +37,6 @@
 
     self.selectedLocationPoint = {}
     self.filledAliquots = []
-    self.tubeLength = 9;
     self.aliquotLengths;
     self.aliquotMaxLength;
     self.validations;
@@ -57,6 +56,7 @@
     self.convertAliquot = convertAliquot;
 
     function onInit() {
+      _getTubeLength();
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
 
@@ -541,6 +541,17 @@
     function _fillConvertedStoragesContainerLabels(){
       self.selectedMomentType.convertedStorages.forEach(aliquot => {
         _fillContainer(aliquot);
+      })
+    }
+
+    function _getTubeLength() {
+      ParticipantLaboratoryService.getSelectedParticipant().then(participant => {
+        const codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
+
+        self.tubeLength = participant.fieldCenter.code.toString().length
+          + codeConfiguration.tubeToken.toString().length
+          + codeConfiguration.waveNumberToken.toString().length
+          + 6;
       })
     }
   }

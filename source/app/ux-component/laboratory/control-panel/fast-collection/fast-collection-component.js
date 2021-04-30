@@ -13,18 +13,20 @@
 
   controller.$inject = [
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
     '$element',
     '$mdToast'
   ];
 
-  function controller(ParticipantLaboratoryService, $element, $mdToast) {
+  function controller(ParticipantLaboratoryService, LaboratoryConfigurationService, $element, $mdToast) {
     var self = this;
-
 
     self.$onInit = onInit;
     self.fastCollection = fastCollection;
+    self.tubeCodeLength = 0;
 
     function onInit() {
+      _getTubeCodeLength();
       $element.find('input').focus();
     }
 
@@ -45,7 +47,7 @@
     }
 
     function fastCollection(element, tubeCode) {
-      if (tubeCode.length === 9) {
+      if (tubeCode.length === self.tubeCodeLength) {
         var foundTube = _findTube(tubeCode);
         if (foundTube) {
           if (!foundTube.tubeCollectionData.isCollected) {
@@ -64,6 +66,17 @@
       return self.tubeList.find(function(tube) {
         return tube.code == code;
       });
+    }
+
+    function _getTubeCodeLength() {
+      ParticipantLaboratoryService.getSelectedParticipant().then(participant => {
+        LaboratoryConfigurationService.getCodeConfiguration().then(codeConfiguration => {
+          self.tubeCodeLength = participant.fieldCenter.code.toString().length
+            + codeConfiguration.tubeToken.toString().length
+            + codeConfiguration.waveNumberToken.toString().length
+            + 6;
+        })
+      })
     }
 
   }
