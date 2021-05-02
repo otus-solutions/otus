@@ -1,4 +1,10 @@
 otus-dashboard-display {
+  background-color: #eeeeee;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  height: 0;
+
   @media screen and (min-width: 360px) {
     .dashboard-display-layout {
       display: grid;
@@ -8,20 +14,11 @@ otus-dashboard-display {
       grid-template-areas:
         "display-participant-info"
         "display-participant-attempt"
-        "display-user-comment-about-participant-list"
         "display-participant-heatmap"
         "display-participant-exam-heatmap"
         "display-report-dashboard";
     }
     .mobile-width {
-      width: 100vw;
-    }
-
-    .mobile-width-left {
-      width: 100vw;
-    }
-
-    .mobile-width-right {
       width: 100vw;
     }
   }
@@ -32,32 +29,27 @@ otus-dashboard-display {
       align-items: center;
       height: auto;
       width: auto;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       grid-template-rows: auto;
       grid-template-areas:
-        "display-participant-info    display-user-comment-about-participant-list"
-        "display-participant-attempt    display-user-comment-about-participant-list"
-        ". display-user-comment-about-participant-list"
-        "display-participant-heatmap    display-participant-heatmap"
-        "display-participant-exam-heatmap    display-participant-exam-heatmap"
-        "display-report-dashboard     display-report-dashboard";
+        "display-participant-info"
+        "display-participant-attempt"
+        "display-participant-heatmap"
+        "display-participant-exam-heatmap"
+        "display-report-dashboard";
     }
 
     .mobile-width {
       width: auto;
     }
-
-    .mobile-width-left {
-      width: 50vw;
-    }
-
-    .mobile-width-right {
-      width: 48vw;
-    }
   }
 
   .mobile-height {
     min-height: 40vh;
+  }
+
+  .display-color-gray {
+    color: gray;
   }
 
   .display-participant-info {
@@ -66,10 +58,6 @@ otus-dashboard-display {
 
   .display-participant-attempt {
     grid-area: display-participant-attempt;
-  }
-
-  .display-user-comment-about-participant-list {
-    grid-area: display-user-comment-about-participant-list;
   }
 
   .display-participant-heatmap {
@@ -82,5 +70,30 @@ otus-dashboard-display {
 
   .display-report-dashboard {
     grid-area: display-report-dashboard;
+  }
+}
+
+@media screen and (min-width: 360px) {
+  .icon-display-size {
+    font-size: 1.6em;
+    height: auto;
+    width: auto;
+  }
+
+  .icon-display-generate-size {
+    font-size: 1.6em;
+    height: auto;
+    padding-right: 15px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .icon-display-size {
+    font-size: 2.6em;
+  }
+
+  .icon-display-generate-size {
+    font-size: 2.6em;
+    padding-right: 35px;
   }
 }

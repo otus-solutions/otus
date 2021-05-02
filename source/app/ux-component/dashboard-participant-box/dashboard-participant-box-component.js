@@ -17,24 +17,29 @@
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.user.business.UserAccessPermissionService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.laboratory.business.participant.ParticipantLaboratoryService'
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'STATE',
+    '$mdColors',
   ];
 
-  function Controller(EventService, DashboardService, UserAccessPermissionService, ApplicationStateService, ParticipantLaboratoryService) {
+  function Controller(EventService, DashboardService, UserAccessPermissionService, ApplicationStateService, ParticipantLaboratoryService, STATE, $mdColors) {
     var self = this;
 
     /* Public methods */
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantActivityStage = loadParticipantActivityStage;
     self.loadParticipantReports = loadParticipantReports;
+    self.loadUserCommentAboutParticipant = loadUserCommentAboutParticipant;
     self.loadLaboratory = loadLaboratory;
     self.loadFollowUps = loadFollowUps;
     self.home = home;
+    self.selectedStateColor = selectedStateColor;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
       self.isEmpty = true;
+      self.state = STATE;
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       _getCheckingExist();
@@ -87,7 +92,7 @@
       ParticipantLaboratoryService.getCheckingExist()
         .then(function (response) {
           self.laboratoryChecking = response;
-          if(self.laboratoryChecking){
+          if (self.laboratoryChecking) {
             _checkingLaboratoryPermission();
           }
         });
@@ -104,5 +109,21 @@
         self.userAccessToActivity = response;
       });
     }
+
+    function loadUserCommentAboutParticipant() {
+      ApplicationStateService.userCommentAboutParticipant();
+    }
+
+    function selectedStateColor(selected) {
+      if (selected == ApplicationStateService.getCurrentState()) {
+        return _menuSelectedColor();
+      }
+      return { background: '##f5f5f5'};
+    }
+
+    function _menuSelectedColor() {
+      return { background: $mdColors.getThemeColor('primary-hue-1-0.41')};
+    }
+
   }
 }());

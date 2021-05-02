@@ -149,9 +149,9 @@
 
     function displayGridLarge() {
       if (window.innerWidth < 1400) {
-        return '1:1.5';
+        return '1:1.6';
       }
-      return '1:1.05';
+      return '1:1.4';
     }
 
     function displayGridSmall() {

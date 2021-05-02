@@ -1,0 +1,17 @@
+<md-menu
+  md-position-mode="target-right bottom"
+>
+  <md-button
+    ng-click="$mdMenu.open()"
+  >
+    {{$ctrl.loggedUser}}
+  </md-button>
+  <md-menu-content>
+    <md-menu-item>
+      <md-button ng-click="$ctrl.logout()">
+        Sair
+      </md-button>
+    </md-menu-item>
+    <md-menu-divider></md-menu-divider>
+  </md-menu-content>
+</md-menu>

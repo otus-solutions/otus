@@ -300,10 +300,11 @@
 
     function displayGridLarge() {
       if (window.innerWidth < 1400) {
-        return '1:0.9';
+        return '1:1';
       }
-      return '6:4';
+      return '6:4.9';
     }
+
     function displayGridSmall() {
       if (window.innerWidth < 680) {
         return '1:1';

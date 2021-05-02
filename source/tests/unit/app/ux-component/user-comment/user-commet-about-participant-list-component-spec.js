@@ -14,7 +14,6 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
       Injections.UserCommentAboutParticipantService = $injector.get('otusjs.user.comment.business.UserCommentAboutParticipantService');
       Injections.DialogShowService = $injector.get('otusjs.application.dialog.DialogShowService');
       Injections.USER_COMMENT_MANAGER_LABELS = $injector.get('USER_COMMENT_MANAGER_LABELS');
-      Injections.GenericListViewerService = $injector.get('otusjs.genericListViewer.GenericListViewerService')
 
       mockInitialize($rootScope, $q);
 
@@ -28,15 +27,13 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
 
   it('should verify properties definition', function () {
     expect(controller.$onInit).toBeDefined();
-    expect(controller.fillSelectedComment).toBeDefined();
     expect(controller.cancelFillSelectedComment).toBeDefined();
     expect(controller.deleteSelectedComment).toBeDefined();
     expect(controller.showStarSelectedUserCommentAboutParticipant).toBeDefined();
     expect(controller.saveUserCommentAboutParticipant).toBeDefined();
     expect(controller.colorStar).toBeDefined();
+    expect(controller.iconStar).toBeDefined();
     expect(controller.getFormattedDate).toBeDefined();
-    expect(controller.getAllItems).toBeDefined();
-    expect(controller.callValidationItemsLimits).toBeDefined();
   });
 
   describe('Methods Suite Test', function () {
@@ -45,6 +42,7 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
       spyOn(Injections.EventService, "onParticipantSelected");
       spyOn(Injections.DashboardService, "getSelectedParticipant").and.returnValue(Mock.deferredResolve.promise);
       spyOn(Injections.DialogShowService, "showDialog").and.returnValue(Mock.deferredResolve.promise);
+      spyOn(Injections.DialogShowService, "showCustomizedDialog").and.returnValue(Mock.deferredResolve.promise);
     });
 
     it('onInitMethod should initialized the controller variables', function () {
@@ -56,26 +54,6 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
 
       expect(Injections.EventService.onParticipantSelected).toHaveBeenCalledTimes(1);
       expect(controller.selectedParticipant.recruitmentNumber).toEqual(Mock.participant.recruitmentNumber);
-    });
-
-    it('fillSelectedCommentMethod should initialized the controller variables', function () {
-      controller.fillSelectedComment(Mock.userCommentsAboutParticipant[0]);
-      Mock.scope.$digest();
-      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
-      expect(controller.comment).toEqual(Mock.userCommentsAboutParticipant[0].comment)
-      expect(controller.selectedComment).toEqual(Mock.userCommentsAboutParticipant[0])
-    });
-
-    it('fillSelectedCommentMethod should initialized the controller variables and selected comment', function () {
-      spyOn(Injections.UserCommentAboutParticipantService, "showMsg").and.callThrough();
-
-      controller.selectedComment = Mock.userCommentsAboutParticipant[0];
-      controller.fillSelectedComment(Mock.userCommentsAboutParticipant[1]);
-      Mock.scope.$digest();
-      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
-      expect(Injections.UserCommentAboutParticipantService.showMsg).toHaveBeenCalledTimes(1);
-      expect(controller.comment).toEqual(Mock.userCommentsAboutParticipant[1].comment)
-      expect(controller.selectedComment).toEqual(Mock.userCommentsAboutParticipant[1])
     });
 
     it('cancelSelectedCommentMethod should initialized the cancel selected comment', function () {
@@ -131,19 +109,24 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
     });
 
     it('saveUserCommentAboutParticipantMethod should initialized the save and updateUserComment', function () {
+      let userComment = {
+        comment: Mock.userCommentsAboutParticipant[0].comment,
+        recruitmentNumber: Mock.participant.recruitmentNumber
+      }
       controller.comment = Mock.userCommentsAboutParticipant[0].comment;
-      controller.selectedComment = Mock.userCommentsAboutParticipant[0];
 
-      spyOn(Injections.UserCommentAboutParticipantService, 'updateUserCommentAboutParticipant').and.returnValue(Promise.resolve());
+      controller.updateUserCommentAboutParticipant(userComment);
 
-      controller.saveUserCommentAboutParticipant();
-
-      expect(Injections.UserCommentAboutParticipantService.updateUserCommentAboutParticipant).toHaveBeenCalledTimes(1);
-      expect(Injections.UserCommentAboutParticipantService.updateUserCommentAboutParticipant).toHaveBeenCalledWith(Mock.userCommentsAboutParticipant[0]);
+      expect(Injections.DialogShowService.showCustomizedDialog).toHaveBeenCalledTimes(1);
     });
+
 
     it('colorStarMethod should initialized the controller variable for color', function () {
       expect(controller.colorStar(Mock.userCommentsAboutParticipant[2].starred)).toEqual(Mock.color);
+    });
+
+    it('iconStarMethod should initialized the controller variable for color', function () {
+      expect(controller.iconStar(Mock.userCommentsAboutParticipant[2].starred)).toEqual(Mock.icon);
     });
 
     it('getFormattedDateMethod should initialized the.userCommentsAboutParticipant formate ISO', function () {
@@ -160,6 +143,7 @@ describe('otusUserCommentAboutParticipantListCtrl Test', function () {
     Mock.scope = $rootScope.$new();
     Mock.deferred = $q.defer();
     Mock.deferredResolve = $q.defer();
+    Mock.icon = 'star_rate';
     Mock.color = { color: 'rgb(253, 204, 13)' };
     Mock.participant = { recruitmentNumber: '02' };
     Mock.starred = false;

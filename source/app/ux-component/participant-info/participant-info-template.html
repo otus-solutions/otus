@@ -1,44 +1,45 @@
-<div layout-align="center center" layout-margin layout-padding>
-  <div style="width: 800px; margin: 0 auto; background: white" flex>
-    <div>
-      <div layout="row" layout-align="space-between stretch">
-        <div layout="column" hide-sm hide-xs>
-          <md-icon style="font-size: 8em;" flex hide-xs>account_circle</md-icon>
-        </div>
-        <div layout="column" layout-align="center start">
-          <div class="md-subtitle" ng-if="$ctrl.selectedParticipant.name"><b>{{$ctrl.selectedParticipant.name}}</b></div>
-          <span class="md-subtitle" class="md-caption">
-            NR: {{$ctrl.selectedParticipant.recruitmentNumber}}
-          </span>
-          <span class="md-caption" ng-if="$ctrl.getSex($ctrl.selectedParticipant.sex)">
-            Sexo: {{$ctrl.getSex($ctrl.selectedParticipant.sex)}}
-          </span>
-          <span class="md-caption" ng-if="$ctrl.selectedParticipant.birthdate">
-            Nascimento: {{$ctrl.participantBirthdate | date: "dd/MM/yyyy"}}
-          </span>
-          <span class="md-caption">
-            Centro: {{$ctrl.selectedParticipant.fieldCenter.acronym}}
-          </span>
-          <span ng-show="$ctrl.hasLaboratory && $ctrl.participantLaboratory.identification" layout="row" layout-align="center center" class="md-caption">
-            Laboratório vinculado: {{$ctrl.participantLaboratory.identification}}
-          </span>
-        </div>
-        <div layout="column" layout-align="start end">
-          <md-button class="md-icon-button">
-            <md-icon>help</md-icon>
-            <md-tooltip md-direction="bottom">Participante selecionado</md-tooltip>
-          </md-button>
-          <md-button class="md-icon-button md-accent md-mini" ng-click="$ctrl.updateParticipant()">
-            <md-icon>edit</md-icon>
-            <md-tooltip md-direction="bottom">Editar participante selecionado</md-tooltip>
-          </md-button>
-          <otus-participant-password-reset-button email="$ctrl.selectedParticipant.email"></otus-participant-password-reset-button>
-          <generate-custom-label-dialog  basic-button="true" participant-button="true"
-                                        label-data="$ctrl.participantLabel">
-          </generate-custom-label-dialog>
-        </div>
+<div layout="row" layout-align="center center">
+  <div class="participant-info-box participant-info-box-dimensions md-whiteframe-2dp" layout-fill layout-margin layout="row" layout-align="center center" ng-show="!$ctrl.selectedParticipant">
+    <span class="md-display-1">Não há participante selecionado</span>
+  </div>
+  <div ng-show="$ctrl.selectedParticipant" class="participant-info-box participant-info-box-dimensions md-whiteframe-2dp" layout="column">
+    <div class="participant-info-layout">
+      <div hide-xs class="participant-info-name" layout="row" layout-align="start end">
+        <span class="md-display-1" ng-if="$ctrl.selectedParticipant.name" md-truncate>
+          {{$ctrl.selectedParticipant.name}}
+        </span>
+        <md-button class="md-accent md-mini" ng-click="$ctrl.updateParticipant()">
+          <md-icon>edit</md-icon>
+          <md-tooltip md-direction="bottom">Editar participante selecionado</md-tooltip>
+        </md-button>
       </div>
+      <div hide-xs class="participant-info-recruitmentNumber participant-padding" layout="row"
+        layout-align="start start">
+        <span class="md-headline">
+          {{$ctrl.selectedParticipant.recruitmentNumber}}
+        </span>
+      </div>
+      <span class="participant-info-sex md-subhead" ng-if="$ctrl.getSex($ctrl.selectedParticipant.sex)">
+        Sexo: {{$ctrl.getSex($ctrl.selectedParticipant.sex)}}
+      </span>
+      <span class="participant-birthdate md-subhead" ng-if="$ctrl.selectedParticipant.birthdate">
+        Nascimento: {{$ctrl.participantBirthdate | date: "dd/MM/yyyy"}}
+      </span>
+      <span class="participant-field-center md-subhead">
+        Centro: {{$ctrl.selectedParticipant.fieldCenter.acronym}}
+      </span>
+      <span class="participant-mother-name md-subhead">
+        Nome da mãe: {{$ctrl.selectedParticipant.motherName}}
+      </span>
+      <span class="participant-laboratory-identification"
+        ng-show="$ctrl.hasLaboratory && $ctrl.participantLaboratory.identification" layout="row"
+        layout-align="center center" class="md-subhead">
+        Laboratório vinculado: {{$ctrl.participantLaboratory.identification}}
+      </span>
     </div>
-    <attache-laboratory ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle" selected-participant="$ctrl.selectedParticipant"></attache-laboratory>
+    <attache-laboratory hide-confirmation="true" class="participant-info-virculars" ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle"
+      selected-participant="$ctrl.selectedParticipant"></attache-laboratory>
+    <otus-user-comment-about-participant-dashboard-list participant="$ctrl.selectedParticipant">
+    </otus-user-comment-about-participant-dashboard-list>
   </div>
 </div>

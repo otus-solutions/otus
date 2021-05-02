@@ -76,6 +76,13 @@
                 </md-button>
               </md-card-content>
             </md-card>
+            <md-card class="card-button" ng-init="showLaboratory=true" layout-fill ng-show="$ctrl.userAccessToActivity.offlineActivitySincAccess" >
+              <md-card-content class="no-padding" layout="column" layout-align="start start">
+                <md-button ng-click="$ctrl.importActivity()" layout-align="center" layout-margin="">
+                  <md-icon>backup</md-icon>Importação de atividades
+                </md-button>
+              </md-card-content>
+            </md-card>
           </div>
         </div>
 

@@ -9,84 +9,80 @@
     }).controller('otusUserCommentAboutParticipantListCtrl', Controller);
 
   Controller.$inject = [
-    '$element',
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.user.comment.business.UserCommentAboutParticipantService',
     'USER_COMMENT_MANAGER_LABELS',
-    'otusjs.genericListViewer.GenericListViewerService',
+    'otusjs.deploy.LoadingScreenService'
+
   ];
 
-  function Controller($element, DashboardEventService, DashboardService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS, GenericListViewerService) {
-    const STAR_COLOR = 'rgb(253, 204, 13)';
-    const LIMIT = 10;
-    const SKIP = 0;
+  function Controller(DashboardEventService, DashboardService, DialogService, UserCommentAboutParticipantService, USER_COMMENT_MANAGER_LABELS, LoadingScreenService) {
+    const DIALOG_CONTROLLER = 'otusUserCommentAboutParticipantDialogCtrl';
+    const DIRECTORY_DIALOG_CONTROLLER = 'app/ux-component/user-comment/user-comment-about-participant-dialog/user-comment-about-participant-dialog-template.html';
 
     var self = this;
 
+    let stuntmanSearchSettings = {};
+
     /* Public methods */
-    self.fillSelectedComment = fillSelectedComment;
     self.cancelFillSelectedComment = cancelFillSelectedComment;
     self.deleteSelectedComment = deleteSelectedComment;
     self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
     self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
+    self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
     self.colorStar = colorStar;
+    self.iconStar = iconStar;
     self.getFormattedDate = getFormattedDate;
-    self.getAllItems = GenericListViewerService.getAllItems;
-    self.callValidationItemsLimits = GenericListViewerService.callValidationItemsLimits;
+    self.openMenu = openMenu;
+
     self.$onInit = onInit;
 
     self.items = [];
     self.selectedComment = null;
     self.selectedParticipant = null;
     self.paginatorActive = true;
-    self.stuntmanSearchSettings = {};
 
-    function onInit() {
-      _loadSelectedParticipant();
+    async function onInit() {
       DashboardEventService.onParticipantSelected(_loadSelectedParticipant);
+      await _loadSelectedParticipant();
     }
 
-    function _loadSelectedParticipant(participantData) {
+    function ready () {
+      self.ready = true;
+      LoadingScreenService.finish();
+    }
+    function unready () {
+      self.ready = false;
+      LoadingScreenService.start();
+
+    }
+
+    function openMenu($mdMenu, ev) {
+      $mdMenu.open(ev);
+    }
+
+    async function _loadSelectedParticipant(participantData) {
+      unready();
       if (participantData) {
         self.selectedParticipant = participantData;
-        self.isEmpty = false;
-        _loadNoteAboutParticipant();
+        await _loadNoteAboutParticipant();
       } else {
-        DashboardService
-          .getSelectedParticipant()
-          .then(function (participantData) {
-            if (participantData) {
-              self.selectedParticipant = participantData;
-              self.isEmpty = false;
-              _loadNoteAboutParticipant();
-            }
-          });
+        self.selectedParticipant = await DashboardService.getSelectedParticipant()
+        if (self.selectedParticipant) {
+          await _loadNoteAboutParticipant();
+          ready();
+        }
       }
     }
 
-    function _loadNoteAboutParticipant() {
-      self.stuntmanSearchSettings = {
-        currentQuantity: SKIP,
-        quantityToGet: LIMIT,
+    async function _loadNoteAboutParticipant() {
+      stuntmanSearchSettings = {
         recruitmentNumber: self.selectedParticipant.recruitmentNumber
       }
 
-      initialize(SKIP, LIMIT);
-
-      self.getAllItems(self.stuntmanSearchSettings)
-        .then((items) => self.items = items);
-    }
-
-    function initialize(skip, limit) {
-      angular.extend(self, self, GenericListViewerService);
-      self.init(null, skip, limit,
-        UserCommentAboutParticipantService.getNoteAboutParticipant, null, _genericParse);
-    }
-
-    function _genericParse(items) {
-      return items;
+      self.items = await UserCommentAboutParticipantService.getNoteAboutParticipant(stuntmanSearchSettings)
     }
 
     function showStarSelectedUserCommentAboutParticipant(userCommentAboutParticipant) {
@@ -103,59 +99,38 @@
     }
 
     function colorStar(starSelected) {
-      return starSelected ? { color: STAR_COLOR } : null;
+      return UserCommentAboutParticipantService.colorStar(starSelected);
+    }
+
+    function iconStar(starSelected) {
+      return UserCommentAboutParticipantService.iconStar(starSelected);
     }
 
     function getFormattedDate(date) {
       return UserCommentAboutParticipantService.getFormattedDate(date);
     }
 
-    function _updateUserCommentAboutParticipant() {
-      self.selectedComment.comment = self.comment;
-      UserCommentAboutParticipantService.updateUserCommentAboutParticipant(self.selectedComment)
-        .then(() => {
-          UserCommentAboutParticipantService.showMsg('updateSuccessMessage');
-          _loadNoteAboutParticipant();
-          cancelFillSelectedComment();
-        })
-        .catch(() => {
-          UserCommentAboutParticipantService.showMsg('failureMessage');
-        })
+    function updateUserCommentAboutParticipant(selectedComment) {
+      selectedComment.verify = false;
+      selectedComment.dialog = USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.editComment;
+      DialogService.showCustomizedDialog(selectedComment, DIALOG_CONTROLLER, DIRECTORY_DIALOG_CONTROLLER, true)
+        .then(() => _loadNoteAboutParticipant())
+        .catch(() => _loadNoteAboutParticipant());
     }
 
     function saveUserCommentAboutParticipant() {
-      if (self.selectedComment) {
-        _updateUserCommentAboutParticipant();
-      } else {
-        UserCommentAboutParticipantService.saveUserCommentAboutParticipant({ comment: self.comment, recruitmentNumber: self.selectedParticipant.recruitmentNumber })
-          .then(() => {
-            UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
-            self.comment = "";
-            _loadNoteAboutParticipant();
-          })
-          .catch(() => {
-            UserCommentAboutParticipantService.showMsg('failUserCommentAboutParticipantCreation');
-          })
-      }
-    }
-
-    function fillSelectedComment(itemComment) {
-      if (self.selectedComment && self.selectedComment._id !== itemComment._id) {
-        UserCommentAboutParticipantService.showMsg('conflictMessage');
-        DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmFillSelected)
-          .then(function () {
-            self.comment = itemComment.comment;
-            self.selectedComment = itemComment;
-            $element.find('#focus-textarea').focus();
-          });
-      } else {
-        DialogService.showDialog(USER_COMMENT_MANAGER_LABELS.ATTRIBUTES_MESSAGE.confirmEditSelected)
-          .then(function () {
-            self.comment = itemComment.comment;
-            self.selectedComment = itemComment;
-            $element.find('#focus-textarea').focus();
-          })
-      }
+      UserCommentAboutParticipantService.saveUserCommentAboutParticipant({
+        comment: self.comment,
+        recruitmentNumber: self.selectedParticipant.recruitmentNumber
+      })
+        .then(() => {
+          UserCommentAboutParticipantService.showMsg('successUserCommentAboutParticipantCreation');
+          self.comment = "";
+          _loadNoteAboutParticipant();
+        })
+        .catch(() => {
+          UserCommentAboutParticipantService.showMsg('failUserCommentAboutParticipantCreation');
+        })
     }
 
     function cancelFillSelectedComment() {

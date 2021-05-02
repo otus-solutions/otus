@@ -5,7 +5,10 @@
     .module('otusjs.otus.uxComponent')
     .component('otusParticipantPasswordResetButton', {
       templateUrl: 'app/ux-component/participant-password-reset-button/participant-password-reset-button-template.html',
-      bindings: {email: '<'},
+      bindings: {
+        email: '<',
+        confirmation: '<'
+      },
       controller: Controller,
     });
 

@@ -1,15 +1,17 @@
 <div flex>
   <md-toolbar class="md-primary md-whiteframe-1dp">
     <div class="md-toolbar-tools md-padding">
+      <md-button ng-hide="$ctrl.verifyStateParticipantDashboard()" ng-click="$ctrl.home()">
       <img ng-src="{{$ctrl.imageIconURL}}" class="toolbar-icon"/>
-      <otus-dashboard-sidenav-launcher></otus-dashboard-sidenav-launcher>
+      </md-button>
+      <otus-dashboard-sidenav-launcher hide-gt-lg=""></otus-dashboard-sidenav-launcher>
       <div ng-transclude flex class="not-mobile"></div>
       <div class="mobile" flex></div>
 
       <otus-display-token></otus-display-token>
       <otus-crash-report></otus-crash-report>
 
-      <span>{{ $ctrl.loggedUser.name}}</span>
+      <otus-user-menu logged-user="$ctrl.loggedUser.name"></otus-user-menu>
     </div>
   </md-toolbar>
   <md-toolbar class=" mobile md-primary md-whiteframe-1dp">

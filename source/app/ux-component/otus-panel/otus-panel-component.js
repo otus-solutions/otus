@@ -7,7 +7,7 @@
       templateUrl: 'app/ux-component/otus-panel/otus-panel-template.html',
       bindings: {
         headerLabel: '<',
-        align: '<'
+        panelAlign: '<'
       },
       transclude: true,
       controller: Controller

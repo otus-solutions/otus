@@ -1,0 +1,64 @@
+<md-dialog class="otus-user-comment-about-participant-dialog" aria-label="comentário">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>{{$ctrl.selectedComment.dialog.dialogToTitle}}</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
+        <md-icon>close</md-icon>
+        <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <div class="layout-uc">
+    <div class="comment-list-layout">
+      <div class="comment-name" layout="row" layout-align="start center">
+        <p ng-show="!$ctrl.selectedComment.creationDate" class="ng-binding md-body-2 margin-line">{{$ctrl.selectedComment.dialog.titleToText}}</p>
+        <p class="ng-binding md-body-2 margin-line" md-truncate>{{$ctrl.selectedComment.userName}}</p>
+      </div>
+      <div class="comment-status" layout="row" ng-show="$ctrl.selectedComment.edited" layout-align="center center">
+        <p class="md-caption margin-line" ng-style="{ color: '#797985' }">Editado</p>
+        <md-tooltip md-direction="top">
+          Comentário foi editado
+        </md-tooltip>
+      </div>
+      <div class="comment-date" layout="row" layout-align-gt-sm="center center">
+        <p class="md-caption ng-binding margin-line" ng-if="$ctrl.selectedComment.creationDate" ng-bind-html="$ctrl.getFormattedDate($ctrl.selectedComment.creationDate)"></p>
+        <md-tooltip md-direction="top">
+          Data de realização
+        </md-tooltip>
+      </div>
+      <div class="comment-button" layout="row" layout-align="center center">
+        <md-button ng-if="$ctrl.selectedComment.creationDate" ng-click="$ctrl.showStarSelectedUserCommentAboutParticipant($ctrl.selectedComment)">
+          <md-tooltip md-direction="top">Favorito</md-tooltip>
+          <md-icon layout="row" layout-align="center center" ng-style="$ctrl.colorStar($ctrl.selectedComment.starred)"
+            class="md-default-theme material-icons icon-size" aria-label="star"
+            ng-bind-html="$ctrl.iconStar($ctrl.selectedComment.starred)">
+          </md-icon>
+        </md-button>
+      </div>
+    </div>
+  </div>
+  <md-dialog-content class="layout-uc">
+    <div>
+      <form name="userCommentAboutParticipant">
+        <md-input-container layout="column">
+          <label> </label>
+          <textarea ng-disabled="$ctrl.verify" name="comment" id="focus-textarea" rows="5" md-no-resize
+            class="md-textarea comment-textarea" ng-model="$ctrl.comment" aria-label="comentar"
+            placeholder="Digite o texto aqui"></textarea>
+        </md-input-container>
+      </form>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions ng-show="!$ctrl.verify" layout="row" layout-align="end center">
+    <md-button class="md-raised" ng-show="$ctrl.comment" aria-label="cancel edited"
+      ng-click="$ctrl.cancelFillSelectedComment()">
+      Cancelar
+    </md-button>
+    <md-button class="md-primary md-raised" ng-disabled="!$ctrl.comment" aria-label="save"
+      ng-click="$ctrl.saveUserCommentAboutParticipant()">
+      Salvar
+      <md-icon md-font-set="material-icons">save</md-icon>
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>

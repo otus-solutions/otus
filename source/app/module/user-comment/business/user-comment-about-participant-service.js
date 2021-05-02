@@ -13,17 +13,50 @@
 
   function Service($mdToast, UserCommentAboutParticipantRepositoryService, UserCommentAboutParticipantValues, CommentContextService) {
     const self = this;
+    const STAR_COLOR = 'rgb(253, 204, 13)';
 
     self.showMsg = showMsg;
     self.getNoteAboutParticipant = getNoteAboutParticipant;
+    self.getDashboardComments = getDashboardComments;
     self.showStarSelectedUserCommentAboutParticipant = showStarSelectedUserCommentAboutParticipant;
     self.deleteSelectedComment = deleteSelectedComment;
     self.saveUserCommentAboutParticipant = saveUserCommentAboutParticipant;
     self.updateUserCommentAboutParticipant = updateUserCommentAboutParticipant;
     self.getFormattedDate = getFormattedDate;
+    self.colorStar = colorStar;
+    self.iconStar = iconStar;
 
-    function getNoteAboutParticipant(stuntmanSearchSettings) {
-      return UserCommentAboutParticipantRepositoryService.getNoteAboutParticipant(stuntmanSearchSettings);
+    async function getDashboardComments(recruitmentNumber, quantity) {
+      let starredFilters = {
+        quantityToGet: quantity,
+        currentQuantity: 0,
+        filters: {
+          starred: true
+        },
+        recruitmentNumber: recruitmentNumber
+      }
+
+      let starred = await getNoteAboutParticipant(starredFilters)
+
+      if (starred === quantity) {
+        return starred
+      }
+
+      let notStarredFilters = {
+        quantityToGet: quantity - starred.length,
+        currentQuantity: 0,
+        filters: {
+          starred: false
+        },
+        recruitmentNumber: recruitmentNumber
+      }
+
+      let notStarred = await getNoteAboutParticipant(notStarredFilters);
+      return starred.concat(notStarred);
+    }
+
+    function getNoteAboutParticipant(searchSettings) {
+      return UserCommentAboutParticipantRepositoryService.getNoteAboutParticipant(searchSettings);
     }
 
     function showStarSelectedUserCommentAboutParticipant(commentId, starred) {
@@ -57,6 +90,14 @@
           .textContent(UserCommentAboutParticipantValues.toast[msg])
           .hideDelay(4000)
       );
+    }
+
+    function colorStar(starSelected) {
+      return starSelected ? {color: STAR_COLOR} : null;
+    }
+
+    function iconStar(starSelected) {
+      return starSelected ? "star_rate" : "star_outline";
     }
   }
 }());

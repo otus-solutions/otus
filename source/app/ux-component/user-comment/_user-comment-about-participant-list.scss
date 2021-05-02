@@ -2,21 +2,30 @@ otus-user-comment-about-participant-list {
   @media screen and (min-width: 360px) {
     .comment-list-layout {
       display: grid;
-      align-items: center;
       height: auto;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      grid-template-columns: 0.2fr 0.6fr 0.6fr 0.4fr 0.1fr 0.6fr;
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+      grid-template-columns: repeat(4, 0.8fr) repeat(4, 0.1fr);
       grid-template-rows: auto;
       grid-template-areas:
-        "comment-image . comment-date comment-status comment-button comment-button"
-        "comment-image comment-name  comment-name  comment-name comment-button comment-button"
-        "comment-text comment-text  comment-text  comment-text  comment-text comment-text";
+        "comment-name  comment-name  comment-name comment-status comment-status comment-date comment-button  comment-button-menu"
+        "comment-text  comment-text comment-text  comment-text   comment-text   comment-text comment-text    comment-text";
     }
 
-    .md-body-2 {
-      font-size: 14px;
-      line-height: 14px;
+    .comment-list-null {
+      display: grid;
+      max-height: 15vh;
+      align-items: center;
+      padding-top: 0;
+      grid-template-columns: 0.05fr 1fr 0.05fr;
+      grid-template-rows: auto;
+      grid-template-areas: "comment-null comment-null comment-null";
+    }
+
+    .layout-box {
+      padding-left: 8px;
+      padding-right: 8px;
+      height: 100%;
     }
 
     .icon-size {
@@ -29,8 +38,15 @@ otus-user-comment-about-participant-list {
       line-height: 2em;
     }
 
-    .layout-pagination {
-      width: 100vw;
+    .comment-layout-margin-line {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+    }
+
+    .comment-layout-padding {
+      padding-left: 8px;
+      padding-right: 8px;
     }
   }
 
@@ -40,24 +56,49 @@ otus-user-comment-about-participant-list {
     }
   }
 
+  @media screen and (min-width: 1024px) {
+    .comment-list-layout {
+      display: grid;
+      height: auto;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+      grid-template-columns: repeat(2, 1fr) repeat(5, 0.09fr);
+      grid-template-rows: auto;
+      grid-template-areas:
+        "comment-name  comment-name   comment-status  comment-status  comment-date  comment-button  comment-button-menu"
+        "comment-text  comment-text   comment-text    comment-text    comment-text  comment-text    comment-text";
+    }
+  }
+
   @media screen and (min-width: 1200px) {
     .comment-list-layout {
       display: -ms-grid;
       display: grid;
-      align-items: center;
       height: auto;
-      min-width: 90vw;
+      min-width: 50vw;
       padding-top: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      grid-template-columns: 0.1fr 2fr 0.8fr 0.6fr 0.6fr 0.4fr;
+      border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+      grid-template-columns: repeat(2, 1fr) repeat(5, 0.07fr);
       grid-template-rows: auto;
       grid-template-areas:
-        "comment-image comment-name comment-date comment-status comment-status comment-button"
-        "comment-image comment-text comment-text comment-text comment-text comment-button";
+        "comment-name  comment-name  comment-status  comment-date   comment-date  comment-button  comment-button-menu"
+        "comment-text  comment-text  comment-text    comment-text   comment-text  comment-text    comment-text";
     }
-    .md-body-2 {
-      font-size: 14px;
-      line-height: 14px;
+
+    .comment-list-null {
+      display: grid;
+      max-height: 15vh;
+      align-items: center;
+      padding-top: 0;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      grid-template-areas: "comment-null comment-null comment-null";
+    }
+
+    .layout-box {
+      padding-left: 16px;
+      padding-right: 16px;
+      background-color: #fff;
     }
 
     .icon-size {
@@ -73,20 +114,26 @@ otus-user-comment-about-participant-list {
     .layout-pagination {
       width: 50vw;
     }
+
+    .comment-layout-margin-line {
+      background: #fff;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    .comment-layout-padding {
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+  }
+
+  .comment-null {
+    grid-area: comment-null;
+    margin-bottom: 16px;
   }
 
   .margin-line {
-    margin: 1px;
-  }
-
-  .layout-box {
-    min-height: 40vh;
-    min-width: 95vw;
-    max-width: 95vw;
-  }
-
-  .comment-image {
-    grid-area: comment-image;
+    margin-bottom: 6px;
   }
 
   .comment-name {
@@ -96,12 +143,7 @@ otus-user-comment-about-participant-list {
 
   .comment-text {
     grid-area: comment-text;
-    border-radius: 5px;
-    background-color: rgba(158, 158, 158, 0.1);
-    margin-bottom: 8px;
-    margin-left: 8px;
-    margin-right: 8px;
-    padding-left: 8px;
+    align-items: start;
     word-break: break-word;
   }
 
@@ -109,10 +151,8 @@ otus-user-comment-about-participant-list {
     grid-area: comment-button;
   }
 
-  .comment-list-layout:hover {
-    background-color: rgba(158, 158, 158, 0.1);
-    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
-    transition: 0.3s;
+  .comment-button-menu {
+    grid-area: comment-button-menu;
   }
 
   .comment-status {
@@ -128,39 +168,21 @@ otus-user-comment-about-participant-list {
     padding: 0;
   }
 
-  md-card {
-    margin: 8px;
-  }
-
-  .comment-textarea {
-    max-width: 100vw;
-    margin-top: 1.5em;
-    margin-bottom: 1.2em;
-    padding: 1em;
-  }
-
-  .md-caption {
-    font-size: 11px;
-    letter-spacing: 0.02em;
-  }
-
-  .md-body-2 {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    line-height: 20px;
-  }
-
-  .md-body-3 {
-    font-size: 12px;
-    letter-spacing: 0.02em;
+  .md-body-1 {
+    color: rgba(0, 0, 0, 0.6);
   }
 
   .md-button {
     min-width: auto;
+    margin: 6px 4px;
   }
 
   .comment-box {
+    max-width: 100vw;
+    padding: 1em;
+  }
+
+  .comment-textarea {
     height: auto;
     color: #999 !important;
     font-family: "Ubuntu", Helvetica, Arial, sans-serif;
@@ -175,7 +197,16 @@ otus-user-comment-about-participant-list {
     resize: vertical;
   }
 
-  .comment-box:focus {
-    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.5) !important;
+  md-card {
+    margin: 8px;
+  }
+
+  md-input-container {
+    padding: 4px 0;
+    margin: 0;
+  }
+
+  md-input-container .md-errors-spacer {
+    min-height: 0;
   }
 }

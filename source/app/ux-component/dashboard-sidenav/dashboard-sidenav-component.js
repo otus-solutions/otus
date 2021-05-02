@@ -16,23 +16,19 @@
     });
 
   Controller.$inject = [
-    '$mdComponentRegistry',
     '$mdSidenav',
-    'otusjs.user.access.service.LogoutService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.participant.core.ContextService',
     'THEME_CONSTANTS'
   ];
 
-  function Controller($mdComponentRegistry, $mdSidenav,
-                      LogoutService, ApplicationStateService, ParticipantContextService, THEME_CONSTANTS) {
+  function Controller( $mdSidenav, ApplicationStateService, ParticipantContextService, THEME_CONSTANTS) {
     const self = this;
     const SIDENAV_ORIGIN = 'left';
 
     /* Public methods */
     self.$onInit = onInit;
     self.close = close;
-    self.logout = logout;
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantReports = loadParticipantReports;
     self.home = home;
@@ -45,10 +41,6 @@
 
     function close() {
       $mdSidenav(SIDENAV_ORIGIN).toggle();
-    }
-
-    function logout() {
-      LogoutService.logout();
     }
 
     function home() {
@@ -68,6 +60,5 @@
     function loadParticipantReports() {
       ApplicationStateService.activateParticipantReports();
     }
-
   }
 }());

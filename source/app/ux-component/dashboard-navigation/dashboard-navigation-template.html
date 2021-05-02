@@ -1,0 +1,29 @@
+<div layout="column" class="md-whiteframe-3dp">
+  <md-toolbar class="md-primary md-whiteframe-1dp">
+    <div class="md-toolbar-tools">
+      <img ng-src="{{$ctrl.iconImage}}" class="toolbar-icon">
+      <span flex></span>
+      <span style="padding-left:8px" class="md-body-2">{{$ctrl.projectName}} | PROJETO</span>
+      <span flex></span>
+    </div>
+  </md-toolbar>
+  <div ng-transclude="hideHomeButton">
+    <div class="participant-padding-navigation-top-and-bottom">
+      <md-list>
+        <span class="md-body-2 participant-box-title" style="color:gray; padding:0 16px">
+          Projeto
+        </span>
+        <md-list-item id="home-menu" ng-click="$ctrl.home()">
+          <div layout-align="start center">
+            <md-icon md-svg-icon="home" aria-label="Home" class="md-accent"></md-icon>
+            <span class="participant-padding-navigation">Home</span>
+          </div>
+        </md-list-item>
+      </md-list>
+    </div>
+  </div>
+  <div ng-transclude="hideParticipantBox">
+    <otus-participant-box on-close="$ctrl.close()" layout="row"></otus-participant-box>
+    <!-- Insere participant-box caso não seja fornecido elemento para o transclude -->
+  </div>
+</div>

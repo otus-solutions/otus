@@ -1,4 +1,21 @@
-<div layout="column" layout-align="center center">
+<div ng-hide="!$ctrl.hideConfirmation" layout="row" layout-align="start center">
+  <span ng-if="$ctrl.subtitle" class="md-subtitle">{{$ctrl.subtitle}}</span>
+  <p ng-if="$ctrl.text" flex="80" class="md-subheader">
+    {{$ctrl.text}}
+  </p>
+  <div style="padding-left:16px; padding-top:16px" layout="row">
+    <md-input-container style="margin:0; padding:0;" class="md-block">
+      <label>Id do Laboratório</label>
+      <input ng-model="$ctrl.laboratoryIdentification" type="number" numbers-only min="0" step="1"
+        ng-disabled="!$ctrl.selectedParticipant.identified">
+    </md-input-container>
+  </div>
+  <md-button class="md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More"
+    ng-disabled="!$ctrl.laboratoryIdentification">
+    <md-icon>compare_arrows</md-icon>
+  </md-button>
+</div>
+<div ng-hide="$ctrl.hideConfirmation" layout="column" layout-align="center center">
   <span ng-if="$ctrl.subtitle" class="md-subtitle">{{$ctrl.subtitle}}</span>
   <div layout="row" layout-align="center center">
     <p ng-if="$ctrl.text" layout-padding="" flex="80" class="md-subheader" align="center">
@@ -9,10 +26,10 @@
     <md-input-container class="md-icon-float md-icon-right md-block">
       <label>Id do Laboratório</label>
       <input ng-model="$ctrl.laboratoryIdentification" type="number" numbers-only min="0" step="1"
-             ng-disabled="!$ctrl.selectedParticipant.identified">
+        ng-disabled="!$ctrl.selectedParticipant.identified">
     </md-input-container>
     <md-button class="md-fab md-mini md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More"
-               ng-disabled="!$ctrl.laboratoryIdentification">
+      ng-disabled="!$ctrl.laboratoryIdentification">
       <md-icon> compare_arrows</md-icon>
     </md-button>
   </div>

@@ -6,6 +6,7 @@
     .controller('otusDashboardDisplayCtrl', Controller);
 
   Controller.$inject = [
+    'otusjs.application.state.ApplicationStateService',
     'otusjs.user.business.UserAccessPermissionService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.laboratory.core.EventService',
@@ -13,16 +14,21 @@
     'otusjs.model.participant.ParticipantFactory',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.participant.core.EventService',
+    'otusjs.participant.business.ParticipantLabelFactory',
+    'otusjs.otus.uxComponent.Publisher'
   ];
 
   function Controller(
+    ApplicationStateService,
     UserAccessPermissionService,
     ParticipantLaboratoryService,
     EventService,
     DashboardService,
     ParticipantFactory,
     LoadingScreenService,
-    ParticipantEventService) {
+    ParticipantEventService,
+    ParticipantLabelFactory,
+    Publisher) {
 
     var self = this;
     self.participantLaboratory = {};
@@ -30,6 +36,7 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.initializeLaboratory = initializeLaboratory;
+    self.updateParticipant = updateParticipant;
 
     function onInit() {
       self.selectedParticipant = undefined;
@@ -50,13 +57,15 @@
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = ParticipantFactory.fromJson(participantData);
-        ParticipantEventService.fireParticipantLoaded(self.selectedParticipant)
+        ParticipantEventService.fireParticipantLoaded(self.selectedParticipant);
+        _executeLabelsStored();
       } else {
         ParticipantLaboratoryService
           .getSelectedParticipant()
           .then(function (participantData) {
             self.selectedParticipant = ParticipantFactory.fromJson(participantData);
             ParticipantEventService.fireParticipantLoaded(self.selectedParticipant)
+            _executeLabelsStored();
           });
       }
     }
@@ -116,6 +125,33 @@
         .then(response => {
           self.userAccessToLaboratory = response;
         });
+    }
+
+    function _executeLabelsStored() {
+      self.participantLabel = ParticipantLabelFactory.create(self.selectedParticipant)
+      _publishPrintStructure()
+      _subscribeLabels()
+    }
+
+    function _labelToPrint(callback) {
+      callback(
+        self.participantLabel
+      )
+    }
+
+    function _subscribeLabels() {
+      Publisher.unsubscribe('label-to-print')
+      Publisher.subscribe('label-to-print', _labelToPrint)
+    }
+
+    function _publishPrintStructure() {
+      Publisher.publish("default-print-structure", (defaultPrintStructure) => {
+        self.participantLabel.printStructure = defaultPrintStructure
+      })
+    }
+
+    function updateParticipant() {
+      ApplicationStateService.activateUpdateParticipant();
     }
   }
 }());
